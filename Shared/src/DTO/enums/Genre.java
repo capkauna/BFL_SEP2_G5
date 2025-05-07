@@ -1,4 +1,4 @@
-package DataClasses;
+package DTO.enums;
 
 public enum Genre
 {

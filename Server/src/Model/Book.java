@@ -1,14 +1,16 @@
-package DataClasses;
+package Model;
 
-import DataClasses.Status.*;
+import DTO.enums.Format;
+import DTO.enums.Genre;
+import Model.Status.*;
 
 public class Book
 {
   private String title, author, isbn, description, imagePath;
   private Genre genre;
-  private Format format;
   private User owner;
   private Status status;
+  private Format format;
 
   public Book(String title, String author, Genre genre, String isbn, Format format, String description, String imagePath, User owner)
   {

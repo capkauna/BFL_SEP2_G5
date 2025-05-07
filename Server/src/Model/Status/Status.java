@@ -1,4 +1,4 @@
-package DataClasses.Status;
+package Model.Status;
 
 public interface Status
 {

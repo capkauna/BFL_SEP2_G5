@@ -1,30 +1,25 @@
-package DataClasses;
+package DTO.enums;
 
 public enum Format
 {
   PAPERBACK,
   HARDCOVER,
-  EBOOKPDF,
-  EBOOKEPUB,
-  EBOOKMOBI;
+  EBOOK;
 
   public static Format fromString(String formatString)
   {
-    switch (formatString.toUpperCase())
+    switch (formatString.trim().toUpperCase())//added trim() to account for spaces or unexpected formatting
     {
       case "PAPERBACK":
         return PAPERBACK;
       case "HARDCOVER":
         return HARDCOVER;
-      case "EBOOKPDF":
-        return EBOOKPDF;
-      case "EBOOKEPUB":
-        return EBOOKEPUB;
-      case "EBOOKMOBI":
-        return EBOOKMOBI;
+      case "EBOOK":
+        return EBOOK;
       default:
         throw new IllegalArgumentException("Unknown format: " + formatString);
     }
   }
+
 
 }

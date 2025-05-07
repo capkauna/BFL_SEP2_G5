@@ -1,5 +1,5 @@
 
-import DataClasses.User;
+import Model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

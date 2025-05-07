@@ -1,4 +1,4 @@
-package DataClasses;
+package Model;
 
 import java.util.List;
 

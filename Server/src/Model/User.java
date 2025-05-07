@@ -1,4 +1,4 @@
-package DataClasses;
+package Model;
 
 import java.util.Objects;
 import java.util.stream.Stream;

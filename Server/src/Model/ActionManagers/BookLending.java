@@ -1,6 +1,6 @@
-package ActionManagers;
-import DataClasses.*;
-import DataClasses.Status.*;
+package Model.ActionManagers;
+import Model.*;
+import Model.Status.*;
 
 import java.time.LocalDate;
 
