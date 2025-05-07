@@ -66,22 +66,22 @@ public class TestUser
   @Test
   public void testGoodName()
   {
-    testUser.setName("good name");
+    testUser.setFullName("good name");
   }
   @Test
   public void testNullName()
   {
-   assertThrows (IllegalArgumentException.class, () -> testUser.setName(null));
+   assertThrows (IllegalArgumentException.class, () -> testUser.setFullName(null));
   }
   @Test
   public void testEmptyName()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setName(""));
+    assertThrows (IllegalArgumentException.class, () -> testUser.setFullName(""));
   }
   @Test
   public void testLongName()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setName("thisnameiswaytoolongandshouldthrowanerror"));
+    assertThrows (IllegalArgumentException.class, () -> testUser.setFullName("thisnameiswaytoolongandshouldthrowanerror"));
   }
 
   //e-mail tests

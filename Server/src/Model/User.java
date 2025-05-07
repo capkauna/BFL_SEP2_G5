@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 public class User
 {
   private String userName;
-  private String name;
+  private String fullName;
   private String email;
   private String password;
   private String phoneNumber;
@@ -21,7 +21,7 @@ public class User
       throw new IllegalArgumentException("User fields cannot be null or empty");
     }
     this.userName = userName;
-    this.name = name;
+    this.fullName = name;
     this.email = email;
     this.password = password;
     this.phoneNumber = phoneNumber;
@@ -40,17 +40,17 @@ public class User
     }
     this.userName = userName;
   }
-  public String getName()
+  public String getFullName()
   {
-    return name;
+    return fullName;
   }
-  public void setName(String name)
+  public void setFullName(String fullName)
   {
-    if(name == null || name.isEmpty() || name.length() >= 40)
+    if(fullName == null || fullName.isEmpty() || fullName.length() >= 40)
     {
       throw new IllegalArgumentException("Name cannot be null, empty, or be longer than 40 characters");
     }
-    this.name = name;
+    this.fullName = fullName;
   }
   public String getEmail()
   {
@@ -117,7 +117,7 @@ public class User
   {
     return "User{" +
             "userName='" + userName + '\'' +
-            ", name='" + name + '\'' +
+            ", name='" + fullName + '\'' +
             ", email='" + email + '\'' +
             ", password='" + password + '\'' +
             ", phoneNumber='" + phoneNumber + '\'' +
