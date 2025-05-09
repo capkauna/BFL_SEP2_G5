@@ -11,7 +11,12 @@ public enum Genre
   HISTORY("History"),
   ROMANCE("Romance"),
   THRILLER("Thriller"),
-  HORROR("Horror");
+  HORROR("Horror"),
+  DYSTOPIA("Dystopia"),
+  PSYCHOLOGY("Psychology"),
+  MANGA("Manga"); //can this be also another category? :?
+
+
 
   private final String genreName;
 
