@@ -57,6 +57,25 @@ public class User
     this(userName, name, email, rawPassword, phoneNumber, address, null);
   }
 
+  // private constructor for “hydration” from the DB:
+  private User(int id,
+      String userName,
+      String fullName,
+      String email,
+      String passwordHash,
+      String phoneNumber,
+      String address,
+      String avatarPath) {
+    this.id             = id;
+    this.userName       = userName;
+    this.fullName       = fullName;
+    this.email          = email;
+    this.passwordHash   = passwordHash;
+    this.phoneNumber    = phoneNumber;
+    this.address        = address;
+    this.userAvatarPath = avatarPath;
+  }
+
   //VALIDATORS
 
   private static void validateUserName(String userName)
@@ -182,6 +201,19 @@ public class User
   public boolean validatePassword(String password) //method to check if the password is correct
   {
     return this.getPasswordHash().equals(hashPassword(password));
+  }
+
+//DATABASE integration
+  /** factory to load a user record without re-hashing */
+  public static User fromDb(int id,
+      String userName,
+      String fullName,
+      String email,
+      String passwordHash,
+      String phoneNumber,
+      String address,
+      String avatarPath) {
+    return new User(id, userName, fullName, email, passwordHash, phoneNumber, address, avatarPath);
   }
 
 

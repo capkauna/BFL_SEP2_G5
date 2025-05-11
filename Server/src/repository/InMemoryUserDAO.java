@@ -1,12 +1,13 @@
-package DAOtesting;
+package repository;
 
+import repository.UserDao;
 import model.User;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InMemoryUserDAO implements UserDAO
+public class InMemoryUserDAO implements UserDao
 {
   private final Map<String, User> users = new ConcurrentHashMap<>();
 
