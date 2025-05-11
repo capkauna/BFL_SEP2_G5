@@ -2,7 +2,7 @@ package model;
 
 import dto.enums.Format;
 import dto.enums.Genre;
-import model.status.*;
+import model.Status.*;
 
 public class Book
 {
