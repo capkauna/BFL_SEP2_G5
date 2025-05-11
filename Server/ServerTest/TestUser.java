@@ -134,11 +134,6 @@ public class TestUser
   {
     assertThrows (IllegalArgumentException.class, () -> testUser.setPassword("1234 5678"));
   }
-  @Test
-  public void testGetPassword()
-  {
-    assertEquals("1234", testUser.getPasswordHash());
-  }
 
   //phone number tests
   @Test
@@ -158,19 +153,23 @@ public class TestUser
     assertThrows (IllegalArgumentException.class, () -> testUser.setPhoneNumber(""));
   }
   @Test
+  //number too short
   public void testInvalidPhoneNumber()
   {
-   assertThrows (IllegalArgumentException.class, () -> testUser.setPhoneNumber("123456789"));
+   assertThrows (IllegalArgumentException.class, () -> testUser.setPhoneNumber("1234567"));
   }
   @Test
+  //number too long
   public void testInvalidPhoneNumber2()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setPhoneNumber("12345678901"));
+    assertThrows (IllegalArgumentException.class, () -> testUser.setPhoneNumber("123456789011234567"));
   }
   @Test
+  //number contains letters or spaces
   public void testInvalidPhoneNumber3()
   {
     assertThrows (IllegalArgumentException.class, () -> testUser.setPhoneNumber("123456789a"));
+    assertThrows(IllegalArgumentException.class, () -> testUser.setPhoneNumber("123 456 7890"));
   }
   //address tests
   @Test

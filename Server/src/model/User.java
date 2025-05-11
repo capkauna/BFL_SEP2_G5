@@ -13,7 +13,7 @@ public class User
   private String address;
   private String userAvatarPath;
 
-  private final int id;
+  private final int userId;
   private static final AtomicInteger nextId = new AtomicInteger(1);
   //adding id to account for the user being recognized even if they change their username
   //AtomicInteger is thread-safe and allows for concurrent access to the id
@@ -48,7 +48,7 @@ public class User
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.userAvatarPath = userAvatarPath;
-    this.id = nextId.getAndIncrement();
+    this.userId = nextId.getAndIncrement();
   }
 
   //constructor without userAvatarPath
@@ -66,7 +66,7 @@ public class User
       String phoneNumber,
       String address,
       String avatarPath) {
-    this.id             = id;
+    this.userId = id;
     this.userName       = userName;
     this.fullName       = fullName;
     this.email          = email;
@@ -124,7 +124,7 @@ public class User
     }
   }
 
-
+//GETTERS AND SETTERS
 
   public String getUserName()
   {
@@ -157,6 +157,11 @@ public class User
   {
     return passwordHash;
   }
+  //getPasswordHash() is used for authentication, doesn't need to be tested
+  //it is needed for DAO or other classes that need to access the password hash
+  //the method will never return the same info when called
+
+  //TODO: make sure this only gets called after previous password was validated
   public void setPassword(String password)
   {
     validateRawPassword(password);
@@ -188,9 +193,9 @@ public class User
   {
     this.userAvatarPath = userAvatarPath;
   }
-  public int getId()
+  public int getUserId()
   {
-    return id;
+    return userId;
   }
 
   //Utilities

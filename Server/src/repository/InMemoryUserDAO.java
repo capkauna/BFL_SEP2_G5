@@ -1,13 +1,13 @@
 package repository;
 
-import repository.UserDao;
+import repository.UserDAO;
 import model.User;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InMemoryUserDAO implements UserDao
+public class InMemoryUserDAO implements UserDAO
 {
   private final Map<String, User> users = new ConcurrentHashMap<>();
 
