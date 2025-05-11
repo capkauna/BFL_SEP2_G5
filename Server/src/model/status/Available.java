@@ -1,5 +1,5 @@
 package model.status;
 
-public class Available implements Status
+public class Available
 {
 }
