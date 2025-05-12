@@ -2,6 +2,7 @@ package model.actionmanagers;
 import model.*;
 import model.status.*;
 
+import java.awt.print.Book;
 import java.time.LocalDate;
 
 public class BookLending
@@ -18,7 +19,7 @@ public class BookLending
     this.u = u;
     this.startDate = LocalDate.now().toString();
     this.endDate = null;
-    this.status = new Borrowed();
+    this.status = (Status) new Borrowed();
   }
 
   public void setEndDate()
@@ -28,7 +29,7 @@ public class BookLending
 
   public void returnBook()
   {
-    this.status = new Available();
+    this.status = (Status) new Available();
     this.u = null;
     setEndDate();
   }
