@@ -1,15 +1,15 @@
 package service;
 
-import repository.UserDao;
+import repository.UserDAO;
 import model.User;
 
 
 import java.util.Optional;
 
 public class AuthService {
-  private final UserDao userDao;
+  private final UserDAO userDao;
 
-  public AuthService(UserDao userDao) {
+  public AuthService(UserDAO userDao) {
     this.userDao = userDao;
   }
 

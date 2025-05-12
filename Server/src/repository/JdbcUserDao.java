@@ -1,13 +1,13 @@
 package repository;
 
-import repository.UserDao;
+import repository.UserDAO;
 import model.User;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;
 
-public class JdbcUserDao implements UserDao
+public class JdbcUserDao implements UserDAO
 {
 
   @Override public Optional<User> findByUserName(String username)
