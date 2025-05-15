@@ -60,7 +60,7 @@ public class JdbcBookDAO implements BookDAO
       ps.setInt(1, book.getBookId());
       ps.setString(2, book.getTitle());
       ps.setString(3, book.getAuthor());
-      ps.setString(4, book.getGenre().name());
+      ps.setString(4, book.getGenre().getGenreName());
       ps.setString(5, book.getIsbn());
       ps.setString(6, book.getFormat().name());
       ps.setString(7, book.getDescription());

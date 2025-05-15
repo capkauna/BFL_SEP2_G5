@@ -2,7 +2,6 @@ package model.actionmanagers;
 import model.*;
 import model.status.*;
 
-import java.awt.print.Book;
 import java.time.LocalDate;
 
 public class BookLending
@@ -12,6 +11,7 @@ public class BookLending
   private String startDate;
   private String endDate;
   private Status status;
+  private int id; //will be handled by the database
 
   public BookLending(Book b, User u)
   {
@@ -27,10 +27,9 @@ public class BookLending
     this.endDate = LocalDate.now().toString();
   }
 
-  public void returnBook()
+  public void returnBook(Book b)
   {
-    this.status = (Status) new Available();
-    this.u = null;
+    b.markAsReturned();
     setEndDate();
   }
 }

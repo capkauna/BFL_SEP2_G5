@@ -14,7 +14,8 @@ public enum Genre
   HORROR("Horror"),
   DYSTOPIA("Dystopia"),
   PSYCHOLOGY("Psychology"),
-  MANGA("Manga"); //can this be also another category? :?
+  MANGA("Manga"),//can this be also another category? :?
+  COMICS("Comics");
 
 
 

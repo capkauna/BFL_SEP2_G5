@@ -164,7 +164,7 @@ public class User
   //TODO: make sure this only gets called after previous password was validated
   public void setPassword(String password)
   {
-    validateRawPassword(password);
+    validateRawPassword(password); //this is not right
     this.passwordHash = hashPassword(password);
   }
   public String getPhoneNumber()
