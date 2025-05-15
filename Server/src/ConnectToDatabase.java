@@ -3,10 +3,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectToDatabase {
+
+
   public static void main(String[] args) {
     String url = "jdbc:postgresql://localhost:5432/postgres";
     String user = "postgres";
-    String password = "AAA25";
+    String password = "amyclaw";
 
     try {
 

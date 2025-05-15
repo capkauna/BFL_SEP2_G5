@@ -1,5 +1,6 @@
 package model.status;
 
+import dto.enums.BookStatus;
 import model.Book;
 import model.User;
 
@@ -19,4 +20,14 @@ public class Unavailable implements Status
   {
     b.setStatus(new Available());
   }
+
+  @Override public String toString()
+  {
+    return "Unavailable";
+  }
+  @Override public BookStatus getStatus()
+  {
+    return BookStatus.UNAVAILABLE;
+  }
 }
+

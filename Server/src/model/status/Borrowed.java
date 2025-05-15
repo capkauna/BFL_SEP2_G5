@@ -1,5 +1,6 @@
 package model.status;
 
+import dto.enums.BookStatus;
 import model.*;
 
 public class Borrowed implements Status
@@ -18,5 +19,13 @@ public class Borrowed implements Status
   @Override public void setUnavailable(Book b)
   {
     throw new UnsupportedOperationException("Book is currently borrowed.");
+  }
+  @Override public String toString()
+  {
+    return "Borrowed";
+  }
+  @Override public BookStatus getStatus()
+  {
+    return BookStatus.BORROWED;
   }
 }

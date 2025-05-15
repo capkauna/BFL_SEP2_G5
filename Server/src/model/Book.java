@@ -1,7 +1,6 @@
 package model;
 
-import dto.enums.Format;
-import dto.enums.Genre;
+import dto.enums.*;
 import model.status.*;
 
 import java.util.concurrent.atomic.AtomicInteger;

@@ -1,5 +1,5 @@
 package repository;
 
-public class ReaderNoteDAO
+public class ReaderNoteDAO implements NoteDAO
 {
 }
