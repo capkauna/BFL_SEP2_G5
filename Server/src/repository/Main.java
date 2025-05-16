@@ -1,7 +1,5 @@
 package repository;
 
-
-
 import model.User;
 import repository.UserDAO;
 import repository.UserDAOImpl;
@@ -12,7 +10,7 @@ import java.sql.SQLException;
 
 public class Main {
   public static void main(String[] args) {
-    String url = "jdbc:postgresql://localhost:5432/postgres";
+    String url = "jdbc:postgresql://localhost:5432/bfl";
     String user = "postgres";
     String password = "AAA25";
 
