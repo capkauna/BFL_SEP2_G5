@@ -34,9 +34,9 @@ public class Main {
         Statement stmt = conn.createStatement()) {
 
       stmt.execute(createTableSQL);
-      System.out.println("✅ Таблица users создана или уже существует.");
+      System.out.println("Table user created or already exist.");
 
-      // После создания таблицы добавляем пользователя
+
       UserDAO userDAO = new UserDAOImpl(conn);
 
       User newUser = new User(
@@ -53,7 +53,7 @@ public class Main {
       System.out.println("✅ User is in db!");
 
     } catch (SQLException e) {
-      System.err.println("❌ Ошибка при работе с БД: " + e.getMessage());
+      System.err.println("Error in work with DB" + e.getMessage());
       e.printStackTrace();
     }
   }

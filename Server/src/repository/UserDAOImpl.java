@@ -32,7 +32,7 @@ public class UserDAOImpl implements UserDAO {
         return Optional.of(user);
       }
     } catch (SQLException e) {
-      e.printStackTrace(); // а лучше логируй
+      e.printStackTrace();
     }
     return Optional.empty();
   }
@@ -56,16 +56,14 @@ public class UserDAOImpl implements UserDAO {
 
       stmt.executeUpdate();
 
-      // установить userId из базы, если нужно
       ResultSet keys = stmt.getGeneratedKeys();
       if (keys.next()) {
         int idFromDb = keys.getInt(1);
         System.out.println("User saved with ID: " + idFromDb);
-        // ты можешь тут вызвать reflection или обновить поле через метод, если нужно
-      }
+          }
 
     } catch (SQLException e) {
-      e.printStackTrace(); // обработка ошибок и логирование
+      e.printStackTrace();
     }
   }
 }
