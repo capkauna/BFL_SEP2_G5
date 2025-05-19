@@ -1,59 +1,126 @@
 package repository;
 
-import model.User;
+import model.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class JdbcUserDAO implements UserDAO
 {
-  private final Connection connection;
+  private final Map<String, User> users = new ConcurrentHashMap<>();
+  private static JdbcUserDAO instance; // Singleton instance, might opt out, not sure yet
 
-  public JdbcUserDAO(Connection connection) {
-    this.connection = connection;
+
+  JdbcUserDAO() throws SQLException
+  {
+    DriverManager.registerDriver(new org.postgresql.Driver());
   }
 
-  @Override
-  public void save(User u) {
-    String sql = "INSERT INTO users (username, hashed_pw, full_name, email) VALUES (?, ?, ?, ?)";
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-      stmt.setString(1, u.getUserName());
-      stmt.setString(2, u.getPasswordHash());
-      stmt.setString(3, u.getFullName());
-      stmt.setString(4, u.getEmail());
-      stmt.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-      // Можешь выбросить или логировать по-нормальному, в зависимости от архитектуры
+  public static JdbcUserDAO getInstance() throws SQLException
+  {
+    if (instance == null)
+    {
+      instance = new JdbcUserDAO();
+    }
+    return instance;
+  }
+
+  private static Connection getConnection() throws SQLException
+  {
+    return DriverManager.getConnection(
+        "jdbc:postgresql://localhost:5432/BookStore", "postgres", "password");
+  }
+
+  @Override public User create(String userName, String name, String email,
+      String rawPassword, String phoneNumber, String address)
+      throws SQLException
+  {
+    try(Connection c = getConnection())
+    {
+      PreparedStatement statement = c.prepareStatement(
+          "INSERT INTO users (userName, name, email, rawPassword, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)");
+      statement.setString(1, userName);
+      statement.setString(2, name);
+      statement.setString(3, email);
+      statement.setString(4, rawPassword);
+      statement.setString(5, phoneNumber);
+      statement.setString(6, address);
+      statement.executeUpdate();
+      return new User(userName, name, email, rawPassword, phoneNumber,
+          address);
     }
   }
-  @Override
-  public Optional<User> findByUserName(String username) {
-    String sql = "SELECT * FROM users WHERE username = ?";
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-      stmt.setString(1, username);
-      ResultSet rs = stmt.executeQuery();
-      if (rs.next()) {
-        User user = User.fromDb(
-            rs.getInt("user_id"),
-            rs.getString("username"),
-            rs.getString("full_name"),
-            rs.getString("email"),
-            rs.getString("hashed_pw"),
-            null, // phoneNumber – нет в БД
-            null, // address – нет в БД
-            null  // avatarPath – нет в БД
-        );
-        return Optional.of(user);
+
+  @Override public UserSummary findById(int id) throws SQLException
+  {
+    try(Connection c = getConnection())
+    {
+      PreparedStatement s = c.prepareStatement(
+          "SELECT userName, name, address FROM users WHERE id = ?");
+      s.setInt(1, id);
+      var rs = s.executeQuery();
+      if (rs.next())
+      {
+        String userName = rs.getString("userName");
+        return new UserSummary(rs.getString("userName"),
+            rs.getString("name"),
+            rs.getString("address"));
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
+      else
+      {
+        return null;
+      }
     }
-    return Optional.empty();
   }
 
+  @Override public List<User> findAll() throws SQLException
+  {
+    try (Connection c = getConnection())
+    {
+      PreparedStatement s = c.prepareStatement(
+          "SELECT * FROM users");
+      ResultSet rs = s.executeQuery();
+      List<User> users = new ArrayList<>();
+      while (rs.next())
+      {
+        String userName = rs.getString("userName");
+        users.add(new User(rs.getString("userName"),
+            rs.getString("name"), rs.getString("email"),
+            rs.getString("rawPassword"), rs.getString("phoneNumber"),
+            rs.getString("address")));
+      }
+      return users;
+    }
+  }
 
+  @Override public void update(User u) throws SQLException
+  {
+
+  }
+
+  @Override public void delete(int id) throws SQLException
+  {
+
+  }
+
+  @Override
+  public Optional<User> findByUserName(String username)
+  {
+    return Optional.ofNullable(users.get(username));
+  }
+
+  @Override
+  public void save(User u)
+  {
+    if (users.containsKey(u.getUserName()))
+    {
+      throw new IllegalArgumentException("Username already taken");
+    }
+    users.put(u.getUserName(), u);
+  }
 }
+
