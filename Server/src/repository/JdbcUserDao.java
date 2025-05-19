@@ -9,22 +9,22 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class JdbcUserDao implements UserDAO
+public class JdbcUserDAO implements UserDAO
 {
   private final Map<String, User> users = new ConcurrentHashMap<>();
-  private static JdbcUserDao instance; // Singleton instance, might opt out, not sure yet
+  private static JdbcUserDAO instance; // Singleton instance, might opt out, not sure yet
 
 
-  JdbcUserDao() throws SQLException
+  JdbcUserDAO() throws SQLException
   {
     DriverManager.registerDriver(new org.postgresql.Driver());
   }
 
-  public static JdbcUserDao getInstance() throws SQLException
+  public static JdbcUserDAO getInstance() throws SQLException
   {
     if (instance == null)
     {
-      instance = new JdbcUserDao();
+      instance = new JdbcUserDAO();
     }
     return instance;
   }

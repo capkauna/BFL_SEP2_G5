@@ -1,6 +1,13 @@
 package repository;
 
+import dto.enums.BookStatus;
+import dto.enums.Format;
+import dto.enums.Genre;
+import model.Book;
 import model.BookEntity;
+import model.BookSummary;
+import model.User;
+import model.status.Status;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +19,11 @@ public class BookDAOImpl implements BookDAO
 
   public BookDAOImpl(Connection connection){
     this.connection = connection;
+  }
+  private static Connection getConnection() throws SQLException
+  {
+    return DriverManager.getConnection(
+        "jdbc:postgresql://localhost:5432/BookStore"+ "?currentSchema=bfl_library", "postgres", "password");
   }
 
   public void save(BookEntity book)
@@ -31,32 +43,97 @@ public class BookDAOImpl implements BookDAO
       System.out.println("Error saving book: " + e.getMessage());
     }
   }
-  public List<BookEntity> findAll()
+  public List<BookSummary> findAll() throws SQLException
   {
-    List<BookEntity> books = new ArrayList<>();
-    String sql = "SELECT * FROM books";
-    try(Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery(sql))
+    try(Connection c = getConnection())
     {
-      while (rs.next()){
-        BookEntity book = new BookEntity(
-            rs.getInt("bookId"),
-            rs.getString("title"),
-            rs.getString("publisher"),
-            rs.getInt("ownerId"),
-            rs.getInt("year")
-        );
-        books.add(book);
+      PreparedStatement statement = c.prepareStatement(
+          "SELECT b.title, b.author, u.username as owner, b.genre, b.format, b.status FROM books b join users u on b.owner=u.id");
+      ResultSet resultSet = statement.executeQuery();
+      List<BookSummary> books = new ArrayList<>();
+      while (resultSet.next())
+      {
+        String title = resultSet.getString("title");
+        String author = resultSet.getString("author");
+        Genre genre = Genre.valueOf(resultSet.getString("genre"));
+        Format format = Format.valueOf(resultSet.getString("format"));
+        String ownerName = resultSet.getString("ownerName");
+        BookStatus status = BookStatus.valueOf(resultSet.getString("status"));
+        books.add( new BookSummary(title, author, ownerName, format, genre, status));
       }
-
+      return books;
     }
-    catch (SQLException e)
-    {
-      System.out.println("Error retrieving books: " + e.getMessage());
-    }
-return books;
   }
-  public BookEntity findById(int id)
+
+  @Override public List<BookSummary> findByTitle(String title)
+      throws SQLException
+  {
+    return List.of();
+  }
+
+  @Override public List<BookSummary> findByIsbn(String isbn) throws SQLException
+  {
+    return List.of();
+  }
+
+  @Override public List<BookSummary> findByAuthor(String author)
+      throws SQLException
+  {
+    return List.of();
+  }
+
+  @Override public List<BookSummary> findByGenre(Genre genre)
+      throws SQLException
+  {
+    return List.of();
+  }
+
+  @Override public List<BookSummary> findByFormat(Format format)
+      throws SQLException
+  {
+    return List.of();
+  }
+
+  @Override public List<BookSummary> findByOwner(User owner) throws SQLException
+  {
+    return List.of();
+  }
+
+  @Override public List<BookSummary> findByStatus(Status status)
+      throws SQLException
+  {
+    return List.of();
+  }
+
+  @Override public List<BookSummary> findByBorrowedBy(User borrowedBy)
+      throws SQLException
+  {
+    return List.of();
+  }
+
+  @Override public void save(Book b)
+  {
+
+  }
+
+  @Override public void update(Book b) throws SQLException
+  {
+
+  }
+
+  @Override public void delete(int id) throws SQLException
+  {
+
+  }
+
+  @Override public Book create(String title, String author, Genre genre,
+      String isbn, Format format, String description, String imagePath,
+      User owner) throws SQLException
+  {
+    return null;
+  }
+
+  public BookSummary findById(int id)
   {
     String sql = "SELECT * FROM books WHERE bookId = ?";
     try(PreparedStatement stmt = connection.prepareStatement(sql))
@@ -65,13 +142,13 @@ return books;
       try(ResultSet rs = stmt.executeQuery();)
       {
       if (rs.next()){
-        return new BookEntity(
-            rs.getInt("bookId"),
-            rs.getString("title"),
-            rs.getString("publisher"),
-            rs.getInt("ownerId"),
-            rs.getInt("year")
-        );
+//        return new BookEntity(
+//            rs.getInt("bookId"),
+//            rs.getString("title"),
+//            rs.getString("publisher"),
+//            rs.getInt("ownerId"),
+//            rs.getInt("year")
+//        );
       }
     }
     catch (SQLException e)
@@ -85,4 +162,5 @@ return books;
       throw new RuntimeException(e);
     }
 
-  }}
+  }
+}

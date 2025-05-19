@@ -3,12 +3,15 @@ package model.status;
 import dto.enums.BookStatus;
 import model.Book;
 import model.User;
+import model.actionmanagers.BookLending;
 
 public class Available implements Status
 {
+  BookLending lending = new BookLending();
   @Override public void lendTo(Book b, User u)
   {
-    b.setBorrowedBy(u);
+   // b.setBorrowedBy(u);
+    lending = new BookLending(b, u);
     b.setStatus(new Borrowed());
   }
 

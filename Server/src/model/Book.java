@@ -34,8 +34,9 @@ public class Book
     this.imagePath = imagePath;
     this.owner = owner;
     this.status = new Available();
-    this.bookId = nextId.getAndIncrement();
-    this.borrowedBy = null;
+    this.bookId = bookId;//TODO make this come from the database
+    //this.bookId = nextId.getAndIncrement();
+    //this.borrowedBy = null;
   }
   // Constructor without imagePath
   public Book(String title, String author, Genre genre, String isbn,
@@ -51,6 +52,7 @@ public class Book
       throw new IllegalArgumentException("Title cannot be null or empty");
     }
   }
+  //TODO: check if author is a valid name
   private void validateAuthor(String author)
   {
     if (author == null || author.isEmpty())
