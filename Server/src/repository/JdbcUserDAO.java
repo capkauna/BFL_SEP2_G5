@@ -1,6 +1,7 @@
 package repository;
 
 import model.*;
+import util.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,17 +30,18 @@ public class JdbcUserDAO implements UserDAO
     return instance;
   }
 
-  private static Connection getConnection() throws SQLException
-  {
-    return DriverManager.getConnection(
-        "jdbc:postgresql://localhost:5432/BookStore", "postgres", "password");
-  }
+//replaced with DBConnection
+//  private static Connection getConnection() throws SQLException
+//  {
+//    return DriverManager.getConnection(
+//        "jdbc:postgresql://localhost:5432/postgres/bfl", "postgres", "password");
+//  }
 
   @Override public User create(String userName, String name, String email,
       String rawPassword, String phoneNumber, String address)
       throws SQLException
   {
-    try(Connection c = getConnection())
+    try(Connection c = DBConnection.getConnection())
     {
       PreparedStatement statement = c.prepareStatement(
           "INSERT INTO users (userName, name, email, rawPassword, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)");
@@ -57,7 +59,7 @@ public class JdbcUserDAO implements UserDAO
 
   @Override public UserSummary findById(int id) throws SQLException
   {
-    try(Connection c = getConnection())
+    try(Connection c = DBConnection.getConnection())
     {
       PreparedStatement s = c.prepareStatement(
           "SELECT userName, name, address FROM users WHERE id = ?");
@@ -79,7 +81,7 @@ public class JdbcUserDAO implements UserDAO
 
   @Override public List<User> findAll() throws SQLException
   {
-    try (Connection c = getConnection())
+    try (Connection c = DBConnection.getConnection())
     {
       PreparedStatement s = c.prepareStatement(
           "SELECT * FROM users");
