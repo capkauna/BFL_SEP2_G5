@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface UserDAO
 {
-  User create (String userName, String name, String email, String rawPassword, String phoneNumber, String address) throws
+  User create (User newUser) throws
       SQLException;
   UserSummary findById(int id) throws SQLException;
   List<User> findAll() throws SQLException;

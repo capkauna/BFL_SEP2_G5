@@ -37,25 +37,57 @@ public class JdbcUserDAO implements UserDAO
 //        "jdbc:postgresql://localhost:5432/postgres/bfl", "postgres", "password");
 //  }
 
-  @Override public User create(String userName, String name, String email,
-      String rawPassword, String phoneNumber, String address)
-      throws SQLException
-  {
-    try(Connection c = DBConnection.getConnection())
-    {
-      PreparedStatement statement = c.prepareStatement(
-          "INSERT INTO users (userName, name, email, rawPassword, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)");
-      statement.setString(1, userName);
-      statement.setString(2, name);
-      statement.setString(3, email);
-      statement.setString(4, rawPassword);
-      statement.setString(5, phoneNumber);
-      statement.setString(6, address);
-      statement.executeUpdate();
-      return new User(userName, name, email, rawPassword, phoneNumber,
-          address);
+
+
+//changed the create method to use the new User object and let most validation checks in the User class
+  @Override public User create(User newUser) throws SQLException {
+     String INSERT_SQL =
+        "INSERT INTO users (username, fullname, email, password_hash, phone, address, avatar_path) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    try (Connection c = DBConnection.getConnection();
+        PreparedStatement ps = c.prepareStatement(
+            INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+
+      ps.setString(1, newUser.getUserName());
+      ps.setString(2, newUser.getFullName());
+      ps.setString(3, newUser.getEmail());
+      ps.setString(4, newUser.getPasswordHash());
+      ps.setString(5, newUser.getPhoneNumber());
+      ps.setString(6, newUser.getAddress());
+      ps.setString(7, newUser.getUserAvatarPath());
+      ps.executeUpdate();
+
+      try (ResultSet keys = ps.getGeneratedKeys()) {
+        if (keys.next()) {
+          int generatedId = keys.getInt(1);
+          newUser.setUserId(generatedId);
+        } else {
+          throw new SQLException("No ID returned on insert");
+        }
+      }
+      return newUser;
     }
   }
+
+//   public User create(String userName, String name, String email,
+//      String rawPassword, String phoneNumber, String address)
+//      throws SQLException
+//  {
+//    try(Connection c = DBConnection.getConnection())
+//    {
+//      PreparedStatement statement = c.prepareStatement(
+//          "INSERT INTO users (userName, name, email, rawPassword, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)");
+//      statement.setString(1, userName);
+//      statement.setString(2, name);
+//      statement.setString(3, email);
+//      statement.setString(4, rawPassword);
+//      statement.setString(5, phoneNumber);
+//      statement.setString(6, address);
+//      statement.executeUpdate();
+//      return new User(userName, name, email, rawPassword, phoneNumber,
+//          address);
+//    }
+//  }
 
   @Override public UserSummary findById(int id) throws SQLException
   {

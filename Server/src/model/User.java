@@ -13,8 +13,8 @@ public class User
   private String address;
   private String userAvatarPath;
 
-  private final int userId;
-  private static final AtomicInteger nextId = new AtomicInteger(1);
+  private Integer userId;
+  //private static final AtomicInteger nextId = new AtomicInteger(1);
   //adding id to account for the user being recognized even if they change their username
   //AtomicInteger is thread-safe and allows for concurrent access to the id
 
@@ -48,7 +48,7 @@ public class User
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.userAvatarPath = userAvatarPath;
-    this.userId = nextId.getAndIncrement();
+    this.userId = null; //will be set by the database
   }
 
   //constructor without userAvatarPath
@@ -125,6 +125,7 @@ public class User
   }
 
 //GETTERS AND SETTERS
+
 
   public String getUserName()
   {
@@ -210,15 +211,25 @@ public class User
 
 //DATABASE integration
   /** factory to load a user record without re-hashing */
-  public static User fromDb(int id,
-      String userName,
-      String fullName,
-      String email,
-      String passwordHash,
-      String phoneNumber,
-      String address,
-      String avatarPath) {
-    return new User(id, userName, fullName, email, passwordHash, phoneNumber, address, avatarPath);
+  public static User fromDb (int id, String userName, String fullName, String email,
+      String passwordHash, String phoneNumber,
+      String address, String avatarPath)
+  {
+    User u = new User(userName, fullName, email, passwordHash,
+        phoneNumber, address, avatarPath);
+    u.userId = id;  // must be mutable
+    return u;
+  }
+  /** Optional setter so DAO can inject the generated id. */
+  public void setUserId(int id) {
+    if (this.userId != null) {
+      throw new IllegalStateException("ID already set");
+    }
+    this.userId = id;
+  }
+  //getter here just for organisation
+  public Integer getId() {
+    return userId;
   }
 
 
