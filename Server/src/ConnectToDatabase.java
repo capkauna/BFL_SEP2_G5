@@ -1,4 +1,5 @@
 import repository.JdbcUserDAO;
+import util.DBConnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,9 +9,6 @@ public class ConnectToDatabase {
 
 
   public static void main(String[] args) {
-    String url = "jdbc:postgresql://localhost:5432/bfl";
-    String user = "postgres";
-    String password = "amyclaw";
 
     String createTableSQL = """
     CREATE TABLE IF NOT EXISTS users (
@@ -31,7 +29,7 @@ public class ConnectToDatabase {
       Class.forName("org.postgresql.Driver");
 
 
-      try (Connection connection = DriverManager.getConnection(url, user, password)) {
+      try (Connection connection = DBConnection.getConnection()) {
         System.out.println("SUCCESS");
       } catch (SQLException e) {
         System.out.println("ERROR");
