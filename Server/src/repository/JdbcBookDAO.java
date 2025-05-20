@@ -5,6 +5,7 @@ import dto.enums.Format;
 import dto.enums.Genre;
 import model.*;
 import model.status.*;
+import util.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,12 +27,12 @@ public class JdbcBookDAO implements BookDAO
     }
     return instance;
   }
-
-  private static Connection getConnection() throws SQLException
-  {
-    return DriverManager.getConnection(
-        "jdbc:postgresql://localhost:5432/BookStore"+ "?currentSchema=bfl_library", "postgres", "password");
-  }
+//  replaced with DBConnection
+//  private static Connection getConnection() throws SQLException
+//  {
+//    return DriverManager.getConnection(
+//        "jdbc:postgresql://localhost:5432/BookStore"+ "?currentSchema=bfl_library", "postgres", "password");
+//  }
   @Override
   public synchronized Book create(
       String title,
@@ -54,7 +55,7 @@ public class JdbcBookDAO implements BookDAO
       VALUES (?,      ?,     ?,      ?,     ?,    ?,      ?,           ?,         ?,     ?)
       """;
 
-    try ( Connection c = getConnection();
+    try ( Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql) ) {
 
       ps.setInt(1, book.getBookId());
@@ -80,7 +81,7 @@ public class JdbcBookDAO implements BookDAO
 
   @Override public BookSummary findById(int id) throws SQLException
   {
-    try(Connection c = getConnection())
+    try(Connection c = DBConnection.getConnection())
     {
       PreparedStatement statement = c.prepareStatement(
           "SELECT b.title, b.author, u.username as owner, b.genre, b.format, b.status FROM books b join users u on b.owner=u.id  WHERE bookId = ?");
@@ -105,7 +106,7 @@ public class JdbcBookDAO implements BookDAO
 
   @Override public List<BookSummary> findAll() throws SQLException
   {
-   try(Connection c = getConnection())
+   try(Connection c = DBConnection.getConnection())
    {
      PreparedStatement statement = c.prepareStatement(
          "SELECT b.title, b.author, u.username as owner, b.genre, b.format, b.status FROM books b join users u on b.owner=u.id");
@@ -129,7 +130,7 @@ public class JdbcBookDAO implements BookDAO
 
   @Override public List<BookSummary> findByTitle(String searchString) throws SQLException
   {
-    try(Connection c = getConnection())
+    try(Connection c = DBConnection.getConnection())
     {
       PreparedStatement statement = c.prepareStatement(
           "SELECT b.title, b.author, u.username as owner, b.genre, b.format, b.status FROM books b join users u on b.owner=u.id  WHERE title LIKE ?");
@@ -152,7 +153,7 @@ public class JdbcBookDAO implements BookDAO
 
   @Override public List<BookSummary> findByIsbn(String isbn) throws SQLException
   {
-    try(Connection c = getConnection())
+    try(Connection c =DBConnection.getConnection())
     {
       PreparedStatement statement = c.prepareStatement(
           "SELECT b.title, b.author, u.username as owner, b.genre, b.format, b.status FROM books b join users u on b.owner=u.id  WHERE isbn = ?");
@@ -175,7 +176,7 @@ public class JdbcBookDAO implements BookDAO
 
   @Override public List<BookSummary> findByAuthor(String author)throws SQLException
   {
-    try(Connection c = getConnection())
+    try(Connection c = DBConnection.getConnection())
     {
       PreparedStatement statement = c.prepareStatement(
           "SELECT b.title, b.author, u.username as owner, b.genre, b.format, b.status FROM books b join users u on b.owner=u.id  WHERE author LIKE ?");
@@ -198,7 +199,7 @@ public class JdbcBookDAO implements BookDAO
 
   @Override public List<BookSummary> findByGenre(Genre genre)throws SQLException
   {
-    try (Connection c = getConnection())
+    try (Connection c = DBConnection.getConnection())
     {
       PreparedStatement statement = c.prepareStatement(
           "SELECT b.title, b.author, u.username as owner, b.genre, b.format, b.status FROM books b join users u on b.owner=u.id  WHERE genre = ?");
@@ -220,7 +221,7 @@ public class JdbcBookDAO implements BookDAO
 
   @Override public List<BookSummary> findByFormat(Format format)throws SQLException
   {
-    try(Connection c = getConnection())
+    try(Connection c = DBConnection.getConnection())
     {
       PreparedStatement statement = c.prepareStatement(
           "SELECT b.title, b.author, u.username as owner, b.genre, b.format, b.status FROM books b join users u on b.owner=u.id  WHERE format = ?");
@@ -242,7 +243,7 @@ public class JdbcBookDAO implements BookDAO
 
   @Override public List<BookSummary> findByOwner(User owner)throws SQLException
   {
-    try(Connection c = getConnection())
+    try(Connection c =DBConnection.getConnection())
     {
       PreparedStatement statement = c.prepareStatement(
           "SELECT b.title, b.author, u.username as owner, b.genre, b.format, b.status FROM books b join users u on b.owner=u.id  WHERE owner = ?");
@@ -265,7 +266,7 @@ public class JdbcBookDAO implements BookDAO
 
   @Override public List<BookSummary> findByStatus(Status status)throws SQLException
   {
-    try(Connection c = getConnection())
+    try(Connection c = DBConnection.getConnection())
     {
       PreparedStatement statement = c.prepareStatement(
           "SELECT b.title, b.author, u.username as owner, b.genre, b.format, b.status FROM books b join users u on b.owner=u.id  WHERE status = ?");
@@ -314,7 +315,7 @@ public class JdbcBookDAO implements BookDAO
        WHERE bookId      = ?
       """;
 
-    try ( Connection c = getConnection();
+    try ( Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql) ) {
 
       ps.setString(1, b.getTitle());
@@ -336,7 +337,7 @@ public class JdbcBookDAO implements BookDAO
 
   @Override public void delete(int id) throws SQLException
   {
-    try(Connection c = getConnection())
+    try(Connection c = DBConnection.getConnection())
     {
       PreparedStatement statement = c.prepareStatement(
           "DELETE FROM books WHERE bookId = ?");

@@ -1,3 +1,5 @@
+import repository.JdbcUserDAO;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -6,7 +8,7 @@ public class ConnectToDatabase {
 
 
   public static void main(String[] args) {
-    String url = "jdbc:postgresql://localhost:5432/postgres";
+    String url = "jdbc:postgresql://localhost:5432/bfl";
     String user = "postgres";
     String password = "amyclaw";
 
@@ -24,9 +26,6 @@ public class ConnectToDatabase {
         avatar_path TEXT
     );
 """;
-
-
-
     try {
 
       Class.forName("org.postgresql.Driver");
@@ -43,4 +42,6 @@ public class ConnectToDatabase {
       e.printStackTrace();
     }
   }
+
+  //public JdbcUserDAO.create("username1", "John Doe", "john@doe.com", "1524", "1234567890", "123 Main St");
 }
