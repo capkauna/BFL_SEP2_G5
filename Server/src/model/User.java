@@ -29,12 +29,12 @@ public class User
   private static final int MIN_PHONE_NUMBER_LENGTH = 8;
 
 //constructors
-  public User(String userName, String fullName, String email, String rawPassword, String phoneNumber, String address, String userAvatarPath)
+  public User(String userName, String fullName, String email, String initialPassword, String phoneNumber, String address, String userAvatarPath)
   {
     validateUserName(userName);
     validateFullName(fullName);
     validateEmail(email);
-    validateRawPassword(rawPassword);
+    validateRawPassword(initialPassword);
     validatePhoneNumber(phoneNumber);
     validateAddress(address);
     if (userAvatarPath != null && userAvatarPath.isEmpty()) {
@@ -44,7 +44,7 @@ public class User
     this.userName = userName;
     this.fullName = fullName;
     this.email = email;
-    this.passwordHash = hashPassword(rawPassword);
+    this.passwordHash = hashPassword(initialPassword);
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.userAvatarPath = userAvatarPath;
@@ -161,12 +161,32 @@ public class User
   //it is needed for DAO or other classes that need to access the password hash
   //the method will never return the same info when called
 
-  //TODO: make sure this only gets called after previous password was validated
-  public void setPassword(String password)
+  //TOD: make sure this only gets called after previous password was validated
+
+  public void updatePassword(String newPassword, String oldPassword) {
+    validateRawPassword(newPassword);  // validate the new password
+
+    // if exist oldPassword, check if it is correct
+    if (oldPassword != null && !validatePassword(oldPassword)) {
+      throw new IllegalArgumentException("Old password is incorrect");
+    }
+    if (oldPassword != null && newPassword.equals(oldPassword)) {
+      throw new IllegalArgumentException("New password must be different from old password");
+    }
+    this.passwordHash = hashPassword(newPassword);
+  }
+ private void setPassword (String password)
   {
-    validateRawPassword(password); //this is not right
+    //validateRawPassword(password);
     this.passwordHash = hashPassword(password);
   }
+
+  // function to hash the password
+  private String hashPassword(String password) {
+    return Integer.toString(password.hashCode());
+  }
+
+
   public String getPhoneNumber()
   {
     return phoneNumber;
@@ -199,10 +219,7 @@ public class User
   }
 
   //Utilities
-  private String hashPassword(String p)
-  {
-    return Integer.toHexString(p.hashCode());
-  }
+
   public boolean validatePassword(String password) //method to check if the password is correct
   {
     return this.getPasswordHash().equals(hashPassword(password));

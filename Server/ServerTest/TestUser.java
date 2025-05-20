@@ -108,20 +108,25 @@ public class TestUser
 
 
   //password tests
+  @BeforeEach
+  void setUp() {
+    testUser = new User("1234");
+  }
+
   @Test
   public void testShortPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setPassword("22"));
+    assertThrows (IllegalArgumentException.class, () -> new User("22"));
   }
   @Test
   public void testNullPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setPassword(null));
+    assertThrows (IllegalArgumentException.class, () -> new User(null));
   }
   @Test
   public void testEmptyPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setPassword(""));
+    assertThrows (IllegalArgumentException.class, () -> new User(""));
   }
   @Test
   public void testValidPassword()
@@ -132,7 +137,7 @@ public class TestUser
   @Test
   public void testInvalidPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setPassword("1234 5678"));
+    assertThrows (IllegalArgumentException.class, () -> new User ("1234 5678"));
   }
 
   //phone number tests

@@ -25,7 +25,7 @@ public class ImageServer
 
     System.out.println("picture send");
     clientSocket.close();
-    serverSocket.close;
+    serverSocket.close();
 
   }
 }
