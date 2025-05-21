@@ -111,17 +111,17 @@ public class TestUser
   @Test
   public void testShortPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setPassword("22"));
+    assertThrows (IllegalArgumentException.class, () -> testUser.changePassword("1234","22"));
   }
   @Test
   public void testNullPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setPassword(null));
+    assertThrows (IllegalArgumentException.class, () -> testUser.changePassword("1234", null));
   }
   @Test
   public void testEmptyPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setPassword(""));
+    assertThrows (IllegalArgumentException.class, () -> testUser.changePassword("1234", ""));
   }
   @Test
   public void testValidPassword()
@@ -132,7 +132,12 @@ public class TestUser
   @Test
   public void testInvalidPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.setPassword("1234 5678"));
+    assertThrows (IllegalArgumentException.class, () -> testUser.changePassword("1234","1234 5678"));
+  }
+  @Test
+  public void testIncorrectOldPassword()
+  {
+    assertThrows (IllegalArgumentException.class, () -> testUser.changePassword("0000","1234"));
   }
 
   //phone number tests

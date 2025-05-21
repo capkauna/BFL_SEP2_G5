@@ -11,6 +11,10 @@ public class Available implements Status
   @Override public void lendTo(Book b, User u)
   {
    // b.setBorrowedBy(u);
+    if (b.getOwner().equals(u))
+    {
+      throw new UnsupportedOperationException("You cannot borrow your own book. Consider making it unavailable instead.");
+    }
     BookLending lending = new BookLending(b, u);
     b.setStatus(new Borrowed());
   }

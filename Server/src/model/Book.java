@@ -15,8 +15,8 @@ public class Book
   private Status status;
   private Format format;
 
-  private int bookId;
-  private static final AtomicInteger nextId = new AtomicInteger(1);
+  private Integer bookId;
+  //private static final AtomicInteger nextId = new AtomicInteger(1);
 
 
   public Book(String title, String author, Genre genre, String isbn, Format format, String description, String imagePath, User owner)
@@ -34,7 +34,7 @@ public class Book
     this.imagePath = imagePath;
     this.owner = owner;
     this.status = new Available();
-    this.bookId = bookId;//TODO make this come from the database
+    this.bookId = null; //will be set by the database
     //this.bookId = nextId.getAndIncrement();
     //this.borrowedBy = null;
   }
@@ -42,6 +42,20 @@ public class Book
   public Book(String title, String author, Genre genre, String isbn,
       Format format, String description, User owner) {
     this(title, author, genre, isbn, format, description, null, owner);
+  }
+  //private constructor for “hydration” from the DB:
+  public Book(int bookId, String title, String author, Genre genre, String isbn,
+      Format format, String description, String imagePath, User owner, Status status) {
+    this.bookId = bookId;
+    this.title = title;
+    this.author = author;
+    this.genre = genre;
+    this.isbn = isbn;
+    this.format = format;
+    this.description = description;
+    this.imagePath = imagePath;
+    this.owner = owner;
+    this.status = status;
   }
 
   //Validators
@@ -52,7 +66,8 @@ public class Book
       throw new IllegalArgumentException("Title cannot be null or empty");
     }
   }
-  //TODO: check if author is a valid name
+
+
   private void validateAuthor(String author)
   {
     if (author == null || author.isEmpty())
@@ -78,7 +93,7 @@ public class Book
       throw new IllegalArgumentException("Owner cannot be null");
     }
   }
-  //only for state use
+  //for state use
   private void validateBorrower(User borrower)
   {
     if (borrower.equals(owner))
@@ -182,6 +197,11 @@ public class Book
   public void removeBorrower()
   {
     this.borrowedBy = null;
+  }
+  public void setBookId(int bookId)
+      //Optional setter so DAO can inject the generated id.
+  {
+    this.bookId = bookId;
   }
 
 

@@ -1,8 +1,10 @@
 package repository;
 
 import model.User;
+import model.UserSummary;
 
 import java.sql.*;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDAOImpl implements UserDAO {
@@ -10,6 +12,31 @@ public class UserDAOImpl implements UserDAO {
 
   public UserDAOImpl(Connection conn) {
     this.conn = conn;
+  }
+
+  @Override public User create(User newUser) throws SQLException
+  {
+    return null;
+  }
+
+  @Override public UserSummary findById(int id) throws SQLException
+  {
+    return null;
+  }
+
+  @Override public List<User> findAll() throws SQLException
+  {
+    return List.of();
+  }
+
+  @Override public void update(User u) throws SQLException
+  {
+
+  }
+
+  @Override public void delete(int id) throws SQLException
+  {
+
   }
 
   @Override

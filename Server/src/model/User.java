@@ -1,6 +1,6 @@
 package model;
 
-import java.util.concurrent.atomic.AtomicInteger;
+
 import java.util.regex.Pattern;
 
 public class User
@@ -14,9 +14,7 @@ public class User
   private String userAvatarPath;
 
   private Integer userId;
-  //private static final AtomicInteger nextId = new AtomicInteger(1);
-  //adding id to account for the user being recognized even if they change their username
-  //AtomicInteger is thread-safe and allows for concurrent access to the id
+
 
   //quality of life
   private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"); //simplifies some logic
@@ -78,6 +76,7 @@ public class User
 
   //VALIDATORS
 //TODO add check that username doesn't already exist in database
+// this should be done in the DAO
   private static void validateUserName(String userName)
   {
     if(userName == null || userName.contains(" ") ||userName.length() < MIN_USERNAME_LENGTH || userName.length() >= MAX_USERNAME_LENGTH)
@@ -160,13 +159,20 @@ public class User
   }
   //getPasswordHash() is used for authentication, doesn't need to be tested
   //it is needed for DAO or other classes that need to access the password hash
-  //the method will never return the same info when called
 
   //TODO: make sure this only gets called after previous password was validated
-  public void setPassword(String password)
+  private void setPassword(String password)
   {
     validateRawPassword(password); //this is not right
     this.passwordHash = hashPassword(password);
+  }
+  public void changePassword(String oldPassword, String newPassword)
+  {
+    if(!validatePassword(oldPassword))
+    {
+      throw new IllegalArgumentException("Old password is incorrect");
+    }
+    setPassword(newPassword);
   }
   public String getPhoneNumber()
   {
@@ -211,26 +217,30 @@ public class User
 
 //DATABASE integration
   /** factory to load a user record without re-hashing */
-  public static User fromDb (int id, String userName, String fullName, String email,
-      String passwordHash, String phoneNumber,
-      String address, String avatarPath)
+  public static User fromDb(
+      int id,
+      String userName,
+      String fullName,
+      String email,
+      String passwordHash,
+      String phoneNumber,
+      String address,
+      String avatarPath
+  )
   {
-    User u = new User(userName, fullName, email, passwordHash,
-        phoneNumber, address, avatarPath);
-    u.userId = id;  // must be mutable
+    // Use the private constructor that takes an already‐hashed password:
+    User u = new User(id, userName, fullName, email,
+        passwordHash, phoneNumber, address, avatarPath);
     return u;
   }
-  /** Optional setter so DAO can inject the generated id. */
+  //Optional setter so DAO can inject the generated id.
   public void setUserId(int id) {
     if (this.userId != null) {
       throw new IllegalStateException("ID already set");
     }
     this.userId = id;
   }
-  //getter here just for organisation
-  public Integer getId() {
-    return userId;
-  }
+
 
 
   @Override
