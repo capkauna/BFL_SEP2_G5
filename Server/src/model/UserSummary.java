@@ -1,10 +1,13 @@
 package model;
 
+import java.util.List;
+
 public class UserSummary //meant to be a summary of the user information
 {
   private final String name, fullName, address;
 
-  public UserSummary(String name, String fullName, String address)
+
+  public UserSummary(String name, String fullName, String address )
   {
     this.name = name;
     this.fullName = fullName;
@@ -25,4 +28,5 @@ public class UserSummary //meant to be a summary of the user information
   {
     return address;
   }
+
 }

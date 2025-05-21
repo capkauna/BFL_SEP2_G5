@@ -3,6 +3,8 @@ package model;
 import dto.enums.*;
 import model.status.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Book
@@ -34,7 +36,7 @@ public class Book
     this.imagePath = imagePath;
     this.owner = owner;
     this.status = new Available();
-    this.bookId = bookId;//TODO make this come from the database
+    //this.bookId = bookId;//TODO make this come from the database
     //this.bookId = nextId.getAndIncrement();
     //this.borrowedBy = null;
   }
@@ -85,6 +87,11 @@ public class Book
     {
       throw new IllegalArgumentException("Owner cannot borrow their own book");
     }
+  }
+
+  private void validateUser(User user, String role) {
+    if (user == null)
+      throw new IllegalArgumentException(role + " cannot be null");
   }
 
 
@@ -179,6 +186,12 @@ public class Book
     validateBorrower(borrowedBy);
     this.borrowedBy = borrowedBy;
   }
+  public void setUser(User user)
+  {
+    validateUser(user, "User");
+    this.borrowedBy = user;
+  }
+
   public void removeBorrower()
   {
     this.borrowedBy = null;
