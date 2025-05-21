@@ -19,7 +19,7 @@ public class UserDAOImpl implements UserDAO {
     return null;
   }
 
-  @Override public UserSummary findById(int id) throws SQLException
+  @Override public User findById(int id) throws SQLException
   {
     return null;
   }

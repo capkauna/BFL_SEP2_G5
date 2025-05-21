@@ -70,47 +70,56 @@ public class JdbcUserDAO implements UserDAO
   }
 
 
-  @Override public UserSummary findById(int id) throws SQLException
-  {
-    try(Connection c = DBConnection.getConnection())
-    {
-      PreparedStatement s = c.prepareStatement(
-          "SELECT username, full_name, address FROM users WHERE user_id = ?");
-      s.setInt(1, id);
-      var rs = s.executeQuery();
-      if (rs.next())
-      {
-        String userName = rs.getString("username");
-        return new UserSummary(rs.getString("username"),
-            rs.getString("full_name"),
-            rs.getString("address"));
-      }
-      else
-      {
-        return null;
+  @Override
+  public User findById(int id) throws SQLException {
+    String sql = "SELECT * FROM users WHERE user_id = ?";
+    try (Connection c = DBConnection.getConnection();
+        PreparedStatement ps = c.prepareStatement(sql)) {
+      ps.setInt(1, id);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          User u = new User(
+              rs.getString("username"),
+              rs.getString("full_name"),
+              rs.getString("email"),
+              rs.getString("hashed_pw"),
+              rs.getString("phone_number"),
+              rs.getString("address"),
+              rs.getString("avatar")    // if your constructor has an avatar arg
+          );
+          u.setUserId(rs.getInt("user_id"));   // ← set the ID
+          return u;
+        }
       }
     }
+    return null;
   }
 
-  @Override public List<User> findAll() throws SQLException
-  {
-    try (Connection c = DBConnection.getConnection())
-    {
-      PreparedStatement s = c.prepareStatement(
-          "SELECT * FROM users");
-      ResultSet rs = s.executeQuery();
-      List<User> users = new ArrayList<>();
-      while (rs.next())
-      {
-//        String userName = rs.getString("username");
-        users.add(new User(rs.getString("username"),
-            rs.getString("full_name"), rs.getString("email"),
-            rs.getString("hashed_pw"), rs.getString("phone_number"),
-            rs.getString("address")));
+
+  @Override
+  public List<User> findAll() throws SQLException {
+    List<User> users = new ArrayList<>();
+    String sql = "SELECT * FROM users";
+    try (Connection c = DBConnection.getConnection();
+        PreparedStatement ps = c.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery()) {
+      while (rs.next()) {
+        User u = new User(
+            rs.getString("username"),
+            rs.getString("full_name"),
+            rs.getString("email"),
+            rs.getString("hashed_pw"),
+            rs.getString("phone_number"),
+            rs.getString("address"),
+            rs.getString("avatar")
+        );
+        u.setUserId(rs.getInt("user_id"));  // ← set the ID
+        users.add(u);
       }
-      return users;
     }
+    return users;
   }
+
 
   @Override public void update(User u) throws SQLException
   {
@@ -142,31 +151,31 @@ public class JdbcUserDAO implements UserDAO
   }
 
 //TODO check this one again
-  @Override
-  public Optional<User> findByUserName(String username) throws SQLException
-  {
-    String sql = "SELECT * FROM users WHERE username = ?";
-
-    try (Connection c = DBConnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(sql))
-    {
-      ps.setString(1, username);
-      ResultSet rs = ps.executeQuery();
-      if (rs.next())
-      {
-        return Optional.of(
-            new User(rs.getString("username"), rs.getString("full_name"),
-                rs.getString("email"), rs.getString("hashed_pw"),
-                rs.getString("phone_number"), rs.getString("address")));
+@Override
+public Optional<User> findByUserName(String username) throws SQLException {
+  String sql = "SELECT * FROM users WHERE username = ?";
+  try (Connection c = DBConnection.getConnection();
+      PreparedStatement ps = c.prepareStatement(sql)) {
+    ps.setString(1, username);
+    try (ResultSet rs = ps.executeQuery()) {
+      if (rs.next()) {
+        User u = new User(
+            rs.getString("username"),
+            rs.getString("full_name"),
+            rs.getString("email"),
+            rs.getString("hashed_pw"),
+            rs.getString("phone_number"),
+            rs.getString("address"),
+            rs.getString("avatar")
+        );
+        u.setUserId(rs.getInt("user_id"));  // ← set the ID
+        return Optional.of(u);
       }
-
-      return Optional.of(
-          User.fromDb(rs.getInt("user_id"), rs.getString("username"),
-              rs.getString("full_name"), rs.getString("email"),
-              rs.getString("hashed_pw"), rs.getString("phone_number"),
-              rs.getString("address"), rs.getString("avatar")));
     }
   }
+  return Optional.empty();
+}
+
 
   @Override
   public void save(User u) throws SQLException

@@ -10,7 +10,7 @@ public interface UserDAO
 {
   User create (User newUser) throws
       SQLException;
-  UserSummary findById(int id) throws SQLException;
+  User findById(int id) throws SQLException;
   List<User> findAll() throws SQLException;
   void update(User u) throws SQLException;
   void delete(int id) throws SQLException;
