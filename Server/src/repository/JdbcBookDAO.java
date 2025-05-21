@@ -10,8 +10,6 @@ import util.DBConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class JdbcBookDAO implements BookDAO
 {
@@ -67,7 +65,7 @@ public class JdbcBookDAO implements BookDAO
       ps.setString(5, book.getIsbn());
       ps.setString(6, book.getFormat().name());
       ps.setString(7, book.getDescription());
-      ps.setString(8, book.getImagePath());
+      ps.setString(8, book.getImage());
       ps.setInt(9, book.getOwner().getUserId());
       // initial state is always Available
       ps.setString(10, dto.enums.BookStatus.AVAILABLE.name());
@@ -326,7 +324,7 @@ public class JdbcBookDAO implements BookDAO
       ps.setString(4, b.getIsbn());
       ps.setString(5, b.getFormat().name());
       ps.setString(6, b.getDescription());
-      ps.setString(7, b.getImagePath());
+      ps.setString(7, b.getImage());
       ps.setInt   (8, b.getOwner().getUserId());
       // assume you map your Status object back to the enum name:
       ps.setString(9, b.getStatus().getStatus().name());

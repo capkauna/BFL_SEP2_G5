@@ -162,7 +162,7 @@ public class User
 
   //TOD: make sure this only gets called after previous password was validated
 
-  public void updatePassword(String newPassword, String oldPassword) {
+  public void updatePassword(String oldPassword, String newPassword) {
     validateRawPassword(newPassword);  // validate the new password
 
     // if exist oldPassword, check if it is correct
@@ -177,7 +177,7 @@ public class User
 
   private void setPassword(String password)
   {
-    validateRawPassword(password); //this is not right
+    validateRawPassword(password);
     this.passwordHash = hashPassword(password);
   }
   public void changePassword(String oldPassword, String newPassword)

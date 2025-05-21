@@ -3,23 +3,20 @@ package model;
 import dto.enums.*;
 import model.status.*;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class Book
 {
-  private String title, author, isbn, description, imagePath;
+  private String title, author, isbn, description, image;
   private Genre genre;
   private User owner;
-  private User borrowedBy;
 
   private Status status;
   private Format format;
 
-  private Integer bookId;
+  private Integer bookId, year;
   //private static final AtomicInteger nextId = new AtomicInteger(1);
 
 
-  public Book(String title, String author, Genre genre, String isbn, Format format, String description, String imagePath, User owner)
+  public Book(String title, String author, Integer year, Genre genre, String isbn, Format format, String description, String imagePath, User owner)
   {
     validateTitle(title);
     validateAuthor(author);
@@ -27,33 +24,34 @@ public class Book
     validateOwner(owner);
     this.title = title;
     this.author = author;
+    this.year = year;
     this.genre = genre;
     this.isbn = isbn;
     this.format = format;
     this.description = description;
-    this.imagePath = imagePath;
+    this.image = imagePath;
     this.owner = owner;
     this.status = new Available();
     this.bookId = null; //will be set by the database
-    //this.bookId = nextId.getAndIncrement();
-    //this.borrowedBy = null;
+
   }
   // Constructor without imagePath
-  public Book(String title, String author, Genre genre, String isbn,
+  public Book(String title, String author, Integer year, Genre genre, String isbn,
       Format format, String description, User owner) {
-    this(title, author, genre, isbn, format, description, null, owner);
+    this(title, author, year, genre, isbn, format, description, null, owner);
   }
   //private constructor for “hydration” from the DB:
-  public Book(int bookId, String title, String author, Genre genre, String isbn,
+  public Book(int bookId, String title, String author,Integer year, Genre genre, String isbn,
       Format format, String description, String imagePath, User owner, Status status) {
     this.bookId = bookId;
     this.title = title;
     this.author = author;
+    this.year = year;
     this.genre = genre;
     this.isbn = isbn;
     this.format = format;
     this.description = description;
-    this.imagePath = imagePath;
+    this.image = imagePath;
     this.owner = owner;
     this.status = status;
   }
@@ -93,14 +91,7 @@ public class Book
       throw new IllegalArgumentException("Owner cannot be null");
     }
   }
-  //for state use
-  private void validateBorrower(User borrower)
-  {
-    if (borrower.equals(owner))
-    {
-      throw new IllegalArgumentException("Owner cannot borrow their own book");
-    }
-  }
+
 
 
   //getters
@@ -111,6 +102,10 @@ public class Book
   public String getAuthor()
   {
     return author;
+  }
+  public Integer getYear()
+  {
+    return year;
   }
   public String getIsbn()
   {
@@ -136,18 +131,15 @@ public class Book
   {
     return status;
   }
-  public String getImagePath()
+  public String getImage()
   {
-    return imagePath;
+    return image;
   }
   public int getBookId()
   {
     return bookId;
   }
-  public User getBorrowedBy()
-  {
-    return borrowedBy;
-  }
+
 //setters
   public void setTitle(String title)
   {
@@ -158,6 +150,10 @@ public class Book
   {
     validateAuthor(author);
     this.author = author;
+  }
+  public void setYear(Integer year)
+  {
+    this.year = year;
   }
   public void setIsbn(String isbn)
   {
@@ -185,21 +181,12 @@ public class Book
   {
     this.status = status;
   }
-  public void setImagePath(String imagePath)
+  public void setImage(String image)
   {
-    this.imagePath = imagePath;
+    this.image = image;
   }
-  public void setBorrowedBy(User borrowedBy)
-  {
-    validateBorrower(borrowedBy);
-    this.borrowedBy = borrowedBy;
-  }
-  public void removeBorrower()
-  {
-    this.borrowedBy = null;
-  }
+  //Optional setter so DAO can inject the generated id.
   public void setBookId(int bookId)
-      //Optional setter so DAO can inject the generated id.
   {
     this.bookId = bookId;
   }

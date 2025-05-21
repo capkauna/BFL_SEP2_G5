@@ -141,8 +141,8 @@ public class TestBook
   @Test
   public void testValidImagePath()
   {
-    testBook.setImagePath("valid/path/to/image.jpg");
-    assertEquals("valid/path/to/image.jpg", testBook.getImagePath());
+    testBook.setImage("valid/path/to/image.jpg");
+    assertEquals("valid/path/to/image.jpg", testBook.getImage());
   }
 
   // Test the owner
