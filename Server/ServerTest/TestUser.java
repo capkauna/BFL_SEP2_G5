@@ -108,6 +108,7 @@ public class TestUser
 
 
   //password tests
+
   @Test
   public void testShortPassword()
   {
