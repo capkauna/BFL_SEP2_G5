@@ -1,6 +1,6 @@
 package Server.model;
 
-
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
 public class User
@@ -13,8 +13,10 @@ public class User
   private String address;
   private String userAvatarPath;
 
-  private Integer userId;
-
+  private final int userId;
+  private static final AtomicInteger nextId = new AtomicInteger(1);
+  //adding id to account for the user being recognized even if they change their username
+  //AtomicInteger is thread-safe and allows for concurrent access to the id
 
   //quality of life
   private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"); //simplifies some logic
@@ -46,7 +48,7 @@ public class User
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.userAvatarPath = userAvatarPath;
-    this.userId = null; //will be set by the database
+    this.userId = nextId.getAndIncrement();
   }
 
   //constructor without userAvatarPath
@@ -76,7 +78,6 @@ public class User
 
   //VALIDATORS
 //TODO add check that username doesn't already exist in database
-// this should be done in the DAO
   private static void validateUserName(String userName)
   {
     if(userName == null || userName.contains(" ") ||userName.length() < MIN_USERNAME_LENGTH || userName.length() >= MAX_USERNAME_LENGTH)
@@ -162,20 +163,30 @@ public class User
 
   //TOD: make sure this only gets called after previous password was validated
 
+  public void updatePassword(String newPassword, String oldPassword) {
+    validateRawPassword(newPassword);  // validate the new password
 
-  private void setPassword(String password)
-  {
-    validateRawPassword(password);
-    this.passwordHash = hashPassword(password);
-  }
-  public void changePassword(String oldPassword, String newPassword)
-  {
-    if(!validatePassword(oldPassword))
-    {
+    // if exist oldPassword, check if it is correct
+    if (oldPassword != null && !validatePassword(oldPassword)) {
       throw new IllegalArgumentException("Old password is incorrect");
     }
-    setPassword(newPassword);
+    if (oldPassword != null && newPassword.equals(oldPassword)) {
+      throw new IllegalArgumentException("New password must be different from old password");
+    }
+    this.passwordHash = hashPassword(newPassword);
   }
+ private void setPassword (String password)
+  {
+    //validateRawPassword(password);
+    this.passwordHash = hashPassword(password);
+  }
+
+  // function to hash the password
+  private String hashPassword(String password) {
+    return Integer.toString(password.hashCode());
+  }
+
+
   public String getPhoneNumber()
   {
     return phoneNumber;
@@ -208,10 +219,7 @@ public class User
   }
 
   //Utilities
-  private String hashPassword(String p)
-  {
-    return Integer.toHexString(p.hashCode());
-  }
+
   public boolean validatePassword(String password) //method to check if the password is correct
   {
     return this.getPasswordHash().equals(hashPassword(password));
@@ -219,30 +227,16 @@ public class User
 
 //DATABASE integration
   /** factory to load a user record without re-hashing */
-  public static User fromDb(
-      int id,
+  public static User fromDb(int id,
       String userName,
       String fullName,
       String email,
       String passwordHash,
       String phoneNumber,
       String address,
-      String avatarPath
-  )
-  {
-    // Use the private constructor that takes an already‐hashed password:
-    User u = new User(id, userName, fullName, email,
-        passwordHash, phoneNumber, address, avatarPath);
-    return u;
+      String avatarPath) {
+    return new User(id, userName, fullName, email, passwordHash, phoneNumber, address, avatarPath);
   }
-  //Optional setter so DAO can inject the generated id.
-  public void setUserId(int id) {
-    if (this.userId != null) {
-      throw new IllegalStateException("ID already set");
-    }
-    this.userId = id;
-  }
-
 
 
   @Override

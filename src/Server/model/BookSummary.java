@@ -16,39 +16,4 @@ public class BookSummary
     this.genre = genre;
     this.status = status;
   }
-
-  public String getTitle()
-  {
-    return title;
-  }
-
-  public String getAuthor()
-  {
-    return author;
-  }
-
-  public String getOwnerName()
-  {
-    return ownerName;
-  }
-
-  public Format getFormat()
-  {
-    return format;
-  }
-
-  public Genre getGenre()
-  {
-    return genre;
-  }
-
-  public BookStatus getStatus()
-  {
-    return status;
-  }
-
-  public void setStatus(BookStatus status)
-  {
-    this.status = status;
-  }
 }

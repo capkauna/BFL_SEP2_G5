@@ -7,8 +7,7 @@ public class ImageServer
 {
   public static void main(String[] args) throws IOException
   {
-    //ServerSocket serverSocket = new ServerSocket(1234);
-    ServerSocket serverSocket = new ServerSocket();//temporary so I can test other things until the ServerSocket class is implemented
+    ServerSocket serverSocket = new ServerSocket(1234);
     System.out.println("processing picture");
 
     Socket clientSocket = serverSocket.accept();
