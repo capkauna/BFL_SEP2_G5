@@ -3,6 +3,9 @@ package model;
 import dto.enums.*;
 import model.status.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Book
 {
   private String title, author, isbn, description, image;
@@ -92,6 +95,11 @@ public class Book
     }
   }
 
+//TODO check if necessary in the end
+  private void validateUser(User user, String role) {
+    if (user == null)
+      throw new IllegalArgumentException(role + " cannot be null");
+  }
 
 
   //getters
@@ -190,7 +198,11 @@ public class Book
   {
     this.bookId = bookId;
   }
-
+  public void setUser(User user)
+  {
+    validateUser(user, "User");
+    //this.borrowedBy = user;
+  }
 
 
   //Status methods
