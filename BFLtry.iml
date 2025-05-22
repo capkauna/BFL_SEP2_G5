@@ -34,7 +34,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="Server" scope="TEST" />
     <orderEntry type="library" name="postgresql-42.7.5" level="project" />
   </component>
 </module>
