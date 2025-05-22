@@ -76,17 +76,17 @@ public class JdbcUserDAO implements UserDAO
       ps.setInt(1, id);
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
-          User u = new User(
+          User u = User.fromDb(
+              rs.getInt("user_id"),
               rs.getString("username"),
               rs.getString("full_name"),
               rs.getString("email"),
               rs.getString("hashed_pw"),
               rs.getString("phone_number"),
               rs.getString("address"),
-              rs.getString("avatar")    // if your constructor has an avatar arg
+              rs.getString("avatar")
           );
-          u.setUserId(rs.getInt("user_id"));   // ← set the ID
-          return u;
+         return u;
         }
       }
     }
@@ -102,7 +102,8 @@ public class JdbcUserDAO implements UserDAO
         PreparedStatement ps = c.prepareStatement(sql);
         ResultSet rs = ps.executeQuery()) {
       while (rs.next()) {
-        User u = new User(
+        User u = User.fromDb(
+            rs.getInt("user_id"),
             rs.getString("username"),
             rs.getString("full_name"),
             rs.getString("email"),
@@ -111,7 +112,6 @@ public class JdbcUserDAO implements UserDAO
             rs.getString("address"),
             rs.getString("avatar")
         );
-        u.setUserId(rs.getInt("user_id"));  // ← set the ID
         users.add(u);
       }
     }
