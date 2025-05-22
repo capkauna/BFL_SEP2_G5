@@ -1,4 +1,4 @@
-import repository.JdbcUserDAO;
+import repository.*;
 import util.DBConnection;
 
 import java.sql.Connection;
@@ -8,7 +8,8 @@ import java.sql.SQLException;
 public class ConnectToDatabase {
 
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException
+  {
 
     String createTableSQL = """
     CREATE TABLE IF NOT EXISTS books (
@@ -20,7 +21,7 @@ public class ConnectToDatabase {
                             format VARCHAR(50),
                             description TEXT,
                             image TEXT,
-                            owner VARCHAR(300),
+                            owner_id INTEGER NOT NULL REFERENCES users(user_id),
                             status VARCHAR(50),
                             year INTEGER
                         );
@@ -97,5 +98,4 @@ public class ConnectToDatabase {
     }
   }
 
-  //public JdbcUserDAO.create("username1", "John Doe", "john@doe.com", "1524", "1234567890", "123 Main St");
 }

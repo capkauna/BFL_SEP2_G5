@@ -2,7 +2,7 @@ package repository;
 
 import model.User;
 import repository.UserDAO;
-import repository.UserDAOImpl;
+import repository.JdbcUserDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -37,7 +37,7 @@ public class Main {
       System.out.println("Table user created or already exist.");
 
 
-      UserDAO userDAO = new UserDAOImpl(conn);
+      UserDAO userDAO = new JdbcUserDAO();
 
       User newUser = new User(
           "Kamir2020",
