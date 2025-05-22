@@ -2,11 +2,11 @@ package Client.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import Client.viewmodel.LogInVM;
-
-import java.awt.*;
-
 
 
 public class LoginController
@@ -15,7 +15,7 @@ public class LoginController
   @FXML private PasswordField passwordField;
   @FXML private Button loginButton;
   @FXML private Button cancelButton;
-  @FXML private javafx.scene.control.Label errorLabel;
+  @FXML private Label errorLabel;
 
   private LogInVM viewModel;
 
@@ -34,6 +34,7 @@ public class LoginController
       // Show error message
       errorLabel.setText("Please enter both username and password.");
       System.out.println("Please enter both username and password.");
+      errorLabel.setVisible(true);
       return;
     }
     //TODO: Validate username and password

@@ -157,7 +157,8 @@ public Optional<User> findByUserName(String username) throws SQLException {
     ps.setString(1, username);
     try (ResultSet rs = ps.executeQuery()) {
       if (rs.next()) {
-        User u = new User(
+        User u = User.fromDb(
+            rs.getInt("user_id"),
             rs.getString("username"),
             rs.getString("full_name"),
             rs.getString("email"),
@@ -166,7 +167,7 @@ public Optional<User> findByUserName(String username) throws SQLException {
             rs.getString("address"),
             rs.getString("avatar")
         );
-        u.setUserId(rs.getInt("user_id"));  // ← set the ID
+
         return Optional.of(u);
       }
     }

@@ -12,7 +12,7 @@ public class ClientMain extends Application
   @Override
   public void start(Stage primaryStage) throws Exception {
     // load FXML
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Client/view/LoginView.fxml"));
     Parent root = loader.load();
     // get controller and inject VM
     LoginController controller = loader.getController();
