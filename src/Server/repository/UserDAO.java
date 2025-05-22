@@ -17,4 +17,5 @@ public interface UserDAO
 
   Optional<User> findByUserName(String username);
   void save(User u);
+  User create(User user1);
 }

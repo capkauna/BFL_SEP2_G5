@@ -34,4 +34,5 @@ public interface BookDAO
 
   //Delete
   void delete(int id) throws SQLException;
+  Book create(Book book1);
 }

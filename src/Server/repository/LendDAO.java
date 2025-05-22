@@ -1,7 +1,6 @@
-package repository;
+package Server.repository;
 
 import model.Lend;
-import model.User;
 
 import java.sql.SQLException;
 import java.util.List;

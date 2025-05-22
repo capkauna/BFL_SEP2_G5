@@ -1,7 +1,7 @@
-package repository;
+package Server.repository;
 
 import model.Lend;
-import repository.LendDAO;
+
 
 import java.sql.*;
 import java.time.LocalDate;
