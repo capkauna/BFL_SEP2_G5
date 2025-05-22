@@ -1,6 +1,6 @@
 package Server.model.status;
 
-import dto.enums.BookStatus;
+import Shared.dto.enums.BookStatus;
 import Server.model.*;
 
 public interface Status

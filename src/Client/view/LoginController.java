@@ -11,11 +11,11 @@ import java.awt.*;
 
 public class LoginController
 {
-  private TextField usernameField;
-  private PasswordField passwordField;
-  private Button loginButton;
-  private Button cancelButton;
-  private javafx.scene.control.Label errorLabel;
+  @FXML private TextField usernameField;
+  @FXML private PasswordField passwordField;
+  @FXML private Button loginButton;
+  @FXML private Button cancelButton;
+  @FXML private javafx.scene.control.Label errorLabel;
 
   private LogInVM viewModel;
 
@@ -44,6 +44,7 @@ public class LoginController
     System.out.println("Logging in with username: " + username + " and password: " + password);
   }
 
+  @FXML
   public void onCancelClicked(ActionEvent actionEvent)
   {
     // Close the application or go back to the previous screen
