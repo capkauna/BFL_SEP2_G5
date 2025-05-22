@@ -1,8 +1,6 @@
 package repository;
 
 import model.User;
-import repository.UserDAO;
-import repository.UserDAOImpl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -50,7 +48,7 @@ public class Main {
       );
 
       userDAO.save(newUser);
-      System.out.println("✅ User is in db!");
+      System.out.println("✅ model.User is in db!");
 
     } catch (SQLException e) {
       System.err.println("Error in work with DB" + e.getMessage());

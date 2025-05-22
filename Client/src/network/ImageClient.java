@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class ImageClient
+/*public class ImageClient
 {
   public static void main(String[] args) throws IOException {
     Socket socket = new Socket("localhost" , 1234);
@@ -26,3 +26,4 @@ public class ImageClient
   }
 
 }
+*/

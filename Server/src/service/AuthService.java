@@ -13,7 +13,7 @@ public class AuthService {
     this.userDao = userDao;
   }
 
-  /** Returns the authenticated User, or empty if credentials are invalid */
+  /** Returns the authenticated model.User, or empty if credentials are invalid */
   public Optional<User> login(String username, String rawPassword)
       throws SQLException
   {

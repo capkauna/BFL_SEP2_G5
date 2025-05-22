@@ -23,7 +23,7 @@ public class TestBook
         "password123", "0987654321", "456 Test St");
     testBook = new Book("Test Title", "Test Author", 52, Genre.FICTION, "1234567890123", Format.HARDCOVER, "Test Description", "test/path/to/image.jpg", owner);
      available = new Available();
-   //  borrowed = new Borrowed(User u);
+   //  borrowed = new Borrowed(model.User u);
      unavailable = new Unavailable();
   }
 
@@ -185,7 +185,7 @@ public class TestBook
 //  @Test
 //  public void testValidBorrowedBy()
 //  {
-//    User borrower1 = new User("testBorrower", "John Doe", "john@doe.com",
+//    model.User borrower1 = new model.User("testBorrower", "John Doe", "john@doe.com",
 //        "password123", "0987654321", "456 Test St");
 //    testBook.setBorrowedBy(borrower1);
 //    assertEquals(borrower1, testBook.getBorrowedBy());

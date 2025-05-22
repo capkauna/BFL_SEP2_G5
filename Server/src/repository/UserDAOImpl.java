@@ -1,7 +1,6 @@
 package repository;
 
 import model.User;
-import model.UserSummary;
 
 import java.sql.*;
 import java.util.List;
@@ -14,7 +13,7 @@ public class UserDAOImpl implements UserDAO {
     this.conn = conn;
   }
 
-  @Override public User create(User newUser) throws SQLException
+  @Override public User create(model.User newUser) throws SQLException
   {
     return null;
   }
@@ -29,7 +28,7 @@ public class UserDAOImpl implements UserDAO {
     return List.of();
   }
 
-  @Override public void update(User u) throws SQLException
+  @Override public void update(model.User u) throws SQLException
   {
 
   }
@@ -40,13 +39,13 @@ public class UserDAOImpl implements UserDAO {
   }
 
   @Override
-  public Optional<User> findByUserName(String username) {
+  public Optional<model.User> findByUserName(String username) {
     String sql = "SELECT * FROM users WHERE username = ?";
     try (PreparedStatement stmt = conn.prepareStatement(sql)) {
       stmt.setString(1, username);
       ResultSet rs = stmt.executeQuery();
       if (rs.next()) {
-        User user = User.fromDb(
+        model.User user = User.fromDb(
             rs.getInt("user_id"),
             rs.getString("username"),
             rs.getString("full_name"),
@@ -65,7 +64,7 @@ public class UserDAOImpl implements UserDAO {
   }
 
   @Override
-  public void save(User user) {
+  public void save(model.User user) {
     String sql = """
             INSERT INTO users\s
             (username, hashed_pw, full_name, email, phone_number, address, avatar_path)
@@ -86,7 +85,7 @@ public class UserDAOImpl implements UserDAO {
       ResultSet keys = stmt.getGeneratedKeys();
       if (keys.next()) {
         int idFromDb = keys.getInt(1);
-        System.out.println("User saved with ID: " + idFromDb);
+        System.out.println("model.User saved with ID: " + idFromDb);
           }
 
     } catch (SQLException e) {

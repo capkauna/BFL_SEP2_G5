@@ -1,5 +1,4 @@
 import model.User;
-import repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,7 @@ public class TestUserDAO
   @Test
   public void testUserDAOConstructor() throws SQLException
   {
-    User newUser = new User ("Lola", "Lola Bunny", "lola@bunny.lt", "1111", "0987654321", "Bunny Street 21");
+    User newUser = new User("Lola", "Lola Bunny", "lola@bunny.lt", "1111", "0987654321", "Bunny Street 21");
     //wip
   }
 

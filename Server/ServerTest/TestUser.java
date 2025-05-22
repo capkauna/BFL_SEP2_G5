@@ -19,7 +19,7 @@ public class TestUser
   @Test
   public void testUserConstructor()
   {
-    User user = new User("testUser", "Test User", "user@email.com", "0000", "1234567890", "123 Test St");
+    User user = new User("testUser", "Test model.User", "user@email.com", "0000", "1234567890", "123 Test St");
     assertEquals ("testUser", user.getUserName());
   }
 

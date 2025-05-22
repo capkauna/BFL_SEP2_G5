@@ -1,6 +1,5 @@
 package model;
 
-
 import java.util.regex.Pattern;
 
 public class User
@@ -248,7 +247,7 @@ public class User
   @Override
   public String toString()
   {
-    return "User{" +
+    return "model.User{" +
             "userName='" + getUserName() + '\'' +
             ", name='" + getFullName() + '\'' +
             ", email='" + getEmail() + '\''  +

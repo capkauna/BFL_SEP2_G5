@@ -11,7 +11,7 @@ public class Borrowed implements Status
     this.borrower = borrower;
   }
 
-  @Override public void lendTo(Book b,User u)
+  @Override public void lendTo(Book b, User u)
   {
     throw new UnsupportedOperationException("Book is already borrowed");
   }

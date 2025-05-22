@@ -3,9 +3,6 @@ package model;
 import dto.enums.*;
 import model.status.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Book
 {
   private String title, author, isbn, description, image;
@@ -200,7 +197,7 @@ public class Book
   }
   public void setUser(User user)
   {
-    validateUser(user, "User");
+    validateUser(user, "model.User");
     //this.borrowedBy = user;
   }
 

@@ -2,8 +2,6 @@ package dummydata;
 
 import repository.*;
 import model.*;
-import model.status.*;
-import util.DBConnection;
 import dto.enums.*;
 
 import java.sql.*;

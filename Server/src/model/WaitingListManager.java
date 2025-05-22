@@ -12,7 +12,7 @@ public class WaitingListManager {
     boolean alreadyExists = list.stream().anyMatch(e -> e.getUser().equals(user)); // Check if the user is already on the waiting list
 
     if (alreadyExists) {
-      throw new IllegalArgumentException("User is already on the waiting list.");
+      throw new IllegalArgumentException("model.User is already on the waiting list.");
     }
 
     list.add(new WaitingList(user));

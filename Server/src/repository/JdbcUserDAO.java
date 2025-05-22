@@ -1,18 +1,15 @@
 package repository;
 
-import model.*;
 import util.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class JdbcUserDAO implements UserDAO
 {
-  //private final Map<String, User> users = new ConcurrentHashMap<>();
+  //private final Map<String, model.User> users = new ConcurrentHashMap<>();
   private static JdbcUserDAO instance; // Singleton instance, might opt out, not sure yet
 
 
@@ -39,7 +36,7 @@ public class JdbcUserDAO implements UserDAO
 
 
 
-//changed the create method to use the new User object and let most validation checks in the User class
+//changed the create method to use the new model.User object and let most validation checks in the model.User class
   @Override public User create(User newUser) throws SQLException {
      String INSERT_SQL =
         "INSERT INTO users (username, full_name, email, hashed_pw, phone_number, address, avatar) " +
