@@ -14,7 +14,7 @@ public class JdbcUserDAO implements UserDAO
   private static JdbcUserDAO instance; // Singleton instance, might opt out, not sure yet
 
 
-  JdbcUserDAO() throws SQLException
+  public JdbcUserDAO() throws SQLException
   {
     DriverManager.registerDriver(new org.postgresql.Driver());
   }
