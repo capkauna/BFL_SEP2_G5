@@ -1,4 +1,4 @@
-package viewmodel;
+package Client.viewmodel;
 
 import javafx.scene.control.Label;
 
