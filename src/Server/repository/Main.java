@@ -35,7 +35,7 @@ public class Main {
       System.out.println("Table user created or already exist.");
 
 
-      UserDAO userDAO = new UserDAOImpl(conn);
+      UserDAO userDAO = new JdbcUserDAO();
 
       User newUser = new User(
           "Kamir2020",

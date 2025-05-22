@@ -2,6 +2,8 @@ package Server.dummydata;
 
 import Server.repository.*;
 import Server.model.*;
+import Shared.dto.enums.Format;
+import Shared.dto.enums.Genre;
 
 import java.sql.*;
 import java.util.List;

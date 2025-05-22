@@ -1,7 +1,7 @@
 package Server.repository;
 
-import dto.enums.Format;
-import dto.enums.Genre;
+import Shared.dto.enums.Format;
+import Shared.dto.enums.Genre;
 import Server.model.Book;
 import Server.model.User;
 import Server.model.status.Status;

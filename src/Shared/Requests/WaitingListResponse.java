@@ -1,7 +1,7 @@
 package Shared.Requests;
 //import Server.model.*;
 
-import dto.WaitingListEntryDTO;
+import Shared.dto.WaitingListEntryDTO;
 
 import java.io.Serializable;
 

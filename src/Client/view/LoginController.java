@@ -3,7 +3,7 @@ package Client.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
-import viewmodel.LogInVM;
+import Client.viewmodel.LogInVM;
 
 import java.awt.*;
 

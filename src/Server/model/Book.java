@@ -1,6 +1,8 @@
 package Server.model;
 
 import Server.model.status.*;
+import Shared.dto.enums.Format;
+import Shared.dto.enums.Genre;
 
 public class Book
 {
