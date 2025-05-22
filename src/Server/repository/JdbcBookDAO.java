@@ -195,7 +195,7 @@ public abstract class JdbcBookDAO implements BookDAO {
     return books;
   }
   @Override
-  public List<Book> findByOwner(User owner) throws SQLException {
+  public List<Book> findByOwner(model.User owner) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
@@ -237,7 +237,7 @@ public abstract class JdbcBookDAO implements BookDAO {
     return books;
   }
   @Override
-  public List<Book> findByBorrowedBy(User borrowedBy) throws SQLException {
+  public List<Book> findByBorrowedBy(model.User borrowedBy) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
@@ -357,7 +357,7 @@ public abstract class JdbcBookDAO implements BookDAO {
         owner);
   }
 
-  private Status parseStatus(String raw, User owner) {
+  private Status parseStatus(String raw, model.User owner) {
     if (raw.startsWith("Borrowed by ")) {
       // borrower name part ignored here; real impl would lookup borrower
       return new Borrowed(owner);
