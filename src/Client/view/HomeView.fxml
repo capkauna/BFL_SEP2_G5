@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--UI thingy and starter page-->
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.HomeViewController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <BorderPane>
+    <top>
+        <Label text="Best Friend Library"
+               style="-fx-font-size: 24px, -fx-background-color: lightblue; -fx-padding: 10;"
+               BorderPane.alignment="CENTER"/>
+    </top>
+    <center>
+        <VBox spacing="20" alignment="CENTER" style="-fx-background-color: #990000; -fx-padding: 40;">
+        <HBox spacing="30" alignment="CENTER">
+                <Button text="My Library" onAction="#onMyLibrary"/>
+                <Button text="My Account" onAction="#onMyAccount"/>
+        </HBox>
+        <Label text="Notifications (log)" style="-fx-background-color: lightgray; -fx-padding: 30;"/>
+        <HBox spacing="30" alignment="CENTER">
+            <Button text="Find Book" onAction="#onFindBook"/>
+            <Button text="Find model.User" onAction="#onFindUser"/>
+        </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>
+</AnchorPane>
+
+
