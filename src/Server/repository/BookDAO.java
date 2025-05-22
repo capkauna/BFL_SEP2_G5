@@ -17,7 +17,7 @@ public interface BookDAO
 
   //Read
   BookSummary findById(int id) throws SQLException;
-  List<BookSummary> findAll() throws SQLException;
+  List<Book> findAll() throws SQLException;
   List<BookSummary> findByTitle(String title) throws SQLException;
   List<BookSummary> findByIsbn(String isbn)throws SQLException;
   List<BookSummary> findByAuthor(String author)throws SQLException;

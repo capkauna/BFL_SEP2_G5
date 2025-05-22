@@ -13,7 +13,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcBookDAO implements BookDAO {
+public abstract class JdbcBookDAO implements BookDAO {
   private static JdbcBookDAO instance;
   private final UserDAO userDao;
 
@@ -24,7 +24,15 @@ public class JdbcBookDAO implements BookDAO {
 
   public static JdbcBookDAO getInstance() throws SQLException {
     if (instance == null) {
-      instance = new JdbcBookDAO();
+      instance = new JdbcBookDAO()
+      {
+        @Override public Book create(String title, String author, Server.repository.Genre genre,
+            String isbn, Format format, String description, String imagePath,
+            User owner) throws SQLException
+        {
+          return null;
+        }
+      };
     }
     return instance;
   }
