@@ -162,18 +162,6 @@ public class User
 
   //TOD: make sure this only gets called after previous password was validated
 
-  public void updatePassword(String oldPassword, String newPassword) {
-    validateRawPassword(newPassword);  // validate the new password
-
-    // if exist oldPassword, check if it is correct
-    if (oldPassword != null && !validatePassword(oldPassword)) {
-      throw new IllegalArgumentException("Old password is incorrect");
-    }
-    if (oldPassword != null && newPassword.equals(oldPassword)) {
-      throw new IllegalArgumentException("New password must be different from old password");
-    }
-    this.passwordHash = hashPassword(newPassword);
-  }
 
   private void setPassword(String password)
   {
