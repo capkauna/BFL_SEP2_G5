@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public class JdbcUserDAO implements UserDAO
 {
-
-  private static JdbcUserDAO instance;
+  //private final Map<String, User> users = new ConcurrentHashMap<>();
+  private static JdbcUserDAO instance; // Singleton instance, might opt out, not sure yet
 
 
   public JdbcUserDAO() throws SQLException
@@ -32,7 +32,7 @@ public class JdbcUserDAO implements UserDAO
 //  private static Connection getConnection() throws SQLException
 //  {
 //    return DriverManager.getConnection(
-//        "jdbc:postgresql://localhost:5432/postgres/bestfriendslibrary" + ", "postgres", "password");
+//        "jdbc:postgresql://localhost:5432/postgres/bfl", "postgres", "password");
 //  }
 
 
@@ -41,7 +41,7 @@ public class JdbcUserDAO implements UserDAO
   @Override public User create(User newUser) throws SQLException {
      String INSERT_SQL =
         "INSERT INTO users (username, full_name, email, hashed_pw, phone_number, address, avatar) " +
-            "VALUES        (       ?,         ?,     ?,         ?,            ?,       ?,     ?)";
+            "VALUES (?, ?, ?, ?, ?, ?, ?)";
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(
             INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {

@@ -40,7 +40,7 @@ public class WaitingListService
     {
       User user = userRepository.findById(entry.getUserId());
       Book book = bookRepository.findById(entry.getBookId());
-      waitingList.add(new WaitingListEntry(entry.getEntryId(), user, book, entry.getAddedAt());
+      waitingList.add(new WaitingListEntry(entry.getEntryId(), user, book, entry.getAddedAt()));
     }
 
     return waitingList;

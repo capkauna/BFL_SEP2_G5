@@ -12,27 +12,26 @@ public interface BookDAO
 {
 
   //Create
-  Book create (String title, String author, Genre genre, String isbn, Format format, String description, String imagePath, User owner) throws
+  Book create (Book newBook) throws
       SQLException;
 
   //Read
-  BookSummary findById(int id) throws SQLException;
+  Book findById(int id) throws SQLException;
   List<Book> findAll() throws SQLException;
-  List<BookSummary> findByTitle(String title) throws SQLException;
-  List<BookSummary> findByIsbn(String isbn)throws SQLException;
-  List<BookSummary> findByAuthor(String author)throws SQLException;
-  List<BookSummary> findByGenre(Genre genre)throws SQLException;
-  List<BookSummary>findByFormat(Format format)throws SQLException;
-  List<BookSummary> findByOwner(User owner)throws SQLException;
-  List<BookSummary>findByStatus(Status status)throws SQLException;
-  List<BookSummary> findByBorrowedBy(User borrowedBy)throws SQLException;
+  List<Book> findByTitle(String title) throws SQLException;
+  List<Book> findByIsbn(String isbn)throws SQLException;
+  List<Book> findByAuthor(String author)throws SQLException;
+  List<Book> findByGenre(Genre genre)throws SQLException;
+  List<Book>findByFormat(Format format)throws SQLException;
+  List<Book> findByOwner(User owner)throws SQLException;
+  List<Book>findByStatus(Status status)throws SQLException;
+  List<Book> findByBorrowedBy(User borrowedBy)throws SQLException;
 
 
   //Update
-  void save(Book b);
+  void save(Book b ) throws SQLException;
   void update(Book b) throws SQLException;
 
   //Delete
   void delete(int id) throws SQLException;
-  Book create(Book book1);
 }

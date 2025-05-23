@@ -1,9 +1,9 @@
 package viewmodel;
 
-import model.Book;
-import repository.BookDAO;
-import util.Session;
-import view.ViewHandler;
+import Server.model.Book;
+import Server.repository.BookDAO;
+import Client.view.ViewHandler;
+import Shared.util.Session;
 
 import java.sql.SQLException;
 import java.util.List;

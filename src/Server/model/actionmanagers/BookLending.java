@@ -21,7 +21,7 @@ public class BookLending
     this.u = u;
     this.startDate = LocalDate.now().toString();
     this.endDate = null;
-    this.status = (Status) new Borrowed();
+    this.status = (Status) new Borrowed(u);
   }
 
   public void setEndDate()

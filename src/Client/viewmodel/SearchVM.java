@@ -1,7 +1,8 @@
-package viewmodel;
+package Client.viewmodel;
 
-import model.Book;
-import repository.BookDAO;
+import Server.repository.JdbcBookDAO;
+import Server.model.Book;
+import Server.repository.BookDAO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,7 +14,7 @@ public class SearchVM
 {
   private final BookDAO dao;
 
-  public SearchVM(BookDAO dao) {
+  public SearchVM(JdbcBookDAO dao) {
     this.dao = dao;
   }
 
