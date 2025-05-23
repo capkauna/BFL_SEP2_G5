@@ -79,12 +79,13 @@ public class ConnectToDatabase {
                                   added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
            );
         
-           CREATE TABLE read (
-                                 record_id SERIAL PRIMARY KEY ,
-                                 user_id INTEGER REFERENCES users(user_id),
-                                 book_id INTEGER REFERENCES books(book_id),
-                                 comment text
-           );
+          CREATE TABLE read (
+                    record_id SERIAL PRIMARY KEY,
+                    user_id INTEGER REFERENCES users(user_id),
+                    book_id INTEGER REFERENCES books(book_id),
+                    is_read BOOLEAN NOT NULL DEFAULT FALSE,
+                    comment TEXT
+                  );
 """;
     try {
 
