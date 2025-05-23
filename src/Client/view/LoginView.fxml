@@ -11,7 +11,7 @@
             <children>
                 <ImageView fx:id="logo" fitHeight="150" fitWidth="200" layoutX="224" layoutY="35" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../img/logo_mockup.png" />
+                        <Image url="img/logo_mockup.png" />
                     </image>
                 </ImageView>
 
