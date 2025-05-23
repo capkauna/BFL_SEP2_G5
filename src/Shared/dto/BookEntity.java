@@ -1,4 +1,4 @@
-package Server.model;
+package Shared.dto;
 
 public class BookEntity
 {
