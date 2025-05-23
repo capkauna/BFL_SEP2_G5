@@ -1,5 +1,9 @@
 package Server.model;
 
+import Shared.dto.enums.BookStatus;
+import Shared.dto.enums.Format;
+import Shared.dto.enums.Genre;
+
 public class BookSummary
 {
   private final String title, author, ownerName;

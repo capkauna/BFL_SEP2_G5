@@ -1,6 +1,6 @@
-package repository;
+package Server.repository;
 
-import Shared.dto.enums.Format;
+import dto.enums.Format;
 import dto.enums.Genre;
 import Server.model.*;
 import Server.model.status.Status;
@@ -8,13 +8,11 @@ import Server.model.status.Status;
 import java.sql.SQLException;
 import java.util.List;
 
-import static sun.net.www.protocol.http.AuthCacheValue.Type.Server;
-
 public interface BookDAO
 {
 
   //Create
-  Server.model.Book create (String title, String author, Genre genre, String isbn, Format format, String description, String imagePath, User owner) throws
+  Book create (String title, String author, Genre genre, String isbn, Format format, String description, String imagePath, User owner) throws
       SQLException;
 
   //Read

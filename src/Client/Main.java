@@ -1,12 +1,17 @@
+package Client;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.ViewHandler;
-import viewmodel.ViewModelFactory;
+import Client.view.ViewHandler;
+import Client.viewmodel.ViewModelFactory;
+
+import java.sql.SQLException;
 
 public class Main extends Application {
 
   @Override
-  public void start(Stage primaryStage) {
+  public void start(Stage primaryStage) throws SQLException
+  {
     ViewModelFactory vmf = new ViewModelFactory();
     ViewHandler vh = new ViewHandler(vmf);
     vh.start(primaryStage);

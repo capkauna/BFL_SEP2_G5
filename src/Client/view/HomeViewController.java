@@ -1,7 +1,7 @@
-package view;
+package Client.view;
 
 import javafx.fxml.FXML;
-import viewmodel.HomeVM;
+import Client.viewmodel.HomeVM;
 
 public class HomeViewController
 {

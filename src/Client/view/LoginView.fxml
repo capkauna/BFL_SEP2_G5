@@ -4,20 +4,50 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="User Log in" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.LoginController">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="278.0" prefWidth="598.0">
-         <children>
-            <ImageView id="logo" fitHeight="150.0" fitWidth="200.0" layoutX="224.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../localData/img/logo_mockup.png" />
-               </image>
-            </ImageView>
-            <TextField id="usernameField" layoutX="123.0" layoutY="208.0" prefHeight="26.0" prefWidth="351.0" promptText="username" />
-            <PasswordField id="passwordField" layoutX="123.0" layoutY="258.0" prefHeight="26.0" prefWidth="352.0" promptText="password" />
-            <Button id="loginButton"  onAction="#onLoginClicked" layoutX="216.0" layoutY="313.0" mnemonicParsing="false" text="Log in" />
-            <Button id="cancelButton" onAction = "#onCancelClicked" layoutX="330.0" layoutY="313.0" mnemonicParsing="false" text="Cancel" />
-            <Label id="errorLabel" layoutX="123.0" layoutY="350.0" textFill="#805c69" visible="false" />
-         </children></AnchorPane>
-  </content>
+<TitledPane text="User Log in"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Client.view.LoginController"
+            prefWidth="600" prefHeight="400"
+            animated="false">
+
+    <content>
+        <AnchorPane prefWidth="598" prefHeight="278">
+            <children>
+                <ImageView fx:id="logo"
+                           layoutX="224" layoutY="35"
+                           fitWidth="200" fitHeight="150"
+                           pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../data/images/app/logo_mockup.png"/>
+                    </image>
+                </ImageView>
+
+                <TextField fx:id="usernameField"
+                           layoutX="123" layoutY="208"
+                           prefWidth="351"
+                           promptText="username"/>
+
+                <PasswordField fx:id="passwordField"
+                               layoutX="123" layoutY="258"
+                               prefWidth="352"
+                               promptText="password"/>
+
+                <Button fx:id="loginButton"
+                        text="Log in"
+                        layoutX="216" layoutY="313"
+                        onAction="#onLoginClicked"/>
+
+                <Button fx:id="cancelButton"
+                        text="Cancel"
+                        layoutX="330" layoutY="313"
+                        onAction="#onCancelClicked"/>
+
+                <Label fx:id="errorLabel"
+                       layoutX="123" layoutY="350"
+                       textFill="#805c69"
+                       visible="false"/>
+            </children>
+        </AnchorPane>
+    </content>
 </TitledPane>

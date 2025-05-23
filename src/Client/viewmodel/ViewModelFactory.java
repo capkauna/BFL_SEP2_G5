@@ -1,8 +1,13 @@
-package viewmodel;
+package Client.viewmodel;
 
-import repository.JdbcBookDAO;
-import view.ViewHandler;
+import Server.repository.JdbcBookDAO;
+import Client.view.ViewHandler;
+import viewmodel.MyLibraryVM;
+import Client.viewmodel.SearchVM;
+import Client.viewmodel.HomeVM;
 
+
+import java.sql.SQLException;
 
 public class ViewModelFactory
 {
@@ -10,13 +15,14 @@ public class ViewModelFactory
   private final SearchVM searchVM;
   private final MyLibraryVM myLibraryVM;
 
-  public ViewModelFactory() {
+  public ViewModelFactory() throws SQLException
+  {
     //here is what is depeneded on what
     this.homeVM = new HomeVM(new ViewHandler(this));
     this.searchVM = new SearchVM(JdbcBookDAO.getInstance()); //connects to DAO
     this.myLibraryVM = new MyLibraryVM(JdbcBookDAO.getInstance(), new ViewHandler(this));
   }
-  public HomeVM getHomeVM() {
+  public Client.viewmodel.HomeVM getHomeVM() {
     return homeVM;
   }
 

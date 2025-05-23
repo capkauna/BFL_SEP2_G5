@@ -1,6 +1,6 @@
-package viewmodel;
+package Client.viewmodel;
 
-import view.ViewHandler;
+import Client.view.ViewHandler;
 
 public class HomeVM
 {

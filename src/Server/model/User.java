@@ -1,6 +1,6 @@
 package Server.model;
 
-import java.util.concurrent.atomic.AtomicInteger;
+
 import java.util.regex.Pattern;
 
 public class User
@@ -11,12 +11,10 @@ public class User
   private String passwordHash; //security
   private String phoneNumber;
   private String address;
-  private String userAvatarPath;
+  private String avatar;//address for image
 
-  private final int userId;
-  private static final AtomicInteger nextId = new AtomicInteger(1);
-  //adding id to account for the user being recognized even if they change their username
-  //AtomicInteger is thread-safe and allows for concurrent access to the id
+  private Integer userId;
+
 
   //quality of life
   private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"); //simplifies some logic
@@ -29,7 +27,7 @@ public class User
   private static final int MIN_PHONE_NUMBER_LENGTH = 8;
 
 //constructors
-  public User(String userName, String fullName, String email, String initialPassword, String phoneNumber, String address, String userAvatarPath)
+  public User(String userName, String fullName, String email, String initialPassword, String phoneNumber, String address, String avatar)
   {
     validateUserName(userName);
     validateFullName(fullName);
@@ -37,9 +35,6 @@ public class User
     validateRawPassword(initialPassword);
     validatePhoneNumber(phoneNumber);
     validateAddress(address);
-    if (userAvatarPath != null && userAvatarPath.isEmpty()) {
-      throw new IllegalArgumentException("Avatar path, if provided, cannot be empty");
-    }
 
     this.userName = userName;
     this.fullName = fullName;
@@ -47,8 +42,8 @@ public class User
     this.passwordHash = hashPassword(initialPassword);
     this.phoneNumber = phoneNumber;
     this.address = address;
-    this.userAvatarPath = userAvatarPath;
-    this.userId = nextId.getAndIncrement();
+    this.avatar = avatar;
+    this.userId = null; //will be set by the database
   }
 
   //constructor without userAvatarPath
@@ -73,11 +68,12 @@ public class User
     this.passwordHash   = passwordHash;
     this.phoneNumber    = phoneNumber;
     this.address        = address;
-    this.userAvatarPath = avatarPath;
+    this.avatar = avatarPath;
   }
 
   //VALIDATORS
 //TODO add check that username doesn't already exist in database
+// this should be done in the DAO
   private static void validateUserName(String userName)
   {
     if(userName == null || userName.contains(" ") ||userName.length() < MIN_USERNAME_LENGTH || userName.length() >= MAX_USERNAME_LENGTH)
@@ -163,30 +159,20 @@ public class User
 
   //TOD: make sure this only gets called after previous password was validated
 
-  public void updatePassword(String newPassword, String oldPassword) {
-    validateRawPassword(newPassword);  // validate the new password
 
-    // if exist oldPassword, check if it is correct
-    if (oldPassword != null && !validatePassword(oldPassword)) {
-      throw new IllegalArgumentException("Old password is incorrect");
-    }
-    if (oldPassword != null && newPassword.equals(oldPassword)) {
-      throw new IllegalArgumentException("New password must be different from old password");
-    }
-    this.passwordHash = hashPassword(newPassword);
-  }
- private void setPassword (String password)
+  private void setPassword(String password)
   {
-    //validateRawPassword(password);
+    validateRawPassword(password);
     this.passwordHash = hashPassword(password);
   }
-
-  // function to hash the password
-  private String hashPassword(String password) {
-    return Integer.toString(password.hashCode());
+  public void changePassword(String oldPassword, String newPassword)
+  {
+    if(!validatePassword(oldPassword))
+    {
+      throw new IllegalArgumentException("Old password is incorrect");
+    }
+    setPassword(newPassword);
   }
-
-
   public String getPhoneNumber()
   {
     return phoneNumber;
@@ -205,13 +191,13 @@ public class User
     validateAddress(address);
     this.address = address;
   }
-  public String getUserAvatarPath()
+  public String getAvatar()
   {
-    return userAvatarPath;
+    return avatar;
   }
-  public void setUserAvatarPath(String userAvatarPath)
+  public void setAvatar(String avatar)
   {
-    this.userAvatarPath = userAvatarPath;
+    this.avatar = avatar;
   }
   public int getUserId()
   {
@@ -219,7 +205,10 @@ public class User
   }
 
   //Utilities
-
+  private String hashPassword(String p)
+  {
+    return Integer.toHexString(p.hashCode());
+  }
   public boolean validatePassword(String password) //method to check if the password is correct
   {
     return this.getPasswordHash().equals(hashPassword(password));
@@ -227,16 +216,30 @@ public class User
 
 //DATABASE integration
   /** factory to load a user record without re-hashing */
-  public static User fromDb(int id,
+  public static User fromDb(
+      int id,
       String userName,
       String fullName,
       String email,
       String passwordHash,
       String phoneNumber,
       String address,
-      String avatarPath) {
-    return new User(id, userName, fullName, email, passwordHash, phoneNumber, address, avatarPath);
+      String avatar
+  )
+  {
+    // Use the private constructor that takes an already‐hashed password:
+    User u = new User(id, userName, fullName, email,
+        passwordHash, phoneNumber, address, avatar);
+    return u;
   }
+  //Optional setter so DAO can inject the generated id.
+  public void setUserId(int id) {
+    if (this.userId != null) {
+      throw new IllegalStateException("ID already set");
+    }
+    this.userId = id;
+  }
+
 
 
   @Override

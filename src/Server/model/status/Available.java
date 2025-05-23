@@ -1,6 +1,6 @@
 package Server.model.status;
 
-import dto.enums.BookStatus;
+import Shared.dto.enums.BookStatus;
 import Server.model.Book;
 import Server.model.User;
 import Server.model.actionmanagers.BookLending;
@@ -11,8 +11,12 @@ public class Available implements Status
   @Override public void lendTo(Book b, User u)
   {
    // b.setBorrowedBy(u);
+    if (b.getOwner().equals(u))
+    {
+      throw new UnsupportedOperationException("You cannot borrow your own book. Consider making it unavailable instead.");
+    }
     BookLending lending = new BookLending(b, u);
-    b.setStatus(new Borrowed());
+    b.setStatus(new Borrowed(u));
   }
 
   @Override public void markAsReturned(Book b)
