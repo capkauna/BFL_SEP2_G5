@@ -7,7 +7,7 @@ import Server.model.User;
 import Server.model.status.Status;
 import Server.model.status.Available;
 import Server.model.status.Borrowed;
-import Server.util.DBConnection;
+import Server.util.*;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -5,10 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage; //this was sus, something about postgres hmm
 import Client.viewmodel.ViewModelFactory;
-import Client.view.HomeViewController;
-import Client.viewmodel.HomeVM;
-import view.MyLibraryViewController;
-import Client.view.SearchViewController;
+import Client.view.*;
 
 
 import java.io.IOException;

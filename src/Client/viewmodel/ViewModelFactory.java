@@ -2,9 +2,7 @@ package Client.viewmodel;
 
 import Server.repository.JdbcBookDAO;
 import Client.view.ViewHandler;
-import viewmodel.MyLibraryVM;
-import Client.viewmodel.SearchVM;
-import Client.viewmodel.HomeVM;
+import Client.viewmodel.*;
 
 
 import java.sql.SQLException;

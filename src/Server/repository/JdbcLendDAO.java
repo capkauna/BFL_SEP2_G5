@@ -1,6 +1,7 @@
 package Server.repository;
 
-import model.Lend;
+import Server.model.Lend;
+import Server.repository.LendDAO;
 
 
 import java.sql.*;
@@ -8,7 +9,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcLendDAO implements LendDAO {
+public class JdbcLendDAO implements LendDAO
+{
   private final Connection connection;
 
   public JdbcLendDAO(Connection connection) {

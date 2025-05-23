@@ -1,8 +1,8 @@
-package view;
+package Client.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import viewmodel.MyLibraryVM;
+import Client.viewmodel.MyLibraryVM;
 
 public class MyLibraryViewController
 {
