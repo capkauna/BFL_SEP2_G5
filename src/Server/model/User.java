@@ -253,23 +253,12 @@ public User() {
 
   public void setUsername(String username) throws SQLException
   {
-    if (username == null || username.trim().isEmpty()) {
+    if (username == null || username.trim().isEmpty())
+    {
       throw new IllegalArgumentException("Username cannot be null or empty");
     }
-
-    // chech if username is already taken
-    try (Connection conn = DBConnection.getConnection()) {
-      PreparedStatement stmt = conn.prepareStatement(
-          "SELECT COUNT(*) FROM users WHERE username = ?");
-      stmt.setString(1, username);
-      ResultSet rs = stmt.executeQuery();
-      if (rs.next() && rs.getInt(1) > 0) {
-        throw new IllegalArgumentException("Username already exists");
-      }
-    }
-
-    this.userName = username;
   }
+
 
   @Override
   public String toString()
