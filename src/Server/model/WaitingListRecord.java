@@ -2,6 +2,11 @@ package Server.model;
 
 import java.time.LocalDateTime;
 
+ // Represents a raw database record from the waiting_list table.
+ //Contains only basic identifiers (userId, bookId, entryId, and addedAt),
+ // and is primarily used for internal mapping, logging, or administrative queries.
+ // This class avoids expensive object resolution (e.g., User, Book) for performance.
+
 public class WaitingListRecord
 {
   private int userId;

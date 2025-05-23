@@ -1,6 +1,8 @@
 package Server.model;
 
 
+import Server.util.DBConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -256,7 +258,7 @@ public User() {
     }
 
     // chech if username is already taken
-    try (Connection conn = util.DBConnection.getConnection()) {
+    try (Connection conn = DBConnection.getConnection()) {
       PreparedStatement stmt = conn.prepareStatement(
           "SELECT COUNT(*) FROM users WHERE username = ?");
       stmt.setString(1, username);
