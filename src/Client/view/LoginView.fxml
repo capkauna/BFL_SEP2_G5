@@ -4,49 +4,26 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<TitledPane text="User Log in"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Client.view.LoginController"
-            prefWidth="600" prefHeight="400"
-            animated="false">
+<TitledPane animated="false" prefHeight="400" prefWidth="600" text="User Log in" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.LoginController">
 
     <content>
-        <AnchorPane prefWidth="598" prefHeight="278">
+        <AnchorPane prefHeight="278" prefWidth="598">
             <children>
-                <ImageView fx:id="logo"
-                           layoutX="224" layoutY="35"
-                           fitWidth="200" fitHeight="150"
-                           pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="logo" fitHeight="150" fitWidth="200" layoutX="224" layoutY="35" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../data/images/app/logo_mockup.png"/>
+                        <Image url="@../../../data/images/app/logo_mockup.png" />
                     </image>
                 </ImageView>
 
-                <TextField fx:id="usernameField"
-                           layoutX="123" layoutY="208"
-                           prefWidth="351"
-                           promptText="username"/>
+                <TextField fx:id="usernameField" layoutX="123" layoutY="208" prefWidth="351" promptText="username" />
 
-                <PasswordField fx:id="passwordField"
-                               layoutX="123" layoutY="258"
-                               prefWidth="352"
-                               promptText="password"/>
+                <PasswordField fx:id="passwordField" layoutX="123" layoutY="258" prefWidth="352" promptText="password" />
 
-                <Button fx:id="loginButton"
-                        text="Log in"
-                        layoutX="216" layoutY="313"
-                        onAction="#onLoginClicked"/>
+                <Button fx:id="loginButton" layoutX="216" layoutY="313" onAction="#onLoginClicked" text="Log in" />
 
-                <Button fx:id="cancelButton"
-                        text="Cancel"
-                        layoutX="330" layoutY="313"
-                        onAction="#onCancelClicked"/>
+                <Button fx:id="cancelButton" layoutX="330" layoutY="313" onAction="#onCancelClicked" text="Cancel" />
 
-                <Label fx:id="errorLabel"
-                       layoutX="123" layoutY="350"
-                       textFill="#805c69"
-                       visible="false"/>
+                <Label fx:id="errorLabel" layoutX="123" layoutY="350" textFill="#805c69" visible="false" />
             </children>
         </AnchorPane>
     </content>

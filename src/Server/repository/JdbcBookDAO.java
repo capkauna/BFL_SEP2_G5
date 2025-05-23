@@ -7,7 +7,7 @@ import Server.model.User;
 import Server.model.status.Status;
 import Server.model.status.Available;
 import Server.model.status.Borrowed;
-
+import Server.util.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class JdbcBookDAO implements BookDAO {
             RETURNING book_id
             """;
 
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setString(1, book.getTitle());
@@ -69,7 +69,7 @@ public class JdbcBookDAO implements BookDAO {
               FROM books b
              WHERE b.book_id = ?
             """;
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setInt(1, id);
@@ -90,7 +90,7 @@ public class JdbcBookDAO implements BookDAO {
               FROM books b
             """;
     List<Book> books = new ArrayList<>();
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql);
         ResultSet rs = ps.executeQuery()) {
 
@@ -110,7 +110,7 @@ public class JdbcBookDAO implements BookDAO {
              WHERE b.title ILIKE ?
             """;
     List<Book> books = new ArrayList<>();
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setString(1, "%" + searchString + "%");
@@ -132,7 +132,7 @@ public class JdbcBookDAO implements BookDAO {
              WHERE b.author ILIKE ?
             """;
     List<Book> books = new ArrayList<>();
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setString(1, "%" + searchString + "%");
@@ -153,7 +153,7 @@ public class JdbcBookDAO implements BookDAO {
              WHERE b.genre = ?
             """;
     List<Book> books = new ArrayList<>();
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setString(1, genre.name());
@@ -174,7 +174,7 @@ public class JdbcBookDAO implements BookDAO {
              WHERE b.format = ?
             """;
     List<Book> books = new ArrayList<>();
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setString(1, format.name());
@@ -195,7 +195,7 @@ public class JdbcBookDAO implements BookDAO {
              WHERE b.owner_id = ?
             """;
     List<Book> books = new ArrayList<>();
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setInt(1, owner.getUserId());
@@ -216,7 +216,7 @@ public class JdbcBookDAO implements BookDAO {
              WHERE b.status = ?
             """;
     List<Book> books = new ArrayList<>();
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setString(1, status.toString());
@@ -237,7 +237,7 @@ public class JdbcBookDAO implements BookDAO {
              WHERE b.status ILIKE ?
             """;
     List<Book> books = new ArrayList<>();
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setString(1, "Borrowed by " + borrowedBy.getFullName());
@@ -258,7 +258,7 @@ public class JdbcBookDAO implements BookDAO {
              WHERE b.isbn ILIKE ?
             """;
     List<Book> books = new ArrayList<>();
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setString(1, "%" + searchString + "%");
@@ -292,7 +292,7 @@ public class JdbcBookDAO implements BookDAO {
                    year        = ?
              WHERE book_id    = ?
             """;
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
       ps.setString(1, b.getTitle());
@@ -314,7 +314,7 @@ public class JdbcBookDAO implements BookDAO {
   @Override
   public void delete(int id) throws SQLException {
     String sql = "DELETE FROM books WHERE book_id = ?";
-    try (Connection c = util.DBConnection.getConnection();
+    try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
       ps.setInt(1, id);
       ps.executeUpdate();

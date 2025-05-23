@@ -1,4 +1,4 @@
-package repository;
+package Server.repository;
 
 import Server.model.Lend;
 

@@ -1,4 +1,4 @@
-package viewmodel;
+package Client.viewmodel;
 
 import Server.model.Book;
 import Server.repository.BookDAO;

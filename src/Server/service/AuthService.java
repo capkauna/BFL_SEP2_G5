@@ -1,23 +1,20 @@
 package Server.service;
 
-import Server.repository.UserDAO;
+import Server.repository.*;
 import Server.model.User;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
 public class AuthService {
-  private final UserDAO userDao;
-
-  public AuthService(UserDAO userDao) {
-    this.userDao = userDao;
+  private final JdbcUserDAO dao;
+  public AuthService() throws SQLException {
+    dao = JdbcUserDAO.getInstance();
   }
-
-  /** Returns the authenticated User, or empty if credentials are invalid */
-  public Optional<User> login(String username, String rawPassword)
-      throws SQLException
-  {
-    return userDao.findByUserName(username)
-        .filter(u -> u.validatePassword(rawPassword));
+  public Optional<User> authenticate(String u, String p) throws SQLException {
+    Optional<User> opt = dao.findByUserName(u);
+    if (opt.isPresent() && opt.get().validatePassword(p))
+      return opt;
+    return Optional.empty();
   }
 }
