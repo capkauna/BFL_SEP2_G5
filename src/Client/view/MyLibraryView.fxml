@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view.MyLibraryViewController"
+            prefHeight="400.0" prefWidth="600.0">
+          <!--  spacing="10" style="-fx-padding: 20; -fx-background-color: #ffffff;">-->
+
+    <VBox>
+        <Label text="My Library" style="-fx-font-size: 24px;"/>
+        <ListView fx:id="libraryList" onMouseClicked="#onBookSelected"/>
+
+        <HBox spacing="10">
+            <Button text="Edit" onAction="#onEditClicked"/>
+            <Button text="Delete" onAction="#onDeleteClicked"/>
+        </HBox>
+
+        <Button text="Back to Home" onAction="#onBackClicked"/>
+
+    </VBox>
+
+</AnchorPane>

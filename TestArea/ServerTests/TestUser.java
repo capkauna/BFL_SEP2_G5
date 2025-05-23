@@ -20,7 +20,7 @@ public class TestUser
   @Test
   public void testUserConstructor()
   {
-    User user = new User("testUser", "Test User", "user@email.com", "0000", "1234567890", "123 Test St");
+    User user = new User("testUser", "Test model.User", "user@email.com", "0000", "1234567890", "123 Test St");
     assertEquals ("testUser", user.getUserName());
   }
 
@@ -109,21 +109,25 @@ public class TestUser
 
 
   //password tests
+  @BeforeEach
+  void setUp() {
+    testUser = new User("1234");
+  }
 
   @Test
   public void testShortPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.changePassword("1234","22"));
+    assertThrows (IllegalArgumentException.class, () -> new User("22"));
   }
   @Test
   public void testNullPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.changePassword("1234", null));
+    assertThrows (IllegalArgumentException.class, () -> new User(null));
   }
   @Test
   public void testEmptyPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.changePassword("1234", ""));
+    assertThrows (IllegalArgumentException.class, () -> new User(""));
   }
   @Test
   public void testValidPassword()
@@ -134,12 +138,7 @@ public class TestUser
   @Test
   public void testInvalidPassword()
   {
-    assertThrows (IllegalArgumentException.class, () -> testUser.changePassword("1234","1234 5678"));
-  }
-  @Test
-  public void testIncorrectOldPassword()
-  {
-    assertThrows (IllegalArgumentException.class, () -> testUser.changePassword("0000","1234"));
+    assertThrows (IllegalArgumentException.class, () -> new User ("1234 5678"));
   }
 
   //phone number tests

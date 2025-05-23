@@ -5,12 +5,6 @@ import Server.model.*;
 
 public class Borrowed implements Status
 {
-  private User borrower;
-  public Borrowed(User borrower)
-  {
-    this.borrower = borrower;
-  }
-
   @Override public void lendTo(Book b,User u)
   {
     throw new UnsupportedOperationException("Book is already borrowed");
@@ -19,6 +13,7 @@ public class Borrowed implements Status
   @Override public void markAsReturned(Book b)
   {
     b.setStatus(new Available());
+    b.removeBorrower();
   }
 
   @Override public void setUnavailable(Book b)
@@ -27,7 +22,7 @@ public class Borrowed implements Status
   }
   @Override public String toString()
   {
-    return "Borrowed by " + borrower.getUserName();
+    return "Borrowed";
   }
   @Override public BookStatus getStatus()
   {
