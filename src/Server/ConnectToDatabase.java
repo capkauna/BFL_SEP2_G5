@@ -73,7 +73,7 @@ public class ConnectToDatabase {
                             added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                         );
         
-                        CREATE TABLE IF NOT EXISTS "read" (
+                        CREATE TABLE IF NOT EXISTS read (
                             record_id SERIAL PRIMARY KEY,
                             user_id INTEGER REFERENCES users(user_id),
                             book_id INTEGER REFERENCES books(book_id),
