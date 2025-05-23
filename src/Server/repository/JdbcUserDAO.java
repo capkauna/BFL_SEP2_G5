@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public class JdbcUserDAO implements UserDAO
 {
-  //private final Map<String, User> users = new ConcurrentHashMap<>();
-  private static JdbcUserDAO instance; // Singleton instance, might opt out, not sure yet
+
+  private static JdbcUserDAO instance;
 
 
   public JdbcUserDAO() throws SQLException
@@ -32,7 +32,7 @@ public class JdbcUserDAO implements UserDAO
 //  private static Connection getConnection() throws SQLException
 //  {
 //    return DriverManager.getConnection(
-//        "jdbc:postgresql://localhost:5432/postgres/bfl", "postgres", "password");
+//        "jdbc:postgresql://localhost:5432/postgres/bestfriendslibrary" + ", "postgres", "password");
 //  }
 
 
@@ -41,7 +41,7 @@ public class JdbcUserDAO implements UserDAO
   @Override public User create(User newUser) throws SQLException {
      String INSERT_SQL =
         "INSERT INTO users (username, full_name, email, hashed_pw, phone_number, address, avatar) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            "VALUES        (       ?,         ?,     ?,         ?,            ?,       ?,     ?)";
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(
             INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -52,7 +52,7 @@ public class JdbcUserDAO implements UserDAO
       ps.setString(4, newUser.getPasswordHash());
       ps.setString(5, newUser.getPhoneNumber());
       ps.setString(6, newUser.getAddress());
-      ps.setString(7, newUser.getUserAvatarPath());
+      ps.setString(7, newUser.getAvatar());
       ps.executeUpdate();
 
       try (ResultSet keys = ps.getGeneratedKeys()) {

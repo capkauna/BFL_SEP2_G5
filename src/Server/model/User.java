@@ -11,7 +11,7 @@ public class User
   private String passwordHash; //security
   private String phoneNumber;
   private String address;
-  private String userAvatarPath;
+  private String avatar;//address for image
 
   private Integer userId;
 
@@ -27,7 +27,7 @@ public class User
   private static final int MIN_PHONE_NUMBER_LENGTH = 8;
 
 //constructors
-  public User(String userName, String fullName, String email, String initialPassword, String phoneNumber, String address, String userAvatarPath)
+  public User(String userName, String fullName, String email, String initialPassword, String phoneNumber, String address, String avatar)
   {
     validateUserName(userName);
     validateFullName(fullName);
@@ -35,9 +35,6 @@ public class User
     validateRawPassword(initialPassword);
     validatePhoneNumber(phoneNumber);
     validateAddress(address);
-    if (userAvatarPath != null && userAvatarPath.isEmpty()) {
-      throw new IllegalArgumentException("Avatar path, if provided, cannot be empty");
-    }
 
     this.userName = userName;
     this.fullName = fullName;
@@ -45,7 +42,7 @@ public class User
     this.passwordHash = hashPassword(initialPassword);
     this.phoneNumber = phoneNumber;
     this.address = address;
-    this.userAvatarPath = userAvatarPath;
+    this.avatar = avatar;
     this.userId = null; //will be set by the database
   }
 
@@ -71,7 +68,7 @@ public class User
     this.passwordHash   = passwordHash;
     this.phoneNumber    = phoneNumber;
     this.address        = address;
-    this.userAvatarPath = avatarPath;
+    this.avatar = avatarPath;
   }
 
   //VALIDATORS
@@ -194,13 +191,13 @@ public class User
     validateAddress(address);
     this.address = address;
   }
-  public String getUserAvatarPath()
+  public String getAvatar()
   {
-    return userAvatarPath;
+    return avatar;
   }
-  public void setUserAvatarPath(String userAvatarPath)
+  public void setAvatar(String avatar)
   {
-    this.userAvatarPath = userAvatarPath;
+    this.avatar = avatar;
   }
   public int getUserId()
   {
@@ -227,12 +224,12 @@ public class User
       String passwordHash,
       String phoneNumber,
       String address,
-      String avatarPath
+      String avatar
   )
   {
     // Use the private constructor that takes an already‐hashed password:
     User u = new User(id, userName, fullName, email,
-        passwordHash, phoneNumber, address, avatarPath);
+        passwordHash, phoneNumber, address, avatar);
     return u;
   }
   //Optional setter so DAO can inject the generated id.

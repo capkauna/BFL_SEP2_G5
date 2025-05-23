@@ -186,6 +186,7 @@ public class JdbcBookDAO implements BookDAO {
     }
     return books;
   }
+  //TODO make sure it checks from user table
   @Override
   public List<Book> findByOwner(User owner) throws SQLException {
     String sql = """
@@ -234,7 +235,7 @@ public class JdbcBookDAO implements BookDAO {
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
-             WHERE b.status ILIKE ?
+             WHERE b.status LIKE ?
             """;
     List<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
@@ -255,7 +256,7 @@ public class JdbcBookDAO implements BookDAO {
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
-             WHERE b.isbn ILIKE ?
+             WHERE b.isbn LIKE ?
             """;
     List<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
