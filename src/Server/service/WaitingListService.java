@@ -2,11 +2,11 @@ package Server.service;
 
 import Server.model.Book;
 import Server.model.User;
-import Server.model.WaitingListDAO;
+import Server.model.WaitingListRecord;
 import Server.model.WaitingListEntry;
 import Server.repository.JdbcBookDAO;
 import Server.repository.JdbcUserDAO;
-import Server.repository.WaitingListRepository;
+import Server.repository.JdbcWaitingListDAO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,15 +14,15 @@ import java.util.List;
 
 public class WaitingListService
 {
-  WaitingListRepository waitingListRepository;
+  JdbcWaitingListDAO waitingListRepository;
   JdbcUserDAO userRepository;
   JdbcBookDAO bookRepository;
 
-  public WaitingListService(WaitingListRepository waitingListRepository)
+  public WaitingListService(JdbcWaitingListDAO waitingListRepository)
   {
     try
     {
-      this.waitingListRepository = WaitingListRepository.getInstance();
+      this.waitingListRepository = JdbcWaitingListDAO.getInstance();
       this.userRepository = JdbcUserDAO.getInstance();
       this.bookRepository = JdbcBookDAO.getInstance();
     }
@@ -34,9 +34,9 @@ public class WaitingListService
 
   public List<WaitingListEntry> getAllWaitingLists() throws SQLException
   {
-    List<WaitingListDAO> waitingListDao = waitingListRepository.findAll();
+    List<WaitingListRecord> waitingListDao = waitingListRepository.findAll();
     List<WaitingListEntry> waitingList = new ArrayList<>();
-    for (WaitingListDAO entry : waitingListDao)
+    for (WaitingListRecord entry : waitingListDao)
     {
       User user = userRepository.findById(entry.getUserId());
       Book book = bookRepository.findById(entry.getBookId());

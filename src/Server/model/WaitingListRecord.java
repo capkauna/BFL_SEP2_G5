@@ -2,14 +2,14 @@ package Server.model;
 
 import java.time.LocalDateTime;
 
-public class WaitingListDAO
+public class WaitingListRecord
 {
   private int userId;
   private int bookId;
   private int entryId;
   private LocalDateTime addedAt;
 
-  public WaitingListDAO(int userId, int bookId, int entryId, LocalDateTime addedAt)
+  public WaitingListRecord(int userId, int bookId, int entryId, LocalDateTime addedAt)
   {
     this.userId = userId;
     this.bookId = bookId;

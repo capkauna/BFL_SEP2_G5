@@ -6,19 +6,18 @@ import java.time.LocalDateTime;
 
 public class WaitingListEntryDTO implements Serializable {
   private final String username;
-  private final LocalDateTime requestDate;
+  private final LocalDateTime addedAt;
 
-  public WaitingListEntryDTO(String username, LocalDateTime requestDate) {
+  public WaitingListEntryDTO(String username, LocalDateTime addedAt) {
     this.username = username;
-    this.requestDate = requestDate;
+    this.addedAt = addedAt;
   }
 
-  // Getters
   public String getUsername() {
     return username;
   }
 
-  public LocalDateTime getRequestDate() {
-    return requestDate;
+  public LocalDateTime getAddedAt() {
+    return addedAt;
   }
 }

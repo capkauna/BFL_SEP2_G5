@@ -1,6 +1,10 @@
 package Server.model;
 
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 public class User
@@ -27,6 +31,10 @@ public class User
   private static final int MIN_PHONE_NUMBER_LENGTH = 8;
 
 //constructors
+
+public User() {
+}
+
   public User(String userName, String fullName, String email, String initialPassword, String phoneNumber, String address, String avatar)
   {
     validateUserName(userName);
@@ -70,6 +78,7 @@ public class User
     this.address        = address;
     this.avatar = avatarPath;
   }
+
 
   //VALIDATORS
 //TODO add check that username doesn't already exist in database
@@ -240,7 +249,25 @@ public class User
     this.userId = id;
   }
 
+  public void setUsername(String username) throws SQLException
+  {
+    if (username == null || username.trim().isEmpty()) {
+      throw new IllegalArgumentException("Username cannot be null or empty");
+    }
 
+    // chech if username is already taken
+    try (Connection conn = util.DBConnection.getConnection()) {
+      PreparedStatement stmt = conn.prepareStatement(
+          "SELECT COUNT(*) FROM users WHERE username = ?");
+      stmt.setString(1, username);
+      ResultSet rs = stmt.executeQuery();
+      if (rs.next() && rs.getInt(1) > 0) {
+        throw new IllegalArgumentException("Username already exists");
+      }
+    }
+
+    this.userName = username;
+  }
 
   @Override
   public String toString()
@@ -253,4 +280,6 @@ public class User
             ", address='" + getAddress() + '\'' +
             '}';
   }
+
+
 }
