@@ -1,5 +1,9 @@
 package Client.network;
 
+import Shared.dto.FullUserDTO;
+
+import javax.naming.AuthenticationException;
+
 public interface AuthServiceClient
 {
   /**
@@ -8,4 +12,5 @@ public interface AuthServiceClient
    * @throws Exception on network or protocol errors
    */
   boolean login(String username, String password) throws Exception;
+  FullUserDTO getUserInfo(String username) throws AuthenticationException;
 }

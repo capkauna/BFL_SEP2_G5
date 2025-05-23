@@ -2,8 +2,12 @@ package Client.viewmodel;
 
 import Client.network.AuthServiceClient;
 import Client.network.SocketAuthServiceClient;
+import Client.view.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-
+import javafx.stage.Stage;
 
 public class LogInVM {
   private final AuthServiceClient authClient;
@@ -24,6 +28,21 @@ public class LogInVM {
         System.out.println("Login successful for user: " + username);
         errorLabel.setVisible(false);
         // TODO: launch main window
+//        FXMLLoader loader = new FXMLLoader(
+//            getClass().getResource("/Client/view/HomeView.fxml")
+//        );
+//        Parent root = loader.load();
+//
+//        // grab the controller & wire in its VM
+//        HomeViewController homeCtrl = loader.getController();
+//        HomeVM homeVM = new HomeVM(authClient, username);
+//        homeCtrl.setViewModel(homeVM);
+//
+//        // swap the scene
+//        Stage stage = (Stage) errorLabel.getScene().getWindow();
+//        stage.setScene(new Scene(root));
+//        stage.show();
+//
       } else {
         System.out.println("Invalid credentials for user: " + username);
         errorLabel.setText("Invalid username or password.");
