@@ -12,7 +12,7 @@ public interface BookDAO
 {
 
   //Create
-  Book create (Book newBook) throws
+  Book create (Book book) throws
       SQLException;
 
   //Read
@@ -29,7 +29,7 @@ public interface BookDAO
 
 
   //Update
-  void save(Book b ) throws SQLException;
+  void save(Book b) throws SQLException;
   void update(Book b) throws SQLException;
 
   //Delete
