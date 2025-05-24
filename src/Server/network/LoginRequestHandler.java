@@ -7,7 +7,7 @@ import Server.model.User;
 public class LoginRequestHandler implements RequestHandler<LoginRequest> {
   @Override
   public LoginResponse handle(LoginRequest req, AuthService auth) throws Exception {
-    Optional<User> u = auth.authenticate(req.username, req.password);
-    return new LoginResponse(u.isPresent(), req.username);
+    User u = auth.authenticate(req.username, req.password);
+    return new LoginResponse(u.getUserName().equals(req.username), req.username);
   }
 }

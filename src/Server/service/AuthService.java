@@ -11,14 +11,14 @@ public class AuthService {
   public AuthService() throws SQLException {
     dao = JdbcUserDAO.getInstance();
   }
-  public Optional<User> authenticate(String u, String p) throws SQLException {
-    Optional<User> opt = dao.findByUserName(u);
-    if (opt.isPresent() && opt.get().validatePassword(p))
+  public User authenticate(String u, String p) throws SQLException {
+    User opt = dao.findByUserName(u);
+    if (opt.getUserName().equals(u) && opt.validatePassword(p))
       return opt;
-    return Optional.empty();
+    return null;
   }
 
-  public Optional<User> getUserByUsername(String username) throws SQLException {
+  public User getUserByUsername(String username) throws SQLException {
     return JdbcUserDAO.getInstance().findByUserName(username);
   }
 }

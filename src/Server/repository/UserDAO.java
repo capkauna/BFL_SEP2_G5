@@ -15,6 +15,6 @@ public interface UserDAO
   void update(User u) throws SQLException;
   void delete(int id) throws SQLException;
 
-  Optional<User> findByUserName(String username) throws SQLException;
+  User findByUserName(String username) throws SQLException;
   void save(User u) throws SQLException;
 }

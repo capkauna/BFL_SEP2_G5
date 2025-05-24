@@ -150,7 +150,7 @@ public class JdbcUserDAO implements UserDAO
 
 //TODO check this one again
 @Override
-public Optional<User> findByUserName(String username) throws SQLException {
+public User findByUserName(String username) throws SQLException {
   String sql = "SELECT * FROM users WHERE username = ?";
   try (Connection c = DBConnection.getConnection();
       PreparedStatement ps = c.prepareStatement(sql)) {
@@ -168,11 +168,11 @@ public Optional<User> findByUserName(String username) throws SQLException {
             rs.getString("avatar")
         );
 
-        return Optional.of(u);
+        return u;
       }
     }
   }
-  return Optional.empty();
+  return null;
 }
 
 
