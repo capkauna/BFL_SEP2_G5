@@ -39,25 +39,35 @@ public class ViewHandler
 
       if (controller instanceof HomeViewController homeController)
       {
-        homeController.init(viewModelFactory.getHomeVM());
+        homeController.init(this, viewModelFactory.getHomeVM());
       }
       else if (controller instanceof SearchViewController searchViewController)
       {
-        searchViewController.init(viewModelFactory.getSearchVM());
+        searchViewController.init( this, viewModelFactory.getSearchVM());
       }
       else if (controller instanceof MyLibraryViewController libController)
       {
-        libController.init(viewModelFactory.getMyLibraryVM());
+        libController.init(this, viewModelFactory.getMyLibraryVM());
       }
-      else if (controller instanceof SearchViewController searchViewController)
+      else if (controller instanceof SearchViewController searchController)
       {
-        searchViewController.init(viewModelFactory.getSearchVM());
+        searchController.init(this, viewModelFactory.getSearchVM());
       }
+      //      else if (controller instanceof SearchViewController searchViewController)
+      //      {
+      //        searchViewController.init(viewModelFactory.getSearchVM());
+      //      }
       else if (controller instanceof MyLibraryViewController libController)
       {
-        libController.init(viewModelFactory.getMyLibraryVM());
+        libController.init(this, viewModelFactory.getMyLibraryVM());
+      }
+      else if (controller instanceof BookInfoViewController bookInfoController)
+      {
+        bookInfoController.init(this, viewModelFactory.getBookInfoVM());
+      }
+
+
         // to be continued for next pages
-      }
 
       primaryStage.setScene(new Scene(root));
       primaryStage.show();

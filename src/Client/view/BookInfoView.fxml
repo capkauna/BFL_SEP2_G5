@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--<AnchorPane xmlns="http://javafx.com/javafx"-->
+<!--            xmlns:fx="http://javafx.com/fxml"-->
+<!--            fx:controller="Client.view.BookInfoViewController"-->
+<!--            prefHeight="400.0" prefWidth="600.0">-->
+
+<!--</AnchorPane>-->
+
+
+<?import javafx.scene.image.ImageView?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Client.view.BookInfoViewController"
+            prefWidth="500" prefHeight="400"
+            style="-fx-background-color: #a51414;">
+
+<Button fx:id="backButton" layoutX="10" layoutY="10" text="←" onAction="#onBackClicked"/>
+<ImageView fx:id="bookImage" layoutX="20" layoutY="50" fitWidth="100" fitHeight="140"/>
+
+<VBox layoutX="130" layoutY="50" spacing="5">
+    <Label fx:id="titleLabel" text="Title"/>
+    <Label fx:id="authorLabel" text="Author"/>
+    <Label fx:id="genreLabel" text="Genre"/>
+    <Label fx:id="isbnLabel" text="ISBN"/>
+    <Label fx:id="ownerLabel" text="Owner"/>
+    <Label fx:id="borrowedLabel" text="Borrowed by"/>
+    <Label fx:id="languageLabel" text="Language"/>
+    <Label fx:id="yearLabel" text="Year"/>
+</VBox>
+
+<CheckBox fx:id="unavailableCheckBox" layoutX="360" layoutY="50" text="mark unavailable"/>
+<CheckBox fx:id="readCheckBox" layoutX="360" layoutY="80" text="read"/>
+
+<Button layoutX="50" layoutY="210" text="Waiting list"/>
+<Button layoutX="250" layoutY="210" text="History"/>
+
+<TextArea fx:id="readerNotes" layoutX="50" layoutY="250" prefWidth="400" prefHeight="60"
+          promptText="Notes from readers" editable="false"/>
+
+<Button layoutX="40" layoutY="330" text="Lend"/>
+<Button layoutX="180" layoutY="330" text="Add note"/>
+<Button layoutX="320" layoutY="330" text="Book was returned"/>
+
+</AnchorPane>

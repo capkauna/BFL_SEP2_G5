@@ -6,26 +6,46 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="Client.view.SearchViewController"
-            prefHeight="400.0" prefWidth="600.0">
-    <GridPane hgap="10" vgap="10" style="-fx-background-color: #990000; -fx-padding: 20;">
+            prefWidth="500" prefHeight="400"
+            style="-fx-background-color: #a51414;">
 
-        <!-- Search Bar -->
-        <TextField fx:id="searchField" GridPane.columnSpan="2" promptText="Search book"/>
-        <Button text="Search" onAction="#onSearchClick"
-        GridPane.columnIndex="2" style="-fx-font-size: 16;"/>
+    <TextField fx:id="searchField" layoutX="20" layoutY="20" promptText="Search book" prefWidth="300"/>
+    <Button fx:id="searchButton" layoutX="330" layoutY="20" text="🔍" onAction="#onSearchClicked"/>
 
-        <!-- Filter Options -->
-        <TextField fx:id="genreField" promptText="Genre" GridPane.rowIndex="1"/>
-        <TextField fx:id="formatField" promptText="Format" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-        <TextField fx:id="ownerField" promptText="Owned by" GridPane.rowIndex="2"/>
-        <TextField fx:id="borrowerField" promptText="Borrowed by" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-        <TextField fx:id="statusField" promptText="Status" GridPane.rowIndex="3"/>
+    <ChoiceBox fx:id="genreChoice" layoutX="20" layoutY="60" prefWidth="100" />
+    <ChoiceBox fx:id="typeChoice" layoutX="130" layoutY="60" prefWidth="100" />
+    <ChoiceBox fx:id="ownerChoice" layoutX="240" layoutY="60" prefWidth="100" />
+    <ChoiceBox fx:id="borrowedChoice" layoutX="350" layoutY="60" prefWidth="100" />
 
-        <!-- Search Results -->
-        <ListView fx:id="resultsList" GridPane.rowIndex="4" GridPane.columnSpan="3"/>
-    </GridPane>
+    <ListView fx:id="searchResults" layoutX="20" layoutY="100" prefWidth="460" prefHeight="230"/>
 
+    <Button fx:id="backButton" layoutX="10" layoutY="350" text="←" onAction="#onBackClicked"/>
 </AnchorPane>
+
+
+
+<!--<AnchorPane xmlns="http://javafx.com/javafx"-->
+<!--            xmlns:fx="http://javafx.com/fxml"-->
+<!--            fx:controller="Client.view.SearchViewController"-->
+<!--            prefHeight="400.0" prefWidth="600.0">-->
+<!--    <GridPane hgap="10" vgap="10" style="-fx-background-color: #990000; -fx-padding: 20;">-->
+
+<!--        &lt;!&ndash; Search Bar &ndash;&gt;-->
+<!--        <TextField fx:id="searchField" GridPane.columnSpan="2" promptText="Search book"/>-->
+<!--        <Button text="Search" onAction="#onSearchClick"-->
+<!--        GridPane.columnIndex="2" style="-fx-font-size: 16;"/>-->
+
+<!--        &lt;!&ndash; Filter Options &ndash;&gt;-->
+<!--        <TextField fx:id="genreField" promptText="Genre" GridPane.rowIndex="1"/>-->
+<!--        <TextField fx:id="formatField" promptText="Format" GridPane.rowIndex="1" GridPane.columnIndex="1"/>-->
+<!--        <TextField fx:id="ownerField" promptText="Owned by" GridPane.rowIndex="2"/>-->
+<!--        <TextField fx:id="borrowerField" promptText="Borrowed by" GridPane.rowIndex="2" GridPane.columnIndex="1"/>-->
+<!--        <TextField fx:id="statusField" promptText="Status" GridPane.rowIndex="3"/>-->
+
+<!--        &lt;!&ndash; Search Results &ndash;&gt;-->
+<!--        <ListView fx:id="resultsList" GridPane.rowIndex="4" GridPane.columnSpan="3"/>-->
+<!--    </GridPane>-->
+
+<!--</AnchorPane>-->

@@ -32,4 +32,9 @@ public class ViewModelFactory
   {
     return myLibraryVM;
   }
+
+  public BookInfoVM getBookInfoVM() {
+    return new BookInfoVM();
+  }
+
 }
