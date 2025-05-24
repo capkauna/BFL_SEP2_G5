@@ -3,6 +3,11 @@ package Server.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+//Represents a detailed entry in the waiting list, containing full user and book objects.
+ //This class is used in the application logic, including user interface updates and DTO generation.
+  //It reflects a meaningful real-world entry with display-ready information.
+
+
 public class WaitingListEntry implements Serializable {
   private int entryId;
   private User user;

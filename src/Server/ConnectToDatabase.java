@@ -3,6 +3,7 @@ package Server;
 import Server.util.DBConnection;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectToDatabase {
@@ -79,19 +80,23 @@ public class ConnectToDatabase {
                                   added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
            );
         
-           CREATE TABLE read (
-                                 record_id SERIAL PRIMARY KEY ,
-                                 user_id INTEGER REFERENCES users(user_id),
-                                 book_id INTEGER REFERENCES books(book_id),
-                                 comment text
-           );
+          CREATE TABLE read (
+                    record_id SERIAL PRIMARY KEY,
+                    user_id INTEGER REFERENCES users(user_id),
+                    book_id INTEGER REFERENCES books(book_id),
+                    is_read BOOLEAN NOT NULL DEFAULT FALSE,
+                    comment TEXT
+                  );
 """;
     try {
 
       Class.forName("org.postgresql.Driver");
 
 
-      try (Connection connection = DBConnection.getConnection()) {
+      try (Connection connection = DriverManager.getConnection(
+          "jdbc:postgresql://localhost:5432/BestFriendLibrary",
+          "postgres",
+          "AAA25")){
         System.out.println("SUCCESS");
       } catch (SQLException e) {
         System.out.println("ERROR");
