@@ -2,7 +2,7 @@ package Server.model.actionmanagers;
 
 import Server.model.*;
 
-public class MarkingAsRead
+public class MarkAsRead
 {
   private User user;
   private Book book;
@@ -10,7 +10,7 @@ public class MarkingAsRead
   private String notes;
   private int id; //will be handled by the database
 
-  public MarkingAsRead(User user, Book book, boolean isRead, String notes)
+  public MarkAsRead(User user, Book book, boolean isRead, String notes)
   {
     this.user = user;
     this.book = book;
@@ -52,6 +52,10 @@ public class MarkingAsRead
   public int getId()
   {
     return id;
+  }
+  public void setId(int id)
+  {
+    this.id = id;
   }
 
 }
