@@ -1,4 +1,4 @@
-package Server.model;
+package Shared.dto;
 
 public class UserSummary //meant to be a summary of the user information
 {

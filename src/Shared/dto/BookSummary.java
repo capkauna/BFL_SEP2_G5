@@ -1,4 +1,4 @@
-package Server.model;
+package Shared.dto;
 
 import Shared.dto.enums.BookStatus;
 import Shared.dto.enums.Format;

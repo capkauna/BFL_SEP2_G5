@@ -2,14 +2,19 @@ package Server.model;
 
 import java.time.LocalDateTime;
 
-public class WaitingListDAO
+ // Represents a raw database record from the waiting_list table.
+ //Contains only basic identifiers (userId, bookId, entryId, and addedAt),
+ // and is primarily used for internal mapping, logging, or administrative queries.
+ // This class avoids expensive object resolution (e.g., User, Book) for performance.
+
+public class WaitingListRecord
 {
   private int userId;
   private int bookId;
   private int entryId;
   private LocalDateTime addedAt;
 
-  public WaitingListDAO(int userId, int bookId, int entryId, LocalDateTime addedAt)
+  public WaitingListRecord(int userId, int bookId, int entryId, LocalDateTime addedAt)
   {
     this.userId = userId;
     this.bookId = bookId;
