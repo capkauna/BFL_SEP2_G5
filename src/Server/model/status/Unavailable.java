@@ -15,6 +15,13 @@ public class Unavailable implements Status
   {
     throw new UnsupportedOperationException("Book is unavailable.");
   }
+  @Override
+  public void addToWaitingList(Book b, User u)
+  {
+    // This method could be implemented to add the user to a waiting list
+    // if the book is unavailable, but for now, we will leave it unimplemented.
+    throw new UnsupportedOperationException("Book is not available to borrow.");
+  }
 
   @Override public void setUnavailable(Book b)
   {

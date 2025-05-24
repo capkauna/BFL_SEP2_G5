@@ -107,7 +107,7 @@ public class JdbcBookDAO implements BookDAO {
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
-             WHERE b.title ILIKE ?
+             WHERE b.title LIKE ?
             """;
     List<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
@@ -129,7 +129,7 @@ public class JdbcBookDAO implements BookDAO {
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
-             WHERE b.author ILIKE ?
+             WHERE b.author LIKE ?
             """;
     List<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
@@ -186,7 +186,10 @@ public class JdbcBookDAO implements BookDAO {
     }
     return books;
   }
-  @Override
+
+
+
+    @Override
   public List<Book> findByOwner(User owner) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
@@ -234,13 +237,13 @@ public class JdbcBookDAO implements BookDAO {
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
-             WHERE b.status ILIKE ?
+             WHERE b.status LIKE ?
             """;
     List<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
-      ps.setString(1, "Borrowed by " + borrowedBy.getFullName());
+      ps.setString(1, "Borrowed by " + borrowedBy.getUserName());
       try (ResultSet rs = ps.executeQuery()) {
         while (rs.next()) {
           books.add(mapResultSetToBook(rs));
@@ -255,7 +258,7 @@ public class JdbcBookDAO implements BookDAO {
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
-             WHERE b.isbn ILIKE ?
+             WHERE b.isbn LIKE ?
             """;
     List<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
@@ -338,6 +341,7 @@ public class JdbcBookDAO implements BookDAO {
     Status status = parseStatus(rawStatus, owner);
 
     return new Book(
+        id,
         title,
         author,
         year,
@@ -346,8 +350,12 @@ public class JdbcBookDAO implements BookDAO {
         format,
         description,
         image,
-        owner);
+        owner,
+        status);
   }
+
+
+
 //TODO check what is this (this is bad, needs to be fixed)
   private Status parseStatus(String raw, User owner) {
     if (raw.startsWith("Borrowed by ")) {

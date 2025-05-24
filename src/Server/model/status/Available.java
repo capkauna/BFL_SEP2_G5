@@ -28,6 +28,12 @@ public class Available implements Status
   {
     b.setStatus(new Unavailable());
   }
+
+  @Override public void addToWaitingList(Book b, User u)
+  {
+    // This method could be implemented to add the user to a waiting list
+  }
+
   @Override public String toString()
   {
     return "Available";

@@ -216,4 +216,8 @@ public class Book
   {
     status.setUnavailable(this);
   }
+  public void addToWaitingList(User user)
+  {
+    status.addToWaitingList(this, user);
+  }
 }
