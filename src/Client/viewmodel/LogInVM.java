@@ -1,51 +1,36 @@
 package Client.viewmodel;
 
+import Client.network.ClientSocket;
 import javafx.scene.control.Label;
-import Server.model.*;
-import Server.repository.*;
+import Shared.Requests.LoginResponse;
+import Shared.Requests.LoginRequest;
 
-import java.sql.SQLException;
-import java.util.Optional;
+import java.io.IOException;
 
-public class LogInVM
-{
-  private final UserDAO userDAO;
+public class LogInVM {
+    private final ClientSocket socketClient;
 
-  public LogInVM() throws SQLException{
-    this.userDAO =  JdbcUserDAO.getInstance();
-  }
-
-
-  public void login(String username, String password, Label errorLabel) {
-    try {
-      Optional<User> opt = userDAO.findByUserName(username);
-      if (opt.isPresent()) {
-        User user = opt.get();
-        // use the model’s built-in check, not raw.equals(hashed)
-        if (user.validatePassword(password)) {
-          System.out.println("Login successful for user: " + username);
-          errorLabel.setVisible(false);
-          // TODO: launch main window
-        } else {
-          System.out.println("Invalid password for user: " + username);
-          errorLabel.setText("Invalid username or password.");
-          errorLabel.setVisible(true);
-        }
-      } else {
-        System.out.println("No such user: " + username);
-        errorLabel.setText("Invalid username or password.");
-        errorLabel.setVisible(true);
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      errorLabel.setText("Error accessing database.");
-      errorLabel.setVisible(true);
+    public LogInVM() {
+        this.socketClient = ClientSocket.getInstance();
     }
-  }
 
-  // no changes to validatePassword in VM; delegate to User.validatePassword(...)
-  private boolean verifyPassword(String raw, String hashed) {
-    return raw.equals(hashed);
-  }
+    public void login(String username, String password, Label errorLabel) {
+        try {
+            LoginResponse response = socketClient.login(username, password);
 
+            if (response.isSuccess()) {
+                System.out.println("Login successful for user: " + username);
+                errorLabel.setVisible(false);
+                // TODO: launch main window with userId = response.getUserId()
+            } else {
+                System.out.println("Login failed: " + response.getMessage());
+                errorLabel.setText(response.getMessage());
+                errorLabel.setVisible(true);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            errorLabel.setText("Error connecting to server");
+            errorLabel.setVisible(true);
+        }
+    }
 }
