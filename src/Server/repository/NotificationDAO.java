@@ -2,11 +2,14 @@ package Server.repository;
 
 import Server.model.Notification;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface NotificationDAO
 {
-  void addNotification(Notification notification);
-  List<Notification> getNotificationsForUser(int userId);
+  List<Notification>  addNotification(int userId, String message, int bookId) throws SQLException;
+  List<Notification> getNotifications(int userId) throws SQLException;
+  List<Notification> markAsRead(int notificationId) throws SQLException;
+  List<Notification> deleteNotification(int notificationId) throws SQLException;
 }
 
