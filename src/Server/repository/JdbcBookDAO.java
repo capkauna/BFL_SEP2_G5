@@ -338,6 +338,7 @@ public class JdbcBookDAO implements BookDAO {
     Status status = parseStatus(rawStatus, owner);
 
     return new Book(
+        id,
         title,
         author,
         year,
@@ -346,8 +347,10 @@ public class JdbcBookDAO implements BookDAO {
         format,
         description,
         image,
-        owner);
+        owner,
+        status);
   }
+
 //TODO check what is this (this is bad, needs to be fixed)
   private Status parseStatus(String raw, User owner) {
     if (raw.startsWith("Borrowed by ")) {
