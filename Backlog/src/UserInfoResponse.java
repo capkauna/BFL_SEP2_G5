@@ -1,5 +1,3 @@
-package Server.network;
-
 public class UserInfoResponse implements Response {
   public final boolean success;
   // these only set if success:

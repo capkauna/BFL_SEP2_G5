@@ -1,5 +1,4 @@
 // Server/network/InfoRequestHandler.java
-package Server.network;
 import Server.service.AuthService;
 import java.util.Optional;
 import Server.model.User;

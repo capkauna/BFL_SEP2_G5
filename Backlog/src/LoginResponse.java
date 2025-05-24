@@ -1,5 +1,3 @@
-package Server.network;
-
 public class LoginResponse implements Response {
   public final boolean success;
   public final String username; // only set if success

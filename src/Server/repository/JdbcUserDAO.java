@@ -176,6 +176,33 @@ public User findByUserName(String username) throws SQLException {
 }
 
 
+
+  @Override public Optional<User> findByUserNameOpt(String username) throws SQLException
+{
+  String sql = "SELECT * FROM users WHERE username = ?";
+  try (Connection c = DBConnection.getConnection();
+      PreparedStatement ps = c.prepareStatement(sql)) {
+    ps.setString(1, username);
+    try (ResultSet rs = ps.executeQuery()) {
+      if (rs.next()) {
+        User u = User.fromDb(
+            rs.getInt("user_id"),
+            rs.getString("username"),
+            rs.getString("full_name"),
+            rs.getString("email"),
+            rs.getString("hashed_pw"),
+            rs.getString("phone_number"),
+            rs.getString("address"),
+            rs.getString("avatar")
+        );
+        return Optional.of(u);
+      }
+    }
+  }
+  return Optional.empty();
+}
+
+
   @Override
   public void save(User u) throws SQLException
   {

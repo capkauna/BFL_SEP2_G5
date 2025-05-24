@@ -1,5 +1,3 @@
-package Server.network;
-
 public class RequestParser {
   public static Request parse(String line) {
     if (line.startsWith("INFO:")) {

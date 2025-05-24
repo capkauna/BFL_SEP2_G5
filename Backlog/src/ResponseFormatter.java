@@ -1,5 +1,3 @@
-package Server.network;
-
 public class ResponseFormatter {
   public static String format(Response resp) {
     return switch (resp) {
