@@ -69,4 +69,5 @@ public class UserPageViewController {
   public void onEditUser() {
     System.out.println("Settings/Edit User button clicked");
   }
+
 }
