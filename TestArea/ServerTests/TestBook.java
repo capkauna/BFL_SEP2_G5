@@ -1,7 +1,7 @@
 package ServerTests;
 
-import dto.enums.Format;
-import dto.enums.Genre;
+import Shared.dto.enums.Format;
+import Shared.dto.enums.Genre;
 import Server.model.*;
 import Server.model.status.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,9 +23,9 @@ public class TestBook
     owner = new User("testOwner", "Jane Doe", "jane@doe.com", "password123", "1234567890", "123 Test St");
     testBorrower = new User("testBorrower", "John Doe", "john@doe.com",
         "password123", "0987654321", "456 Test St");
-    testBook = new Book("Test Title", "Test Author", Genre.FICTION, "1234567890123", Format.HARDCOVER, "Test Description", "test/path/to/image.jpg", owner);
+    testBook = new Book("Test Title", "Test Author",  1233, Genre.FICTION,"1234567890126", Format.HARDCOVER, "Test Description", "test/path/to/image.jpg", owner);
      available = new Available();
-     borrowed = new Borrowed();
+     borrowed = new Borrowed(testBorrower);
      unavailable = new Unavailable();
   }
 
@@ -33,7 +33,7 @@ public class TestBook
   @Test
   public void testBookConstructor()
   {
-    Book newBook = new Book("Test Title2", "Test Author",
+    Book newBook = new Book("Test Title2", "Test Author", 521,
         Genre.FICTION, "1234567890123", Format.HARDCOVER,
         "Test Description", "test/path/to/image.jpg", owner);
     assertEquals("Test Title2", newBook.getTitle());
@@ -48,7 +48,7 @@ public class TestBook
   public void testEmptyParametersBookConstructor()
   {
     assertThrows(IllegalArgumentException.class,
-        () -> new Book("", "", null, "", null, "", "", null));
+        () -> new Book("", "",null , null, "", null, "", "", null));
   }
 
   // Test the title validation
@@ -143,8 +143,8 @@ public class TestBook
   @Test
   public void testValidImagePath()
   {
-    testBook.setImagePath("valid/path/to/image.jpg");
-    assertEquals("valid/path/to/image.jpg", testBook.getImagePath());
+    testBook.setImage("valid/path/to/image.jpg");
+    assertEquals("valid/path/to/image.jpg", testBook.getImage());
   }
 
   // Test the owner
@@ -176,21 +176,22 @@ public class TestBook
   //make sure the id is auto incremented
   public void testGetBookId()
   {
-    Book secondBook = new Book("Test Title2", "Test Author",
+    Book secondBook = new Book("Test Title2", "Test Author", 5846,
         Genre.FICTION, "1234567890123", Format.HARDCOVER,
         "Test Description", "test/path/to/image.jpg", owner);
     assertEquals(1, testBook.getBookId());
     assertEquals(2, secondBook.getBookId());
   }
   // Test the borrowedBy
-  @Test
-  public void testValidBorrowedBy()
-  {
-    User borrower1 = new User("testBorrower", "John Doe", "john@doe.com",
-        "password123", "0987654321", "456 Test St");
-    testBook.setBorrowedBy(borrower1);
-    assertEquals(borrower1, testBook.getBorrowedBy());
-  }
+  //removed this attribute entirely
+//  @Test
+//  public void testValidBorrowedBy()
+//  {
+//    User borrower1 = new User("testBorrower", "John Doe", "john@doe.com",
+//        "password123", "0987654321", "456 Test St");
+//    testBook.setBorrowedBy(borrower1);
+//    assertEquals(borrower1, testBook.getBorrowedBy());
+//  }
   @Test
   //test owner cannot lend to themselves
   public void testOwnerLendTo()
@@ -204,13 +205,14 @@ public class TestBook
   {
     testBook.lendTo( testBorrower);
     assertInstanceOf(Borrowed.class, testBook.getStatus());
-    assertEquals(testBorrower, testBook.getBorrowedBy());
+    assertEquals(testBorrower, testBook.getStatus().toString().equals("Borrowed by " + testBorrower.getUserName()));
   }
 
   @Test
+  //this might need another look if we have time
   public void testAvailableMarkAsReturned()
   {
-    assertThrows(UnsupportedOperationException.class, () -> testBook.markAsReturned());
+    assertThrows(UnsupportedOperationException.class, () -> testBook.markAsReturned(owner));
   }
   @Test
   public void testAvailableSetUnavailable()
@@ -228,11 +230,11 @@ public class TestBook
   }
   @Test
   public void testBorrowedMarkAsReturned()
+      //check again if time permits
   {
     testBook.setStatus(borrowed);
-    testBook.markAsReturned();
+    testBook.markAsReturned(owner);
     assertInstanceOf(Available.class, testBook.getStatus());
-    assertNull(testBook.getBorrowedBy());
   }
   @Test
   public void testBorrowedSetUnavailable()
@@ -251,7 +253,7 @@ public class TestBook
   public void testUnavailableMarkAsReturned()
   {
     testBook.setStatus(unavailable);
-    assertThrows(UnsupportedOperationException.class, () -> testBook.markAsReturned());
+    assertThrows(UnsupportedOperationException.class, () -> testBook.markAsReturned(testBorrower));
   }
   @Test
   public void testUnavailableSetUnavailable()

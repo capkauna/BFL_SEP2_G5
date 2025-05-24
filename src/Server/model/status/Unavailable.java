@@ -11,7 +11,7 @@ public class Unavailable implements Status
     throw new UnsupportedOperationException("Book cannot be lent out.");
   }
 
-  @Override public void markAsReturned(Book b)
+  @Override public void markAsReturned(Book b, User u)
   {
     throw new UnsupportedOperationException("Book is unavailable.");
   }

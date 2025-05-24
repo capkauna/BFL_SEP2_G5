@@ -49,6 +49,24 @@ public class JdbcWaitingListDAO implements WaitingListDAO
     }
     return getByBookId(bookId);
   }
+  //alt create that takes a WaitingListEntry object
+  public List<WaitingListEntry> newEntry(WaitingListEntry entry) throws SQLException {
+    String sql = "INSERT INTO waiting_list (user_id, book_id, added_at) VALUES (?, ?, NOW()) RETURNING entry_id";
+    try (Connection conn = DBConnection.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+      stmt.setInt(1, entry.getUser().getUserId());
+      stmt.setInt(2, entry.getBook().getBookId());
+      stmt.executeUpdate();
+      ResultSet rs = stmt.getGeneratedKeys();
+      if (rs.next()) {
+        entry.setEntryId(rs.getInt("entry_id"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    //return getByBookId(entry.getBook().getBookId());
+    return exists(entry.getUser().getUserId(), entry.getBook().getBookId());
+  }
 
   @Override
   public List<WaitingListEntry> removeEntry(int userId, int bookId) {

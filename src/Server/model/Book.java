@@ -211,9 +211,9 @@ public class Book
   {
     status.lendTo(this, user);
   }
-  public void markAsReturned()
+  public void markAsReturned(User user)
   {
-    status.markAsReturned(this);
+    status.markAsReturned(this, user);
   }
   public void setUnavailable()
   {

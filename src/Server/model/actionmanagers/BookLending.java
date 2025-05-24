@@ -33,9 +33,9 @@ public class BookLending
     return u;
   }
 
-  public void returnBook(Book b)
+  public void returnBook(Book b, User u)
   {
-    b.markAsReturned();
+    b.markAsReturned(u);
     setEndDate();
   }
 }

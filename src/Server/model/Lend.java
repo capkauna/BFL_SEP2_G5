@@ -81,10 +81,10 @@ public static Lend fromDb(int lendId,
     b.lendTo(u);
     return new Lend(b.getOwner().getUserId(), b.getBookId(), u.getUserId());
   }
-  public void returnBook(Book b)
+  public void returnBook(Book b, User u)
   {
     this.setEndDate();
-    b.markAsReturned();
+    b.markAsReturned(u);
   }
 
   @Override public boolean equals(Object o)
