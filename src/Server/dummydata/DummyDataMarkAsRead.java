@@ -13,7 +13,6 @@ import Server.repository.JdbcMarkAsReadDAO;
 
 import Server.model.Book;
 import Server.model.User;
-import Server.model.UserSummary;
 import Server.model.actionmanagers.MarkAsRead;
 import Server.repository.*;
 
