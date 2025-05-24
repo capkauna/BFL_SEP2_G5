@@ -3,6 +3,7 @@ package Server;
 import Server.util.DBConnection;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectToDatabase {
@@ -92,7 +93,10 @@ public class ConnectToDatabase {
       Class.forName("org.postgresql.Driver");
 
 
-      try (Connection connection = DBConnection.getConnection()) {
+      try (Connection connection = DriverManager.getConnection(
+          "jdbc:postgresql://localhost:5432/BestFriendLibrary",
+          "postgres",
+          "AAA25")){
         System.out.println("SUCCESS");
       } catch (SQLException e) {
         System.out.println("ERROR");

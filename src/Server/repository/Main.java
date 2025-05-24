@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class Main {
   public static void main(String[] args) {
-    String url = "jdbc:postgresql://localhost:5432/bfl";
+    String url = "jdbc:postgresql://localhost:5432/BestFriendLibrary";
     String user = "postgres";
     String password = "AAA25";
 
