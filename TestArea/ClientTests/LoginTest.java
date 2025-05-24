@@ -1,7 +1,7 @@
 package ClientTests;
 
-import dto.Request;
-import dto.Response;
+import Shared.dto.Request;
+import Shared.dto.Response;
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;

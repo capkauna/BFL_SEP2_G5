@@ -1,44 +1,57 @@
 package Server.repository;
 
 import Server.model.Lend;
+import Server.model.actionmanagers.BookLending;
 import Server.repository.LendDAO;
-
+import Server.util.DBConnection;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcLendDAO implements LendDAO
-{
-  private final Connection connection;
+public class JdbcLendDAO implements LendDAO {
+  private final Connection c;
 
   public JdbcLendDAO(Connection connection) {
-    this.connection = connection;
+    this.c = connection;
   }
 
-  @Override
-  public Lend create(int userId, int bookId, int borrowerId) throws SQLException {
-    String sql = "INSERT INTO lend (user_id, book_id, borrower_id, start_date) VALUES (?, ?, ?, CURRENT_DATE)";
-    try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-      stmt.setInt(1, userId);
-      stmt.setInt(2, bookId);
-      stmt.setInt(3, borrowerId);
-      stmt.executeUpdate();
-
-      ResultSet keys = stmt.getGeneratedKeys();
-      if (keys.next()) {
-        int id = keys.getInt(1);
-        return new Lend(id, userId, bookId, borrowerId, LocalDate.now());
-      }
-      throw new SQLException("Creating lend failed, no ID obtained.");
+  public static LendDAO getInstance() {
+    try {
+      return new JdbcLendDAO(DBConnection.getConnection());
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
     }
   }
 
+
+  @Override
+  public Lend create(Lend lend) throws SQLException {
+    String sql =
+        "INSERT INTO lends (user_id, book_id, borrower_id, start_date) " +
+            "VALUES (?, ?, ?, CURRENT_DATE) RETURNING lend_id";
+    try (PreparedStatement stmt = c.prepareStatement(sql)) {
+      stmt.setInt(1, lend.getOwnerId());
+      stmt.setInt(2, lend.getBookId());
+      stmt.setInt(3, lend.getBorrowerId());
+
+      ResultSet rs = stmt.executeQuery();
+
+    ResultSet keys = stmt.executeQuery();
+      if (keys.next()) {
+        lend.setLendId(keys.getInt(1));
+      }
+      return lend;
+    }
+  }
+
+
   @Override
   public Lend findById(int id) throws SQLException {
-    String sql = "SELECT * FROM lend WHERE lend_id = ?";
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+    String sql = "SELECT * FROM lends WHERE lend_id = ?";
+    try (PreparedStatement stmt = c.prepareStatement(sql)) {
       stmt.setInt(1, id);
       ResultSet rs = stmt.executeQuery();
       if (rs.next()) return mapRowToLend(rs);
@@ -48,8 +61,8 @@ public class JdbcLendDAO implements LendDAO
 
   @Override
   public List<Lend> findAll() throws SQLException {
-    String sql = "SELECT * FROM lend";
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+    String sql = "SELECT * FROM lends";
+    try (PreparedStatement stmt = c.prepareStatement(sql)) {
       ResultSet rs = stmt.executeQuery();
       List<Lend> lends = new ArrayList<>();
       while (rs.next()) lends.add(mapRowToLend(rs));
@@ -72,53 +85,77 @@ public class JdbcLendDAO implements LendDAO
     return findByField("borrower_id", borrowerId);
   }
 
-  @Override public List<Lend> findActiveLends() throws SQLException
-  {
-    return List.of();
+  @Override
+  public List<Lend> findActiveLends() throws SQLException {
+    String sql = "SELECT * FROM lends WHERE end_date IS NULL";
+    try (PreparedStatement stmt = c.prepareStatement(sql))
+    {
+      ResultSet rs = stmt.executeQuery();
+      List<Lend> lends = new ArrayList<>();
+      while (rs.next())
+      {
+        lends.add(mapRowToLend(rs));
+      }
+      return lends;
+    }
   }
 
-  @Override public List<Lend> findReturnedLends() throws SQLException
-  {
-    return List.of();
+  @Override
+  public List<Lend> findReturnedLends() throws SQLException {
+    String sql = "SELECT * FROM lends WHERE end_date IS NOT NULL";
+    try (PreparedStatement stmt = c.prepareStatement(sql))
+    {
+      ResultSet rs = stmt.executeQuery();
+      List<Lend> lends = new ArrayList<>();
+      while (rs.next())
+      {
+        lends.add(mapRowToLend(rs));
+      }
+      return lends;
+    }
   }
 
-  @Override public void markAsReturned(int lendId) throws SQLException
-  {
+  @Override
+  public void markAsReturned(int lendId) throws SQLException {
+    String sql = "UPDATE lends SET end_date = ? WHERE lend_id = ?";
 
+    try (PreparedStatement stmt = c.prepareStatement(sql)) {
+      stmt.setDate(1, Date.valueOf(LocalDate.now()));
+      stmt.setInt(2, lendId);
+      stmt.executeUpdate();
+    }
   }
 
   @Override
   public void update(Lend lend) throws SQLException {
-    String sql = "UPDATE lend SET user_id = ?, book_id = ?, borrower_id = ?, start_date = ?, end_date = ? WHERE lend_id = ?";
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-      stmt.setInt(1, lend.getUserId());
+    String sql = "UPDATE lends SET user_id = ?, book_id = ?, borrower_id = ?, start_date = ?, end_date = ? WHERE lend_id = ?";
+    try (PreparedStatement stmt = c.prepareStatement(sql)) {
+      stmt.setInt(1, lend.getOwnerId());
       stmt.setInt(2, lend.getBookId());
       stmt.setInt(3, lend.getBorrowerId());
       stmt.setDate(4, Date.valueOf(lend.getStartDate()));
-      if (lend.getEndDate() != null) {
-        stmt.setDate(5, Date.valueOf(lend.getEndDate()));
-      } else {
+      if (lend.getEndDate() == null) {
         stmt.setNull(5, Types.DATE);
+      } else {
+        stmt.setDate(5, Date.valueOf(lend.getEndDate()));
       }
-      stmt.setInt(6, lend.getId());
+      stmt.setInt(6, lend.getLendId());
       stmt.executeUpdate();
     }
   }
 
   @Override
   public void delete(int id) throws SQLException {
-    String sql = "DELETE FROM lend WHERE lend_id = ?";
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+    String sql = "DELETE FROM lends WHERE lend_id = ?";
+    try (PreparedStatement stmt = c.prepareStatement(sql)) {
       stmt.setInt(1, id);
       stmt.executeUpdate();
     }
   }
 
-  // ---------------- Utility ----------------
-
   private List<Lend> findByField(String fieldName, int value) throws SQLException {
-    String sql = "SELECT * FROM lend WHERE " + fieldName + " = ?";
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+    String sql = "SELECT * FROM lends WHERE " + fieldName + " = ?";
+    try (PreparedStatement stmt = c.prepareStatement(sql)) {
       stmt.setInt(1, value);
       ResultSet rs = stmt.executeQuery();
       List<Lend> lends = new ArrayList<>();
@@ -127,13 +164,31 @@ public class JdbcLendDAO implements LendDAO
     }
   }
 
+  private List<Lend> findByBooleanField(String fieldName, boolean value) throws SQLException {
+    String sql = "SELECT * FROM lends WHERE " + fieldName + " = ?";
+    try (PreparedStatement stmt = c.prepareStatement(sql)) {
+      stmt.setBoolean(1, value);
+      ResultSet rs = stmt.executeQuery();
+      List<Lend> lends = new ArrayList<>();
+      while (rs.next()) lends.add(mapRowToLend(rs));
+      return lends;
+    }
+  }
+
+
   private Lend mapRowToLend(ResultSet rs) throws SQLException {
-    return new Lend(
-        rs.getInt("lend_id"),
-        rs.getInt("user_id"),
-        rs.getInt("book_id"),
-        rs.getInt("borrower_id"),
-        rs.getDate("start_date").toLocalDate()
-    );
+
+        int id =rs.getInt("lend_id");
+        int ownerId = rs.getInt("user_id");
+        int bookId = rs.getInt("book_id");
+        int borrowerId = rs.getInt("borrower_id");
+        LocalDate startDate = rs.getDate("start_date").toLocalDate();
+        LocalDate endDate   = (rs.getDate("end_date") != null)
+            ? rs.getDate("end_date").toLocalDate()
+            : null;
+
+
+    return new Lend(id, ownerId, bookId, borrowerId, startDate, endDate);
   }
 }
+

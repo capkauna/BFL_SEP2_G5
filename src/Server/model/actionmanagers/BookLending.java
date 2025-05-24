@@ -12,7 +12,7 @@ public class BookLending
   private String startDate;
   private String endDate;
   private Status status;
-  private int id; //will be handled by the database
+  private int id;
 
   public BookLending(Book b, User u)
   {
@@ -27,6 +27,10 @@ public class BookLending
   public void setEndDate()
   {
     this.endDate = LocalDate.now().toString();
+  }
+
+  public User getUser(){
+    return u;
   }
 
   public void returnBook(Book b)
