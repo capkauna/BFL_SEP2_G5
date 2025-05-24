@@ -1,37 +1,46 @@
 package Server.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Lend {
-  private int lendId;
-  private int userId;
-  private int bookId;
-  private int borrowerId;
-  private LocalDate startDate;
-  private boolean endDate;
+  private Integer lendId, ownerId, bookId, borrowerId;
+  private LocalDate startDate, endDate;
+//
 
-  public Lend(int lendId, int userId, int bookId, int borrowerId, LocalDate startDate) {
+
+  public Lend( Integer ownerId, Integer bookId, Integer borrowerId) {
+    this.ownerId = ownerId;
+    this.bookId = bookId;
+    this.borrowerId = borrowerId;
+    this.startDate = LocalDate.now();
+    this.endDate = null;
+    this.lendId = null;//will be created by database
+  }
+  //constructod for DB hydration
+  public Lend (Integer lendId, Integer ownerId, Integer bookId, Integer borrowerId, LocalDate startDate, LocalDate endDate) {
     this.lendId = lendId;
-    this.userId = userId;
+    this.ownerId = ownerId;
     this.bookId = bookId;
     this.borrowerId = borrowerId;
     this.startDate = startDate;
     this.endDate = endDate;
   }
 
-  public int getLendId() {
+  public Integer getLendId() {
     return lendId;
   }
 
-  public int getUserId() {
-    return userId;
+  //TODO: make sure this is the book's owner id, not the borrower
+  public Integer getOwnerId() {
+    return ownerId;
   }
 
-  public int getBookId() {
+  public Integer getBookId() {
     return bookId;
   }
 
-  public int getBorrowerId() {
+  public Integer getBorrowerId() {
     return borrowerId;
   }
 
@@ -39,36 +48,68 @@ public class Lend {
     return startDate;
   }
 
-  public boolean isEndDate() {
+  public LocalDate getEndDate() {
     return endDate;
   }
+//TODO make sure this gets called upon book return
+  public void setEndDate() {
+    this.endDate = LocalDate.now();
 
-  public void setEndDate(boolean endDate) {
-    this.endDate = endDate;
   }
 
-  public int getLenderId()
+
+
+
+//for db use
+public static Lend fromDb(int lendId,
+    int ownerId,
+    int bookId,
+    int borrowerId,
+    LocalDate start,
+    LocalDate end) {
+  return new Lend(lendId, ownerId, bookId, borrowerId, start, end);
+}
+
+
+  public void setLendId(int lendId)
   {
-    return userId;
+    this.lendId = lendId;
   }
 
-  public LocalDate getLendDate()
+  public static Lend lendBook(Book b, User u)
   {
-    return startDate;
+    b.lendTo(u);
+    return new Lend(b.getOwner().getUserId(), b.getBookId(), u.getUserId());
+  }
+  public void returnBook(Book b)
+  {
+    this.setEndDate();
+    b.markAsReturned();
   }
 
-  public LocalDate getReturnDate()
+  @Override public boolean equals(Object o)
   {
-    return null;
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    Lend lend = (Lend) o;
+    return Objects.equals(lendId, lend.lendId) && Objects.equals(ownerId,
+        lend.ownerId) && Objects.equals(bookId, lend.bookId) && Objects.equals(
+        borrowerId, lend.borrowerId) && Objects.equals(startDate,
+        lend.startDate) && Objects.equals(endDate, lend.endDate);
   }
 
-  public LocalDate getEndDate()
+  @Override public int hashCode()
   {
-    return null;
+    return Objects.hash(lendId, ownerId, bookId, borrowerId, startDate,
+        endDate);
   }
 
-  public int getId()
+  @Override public String toString()
   {
-    return lendId;
+    return "Lend{" + "lendId=" + lendId + ", ownerId=" + ownerId + ", bookId="
+        + bookId + ", borrowerId=" + borrowerId + ", startDate=" + startDate
+        + ", endDate=" + endDate + '}';
   }
 }
