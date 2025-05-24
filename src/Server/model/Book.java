@@ -57,6 +57,9 @@ public class Book
     this.status = status;
   }
 
+  public Book() {
+  }
+
   //Validators
   private void validateTitle(String title)
   {

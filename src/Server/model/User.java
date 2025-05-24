@@ -1,6 +1,12 @@
 package Server.model;
 
 
+import Server.util.DBConnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 public class User
@@ -27,6 +33,10 @@ public class User
   private static final int MIN_PHONE_NUMBER_LENGTH = 8;
 
 //constructors
+
+public User() {
+}
+
   public User(String userName, String fullName, String email, String initialPassword, String phoneNumber, String address, String avatar)
   {
     validateUserName(userName);
@@ -70,6 +80,7 @@ public class User
     this.address        = address;
     this.avatar = avatarPath;
   }
+
 
   //VALIDATORS
 //TODO add check that username doesn't already exist in database
@@ -240,6 +251,13 @@ public class User
     this.userId = id;
   }
 
+  public void setUsername(String username) throws SQLException
+  {
+    if (username == null || username.trim().isEmpty())
+    {
+      throw new IllegalArgumentException("Username cannot be null or empty");
+    }
+  }
 
 
   @Override
@@ -253,4 +271,6 @@ public class User
             ", address='" + getAddress() + '\'' +
             '}';
   }
+
+
 }

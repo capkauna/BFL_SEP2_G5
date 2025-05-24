@@ -186,10 +186,7 @@ public class JdbcBookDAO implements BookDAO {
     }
     return books;
   }
-
-
-
-    @Override
+  @Override
   public List<Book> findByOwner(User owner) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
@@ -231,6 +228,7 @@ public class JdbcBookDAO implements BookDAO {
     }
     return books;
   }
+  //TODO check this again
   @Override
   public List<Book> findByBorrowedBy(User borrowedBy) throws SQLException {
     String sql = """
@@ -353,7 +351,6 @@ public class JdbcBookDAO implements BookDAO {
         owner,
         status);
   }
-
 
 
 //TODO check what is this (this is bad, needs to be fixed)
