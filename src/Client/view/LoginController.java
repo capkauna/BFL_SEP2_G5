@@ -37,7 +37,7 @@ public class LoginController
       errorLabel.setVisible(true);
       return;
     }
-    //TODO: Validate username and password
+
 
     // Perform login logic here:
     viewModel.login(username, password, errorLabel);

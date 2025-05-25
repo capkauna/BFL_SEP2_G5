@@ -1,42 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <!--UI thingy and starter page-->
-
-<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml" fx:controller="Client.view.HomeViewController" style="-fx-background-color: #990000;">
-    <top>
-        <Label text="Best Friends Library" style="-fx-font-size: 20px; -fx-padding: 10;" BorderPane.alignment="CENTER" />
-    </top>
-    <center>
-        <VBox spacing="20" alignment="CENTER">
-<!--            <Label text="Notifications (log)" style="-fx-background-color: lightgray; -fx-padding: 40;" />-->
-            <HBox spacing="50" alignment="CENTER">
-                <VBox spacing="10">
-                    <Button fx:id="myLibraryButton" text="My Library" onAction="#onMyLibrary" />
-                    <Button fx:id="findBookButton" text="Find book" onAction="#onFindBook" />
-                </VBox>
-                <TextArea fx:id="notificationLog" prefHeight="200" prefWidth="300" />
-                <VBox spacing="10">
-                    <Button fx:id="myAccountButton" text="My account" onAction="#onMyAccount" />
-                    <Button fx:id="findUserButton" text="Find User" onAction="#onFindUser" />
-                </VBox>
-            </HBox>
-        </VBox>
-    </center>
-</BorderPane>
-
-
 <!--<BorderPane xmlns="http://javafx.com/javafx"-->
 <!--            xmlns:fx="http://javafx.com/fxml"-->
 <!--            fx:controller="Client.view.HomeViewController"-->
 <!--            prefHeight="400.0" prefWidth="600.0">-->
-
-
 <!--    <top>-->
 <!--        <Label text="Best Friend Library"-->
 <!--               style="-fx-font-size: 24px, -fx-background-color: lightblue; -fx-padding: 10;"-->
@@ -55,8 +26,26 @@
 <!--        </HBox>-->
 <!--        </VBox>-->
 <!--    </center>-->
-
 <!--</BorderPane>-->
 
-
-
+<BorderPane fx:id="root" prefHeight="338.0" prefWidth="552.0" style="-fx-background-color: #990000;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.HomeViewController">
+    <top>
+        <Label style="-fx-font-size: 20px; -fx-padding: 10;" text="Best Friends Library" BorderPane.alignment="CENTER" />
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+<!--            <Label text="Notifications (log)" style="-fx-background-color: lightgray; -fx-padding: 40;" />-->
+            <HBox alignment="CENTER" prefHeight="287.0" prefWidth="501.0" spacing="50">
+                <VBox prefHeight="481.0" prefWidth="72.0" spacing="10">
+                    <Button fx:id="myLibraryButton" onAction="#onMyLibrary" text="My Library" />
+                    <Button fx:id="findBookButton" onAction="#onFindBook" prefHeight="26.0" prefWidth="80.0" text="Find book" />
+                </VBox>
+                <TextArea fx:id="notificationLog" prefHeight="506.0" prefWidth="300" />
+                <VBox prefHeight="418.0" prefWidth="79.0" spacing="10">
+                    <Button fx:id="myAccountButton" onAction="#onMyAccount" text="My account" />
+                    <Button fx:id="findUserButton" onAction="#onFindUser" prefHeight="26.0" prefWidth="79.0" text="Find User" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
