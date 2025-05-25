@@ -12,22 +12,22 @@ public class SocketAuthServiceClient implements AuthServiceClient {
   private static final int PORT = 6789;
 
   @Override
-  public boolean login(String username, String password) throws IOException {
-    try (
-        Socket sock = new Socket(HOST, PORT);
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-        BufferedReader in  = new BufferedReader(new InputStreamReader(sock.getInputStream()))
-    ) {
-      // 1) send "username:password"
-      out.write(username + ":" + password);
-      out.newLine();
-      out.flush();
+    public boolean login(String username, String password) throws IOException {
+      try (
+          Socket sock = new Socket(HOST, PORT);
+          BufferedWriter out = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+          BufferedReader in  = new BufferedReader(new InputStreamReader(sock.getInputStream()))
+      ) {
+        // 1) send "username:password"
+        out.write(username + ":" + password);
+        out.newLine();
+        out.flush();
 
-      // 2) read single-line response
-      String resp = in.readLine();
-      return resp != null && resp.startsWith("OK:");
+        // 2) read single-line response
+        String resp = in.readLine();
+        return resp != null && resp.startsWith("OK:");
+      }
     }
-  }
 
   @Override
   public FullUserDTO getUserInfo(String username) throws AuthenticationException

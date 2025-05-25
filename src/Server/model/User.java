@@ -287,5 +287,8 @@ public User() {
             '}';
   }
 
-
+  public String getUsername()
+  {
+    return userName;
+  }
 }
