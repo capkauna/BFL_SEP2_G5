@@ -18,7 +18,42 @@ public class ViewHandler {
 
   public void start(Stage primaryStage) {
     this.primaryStage = primaryStage;
-    openView("Client/view/HomeView.fxml");
+    openLoginView();
+    //openView("Client/view/HomeView.fxml");
+  }
+
+  public void openLoginView() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Client/view/LoginView.fxml"));
+      Parent root = loader.load();
+
+      LoginController controller = loader.getController();
+      controller.init(viewModelFactory.getLogInVM(), this);
+
+      Scene scene = new Scene(root);
+      primaryStage.setScene(scene);
+      primaryStage.setTitle("Login");
+      primaryStage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void openHomeView() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Client/view/HomeView.fxml"));
+      Parent root = loader.load();
+
+      HomeViewController controller = loader.getController();
+      controller.init(this, viewModelFactory.getHomeVM());
+
+      Scene scene = new Scene(root);
+      primaryStage.setScene(scene);
+      primaryStage.setTitle("Home");
+      primaryStage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public void openView(String fxmlFile) {

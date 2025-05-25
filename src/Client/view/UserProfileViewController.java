@@ -16,7 +16,7 @@ public class UserProfileViewController
   @FXML private TextField phoneField;
   @FXML private TextField emailField;
   @FXML private TextField addressField;
-  //@FXML private TextField moreInfoField;
+  @FXML private TextField moreInfoField;
 
   @FXML private Button readListButton;
   @FXML private Button myLibraryButton;

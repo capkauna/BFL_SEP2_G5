@@ -19,8 +19,23 @@ public class LoginController
 
   private LogInVM viewModel;
 
-  public void init(LogInVM vm){
-    this.viewModel = vm;
+
+  //public void init(LogInVM vm){
+    //this.viewModel = vm;
+ // }
+
+
+  public void init(LogInVM viewModel, ViewHandler viewHandler) {
+    this.viewModel = viewModel;
+    this.viewModel.init(viewHandler);
+
+    // Bind the error label visibility to the view model's error property
+    errorLabel.setVisible(false);
+    errorLabel.setText("");
+
+    // Optionally, you can bind the text fields to the view model properties if needed
+    // usernameField.textProperty().bindBidirectional(viewModel.usernameProperty());
+    // passwordField.textProperty().bindBidirectional(viewModel.passwordProperty());
   }
 
   @FXML
