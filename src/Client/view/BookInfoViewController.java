@@ -121,4 +121,9 @@ public class BookInfoViewController
   public void init(ViewHandler viewHandler, BookInfoVM bookInfoVM)
   {
   }
+
+  @FXML
+  private void onBack() {
+    viewHandler.openView("Client/view/HomeView.fxml");
+  }
 }

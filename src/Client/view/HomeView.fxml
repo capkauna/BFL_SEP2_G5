@@ -13,7 +13,7 @@
 
    <Pane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity"
          minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-         prefWidth="600.0" style="-fx-background-color: #c9b83;"
+         prefWidth="600.0" style="-fx-background-color: #e6d7ff;"
          xmlns="http://javafx.com/javafx/22"
          xmlns:fx="http://javafx.com/fxml/1">
       <Label layoutX="202.0" layoutY="21.0" text="Best Friend Library">
@@ -32,7 +32,7 @@
               prefWidth="117.0" text="Find book"/>
       <Button fx:id="myAccountButton" layoutX="448.0" layoutY="81.0"
               mnemonicParsing="false" onAction="#onMyAccount" prefHeight="87.0"
-              prefWidth="117.0" text="My account"/>
+              prefWidth="117.0" text="My Account"/>
       <TextArea fx:id="notificationLog" layoutX="164.0" layoutY="81.0"
                 prefHeight="259.0" prefWidth="273.0"/>
    </Pane>

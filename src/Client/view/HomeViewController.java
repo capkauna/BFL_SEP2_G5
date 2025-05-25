@@ -30,7 +30,7 @@ public class HomeViewController {
   }
 
   @FXML private void onMyAccount(ActionEvent actionEvent) {
-    viewHandler.openView("Client/view/UserPageView.fxml");
+    viewHandler.openView("Client/view/UserProfileView.fxml");
   }
 
   @FXML private void onFindBook(ActionEvent actionEvent){

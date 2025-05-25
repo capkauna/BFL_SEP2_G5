@@ -30,9 +30,11 @@ public class UserProfileViewController
   @FXML private Button edit;
 
   private UserProfileVM viewModel;
+  private ViewHandler viewHandler;
 
-  public void init(UserProfileVM viewModel) {
+  public void init(ViewHandler viewHandler,UserProfileVM viewModel) {
     this.viewModel = viewModel;
+    this.viewHandler = viewHandler;
 
     nameField.textProperty().bind(viewModel.nameProperty());
     phoneField.textProperty().bind(viewModel.phoneProperty());
@@ -67,7 +69,7 @@ public class UserProfileViewController
 
   @FXML
   public void onBack() {
-    System.out.println("Back button clicked");
+    viewHandler.openView("Client/view/HomeView.fxml");
   }
 
   @FXML

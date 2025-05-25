@@ -44,7 +44,7 @@ public class ViewHandler
         case MyLibraryViewController libController ->
             libController.init(this, viewModelFactory.getMyLibraryVM());
         case UserProfileViewController userPage ->
-            userPage.init(viewModelFactory.getUserProfileVM());
+            userPage.init(this, viewModelFactory.getUserProfileVM());
         case UserListViewController userList ->
             userList.init(this, viewModelFactory.getUserListVM());
         case EditBookViewController userPage ->

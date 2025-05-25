@@ -66,7 +66,7 @@ public class SearchViewController {
 
   @FXML
   private void onBackClicked() {
-    viewHandler.openView("/Client/view/HomeView.fxml");
+    viewHandler.openView("Client/view/HomeView.fxml");
   }
 
   @FXML
@@ -74,7 +74,7 @@ public class SearchViewController {
     Book selected = bookTable.getSelectionModel().getSelectedItem();
     if (selected != null) {
       viewModel.setSelectedBook(selected);
-      viewHandler.openView("/Client/view/BookInfoView.fxml");
+      viewHandler.openView("Client/view/BookInfoView.fxml");
     }
   }
 }

@@ -23,7 +23,7 @@
 <!--    </GridPane>-->
 <!--</AnchorPane>-->
 
-<AnchorPane prefHeight="400" prefWidth="500" style="-fx-background-color: #a51414;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.SearchViewController">
+<AnchorPane prefHeight="400" prefWidth="500" style="-fx-background-color: #d2afff;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.SearchViewController">
 
     <TextField fx:id="searchField" layoutX="20" layoutY="20" prefHeight="26.0" prefWidth="421.0" promptText="Search book" />
     <Button fx:id="searchButton" layoutX="450.0" layoutY="20.0" onAction="#onSearchClicked" text="🔍" />

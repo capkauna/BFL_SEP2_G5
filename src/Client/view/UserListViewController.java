@@ -31,7 +31,7 @@ public class UserListViewController {
 
   @FXML
   private void onBack() {
-    viewHandler.openView("HomeView.fxml");
+    viewHandler.openView("Client/view/HomeView.fxml");
   }
 }
 

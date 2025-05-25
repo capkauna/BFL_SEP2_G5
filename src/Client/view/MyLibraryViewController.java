@@ -50,6 +50,6 @@ public class MyLibraryViewController
 
   @FXML
   public void onBackClicked(ActionEvent actionEvent) {
-    viewHandler.openView("HomeView.fxml");
+    viewHandler.openView("Client/view/HomeView.fxml");
   }
 }
