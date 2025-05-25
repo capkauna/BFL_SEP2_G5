@@ -14,4 +14,31 @@ public class FullUserDTO
     this.address = address;
     this.avatar = avatar;
   }
+
+
+  //add this for UserProfileVM in Client
+  public String getUserName() {
+    return userName;
+  }
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public String getAvatar() {
+    return avatar;
+  }
 }
+

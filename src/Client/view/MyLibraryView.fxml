@@ -12,7 +12,7 @@
 
     <Label layoutX="20" layoutY="20" text="My Library" style="-fx-text-fill: white; -fx-font-size: 16;" />
 
-    <ListView fx:id="bookListView" layoutX="20" layoutY="50" prefWidth="440" prefHeight="180" />
+    <ListView fx:id="libraryList" layoutX="20" layoutY="50" prefWidth="440" prefHeight="180" />
 
     <Button fx:id="addBookButton" text="Add new book" layoutX="20" layoutY="250" prefWidth="130" onAction="#onAddBookClicked"/>
     <Button fx:id="viewBookButton" text="View Book" layoutX="175" layoutY="250" prefWidth="130" onAction="#onViewBookClicked"/>

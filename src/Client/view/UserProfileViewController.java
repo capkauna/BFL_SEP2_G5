@@ -7,7 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class UserPageViewController {
+public class UserProfileViewController
+{
 
   @FXML private ImageView userAvatar;
 
@@ -15,7 +16,7 @@ public class UserPageViewController {
   @FXML private TextField phoneField;
   @FXML private TextField emailField;
   @FXML private TextField addressField;
-  @FXML private TextField moreInfoField;
+  //@FXML private TextField moreInfoField;
 
   @FXML private Button readListButton;
   @FXML private Button myLibraryButton;
@@ -33,7 +34,7 @@ public class UserPageViewController {
     phoneField.textProperty().bind(viewModel.phoneProperty());
     emailField.textProperty().bind(viewModel.emailProperty());
     addressField.textProperty().bind(viewModel.addressProperty());
-    moreInfoField.textProperty().bind(viewModel.moreInfoProperty());
+    //moreInfoField.textProperty().bind(viewModel.moreInfoProperty());
 
     if (viewModel.getAvatar() != null && !viewModel.getAvatar().isEmpty()) {
       userAvatar.setImage(new Image(viewModel.getAvatar()));

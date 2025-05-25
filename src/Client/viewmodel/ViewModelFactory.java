@@ -12,15 +12,17 @@ public class ViewModelFactory
   private final HomeVM homeVM;
   private final SearchVM searchVM;
   private final MyLibraryVM myLibraryVM;
+  private JdbcBookDAO bookDAO;
 
   public ViewModelFactory() throws SQLException
   {
     //here is what is depeneded on what
-    this.homeVM = new HomeVM(new ViewHandler(this));
+    this.homeVM = new HomeVM();
     this.searchVM = new SearchVM(JdbcBookDAO.getInstance()); //connects to DAO
     this.myLibraryVM = new MyLibraryVM(JdbcBookDAO.getInstance(), new ViewHandler(this));
   }
-  public Client.viewmodel.HomeVM getHomeVM() {
+
+  public HomeVM getHomeVM() {
     return homeVM;
   }
 

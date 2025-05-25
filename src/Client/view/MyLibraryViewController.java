@@ -1,11 +1,11 @@
 package Client.view;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import Client.viewmodel.MyLibraryVM;
-
-import java.awt.event.ActionEvent;
 
 public class MyLibraryViewController
 {
@@ -13,29 +13,32 @@ public class MyLibraryViewController
   @FXML private Button addBookButton;
   @FXML private Button viewBookButton;
   @FXML private Button removeBookButton;
+  private ActionEvent actionEvent;
 
   private ViewHandler viewHandler;
   private MyLibraryVM viewModel;
+
 
   public void init(ViewHandler viewHandler, MyLibraryVM vm) {
     this.viewHandler = viewHandler;
     this.viewModel = vm;
 
-    bookListView.setItems(viewModel.getMyBooks());
+    libraryList.setItems(viewModel.getMyBooks());
   }
 
-
-  @FXML private void onAddBookClicked(ActionEvent actionEvent) {
+  FXMLLoader loader = new FXMLLoader(getClass().getResource("/Client/view/MyLibraryView.fxml"));
+  public void onAddBookClicked(javafx.event.ActionEvent actionEvent)
+  {
     viewHandler.openView("BookInfoView.fxml");
   }
 
-  @FXML private void onViewBookClicked(ActionEvent actionEvent) {
+  public void onViewBookClicked(javafx.event.ActionEvent actionEvent)
+  {
     viewHandler.openView("BookInfoView.fxml");
   }
 
-  @FXML private void onRemoveBookClicked(ActionEvent actionEvent) {
-    viewModel.removeSelectedBook(bookListView.getSelectionModel().getSelectedItem());
+  public void onRemoveBookClicked(javafx.event.ActionEvent actionEvent)
+  {
+    viewModel.removeSelectedBook(libraryList.getSelectionModel().getSelectedItem());
   }
-
-
 }

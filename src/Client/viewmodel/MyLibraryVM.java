@@ -1,23 +1,21 @@
 package Client.viewmodel;
 
-import Server.model.Book;
-import Server.repository.BookDAO;
+
 import Client.view.ViewHandler;
-import Shared.util.Session;
+import Server.repository.JdbcBookDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class MyLibraryVM
 {
   private final ObservableList<String> books;
 
-  public MyLibraryVM() {
-    books = FXCollections.observableArrayList("Book A", "Book B", "Book C");
+  public MyLibraryVM(JdbcBookDAO instance, ViewHandler viewHandler)
+  {
+
+    this.books = FXCollections.observableArrayList();
   }
+
 
   public ObservableList<String> getBooks(){
     return books;
@@ -25,6 +23,11 @@ public class MyLibraryVM
 
   public void removeSelectedBook(String book) {
     books.remove(book);
+  }
+
+  public ObservableList<String> getMyBooks()
+  {
+    return books;
   }
 }
 //  private final BookDAO dao;

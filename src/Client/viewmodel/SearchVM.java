@@ -1,14 +1,8 @@
 package Client.viewmodel;
 
 import Server.repository.JdbcBookDAO;
-import Server.model.Book;
-import Server.repository.BookDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
 
@@ -20,7 +14,7 @@ public class SearchVM
   private final ObservableList<String> owners;
   private final ObservableList<String> borrowers;
 
-  public SearchVM() {
+  public SearchVM(JdbcBookDAO instance) {
     searchResults = FXCollections.observableArrayList();
     genres = FXCollections.observableArrayList("All", "Fiction", "Manga", "History");
     formats = FXCollections.observableArrayList("All", "Paperback", "Hardcover", "EBook");

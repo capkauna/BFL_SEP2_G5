@@ -1,7 +1,7 @@
 package ServerTests;
 
-import dto.enums.Format;
-import dto.enums.Genre;
+import Shared.dto.enums.Format;
+import Shared.dto.enums.Genre;
 import Server.model.*;
 import Server.model.status.*;
 import org.junit.jupiter.api.BeforeEach;

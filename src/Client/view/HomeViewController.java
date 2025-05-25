@@ -1,37 +1,35 @@
 package Client.view;
 
-import javafx.fxml.FXML;
 import Client.viewmodel.HomeVM;
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
+import javafx.event.ActionEvent;
 
-public class HomeViewController
-{
+public class HomeViewController {
   @FXML private TextArea notificationLog;
 
   private ViewHandler viewHandler;
   private HomeVM viewModel;
 
-  public void init(ViewHandler viewHandler, HomeVM vm) {
+  public void init(ViewHandler viewHandler, HomeVM viewModel) {
     this.viewHandler = viewHandler;
-    this.viewModel = vm;
-
-    notificationLog.setText("Notifications appears");
+    this.viewModel = viewModel;
+    notificationLog.setText("Notifications appear here.");
   }
 
   @FXML private void onMyLibrary(ActionEvent actionEvent) {
-    viewModel.openView("MyLibraryView.fxml");
+    viewHandler.openView("Client/view/MyLibraryView.fxml");
   }
 
   @FXML private void onMyAccount(ActionEvent actionEvent) {
-    viewModel.openView("UserProfileView.fxml");
+    viewHandler.openView("Client/view/UserPageView.fxml");
   }
 
   @FXML private void onFindBook(ActionEvent actionEvent){
-    viewModel.openView("SearchView.fxml");
+    viewHandler.openView("Client/view/SearchView.fxml");
   }
 
   @FXML private void onFindUser(ActionEvent actionEvent){
-    viewModel.openView("UserListView.fxml");
+    viewHandler.openView("Client/view/UserListView.fxml");
   }
 }
