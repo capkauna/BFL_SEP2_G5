@@ -8,9 +8,9 @@
 
 <!--UI thingy and starter page-->
 
-<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml" fx:controller="Client.view.HomeViewController">
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml" fx:controller="Client.view.HomeViewController" style="-fx-background-color: #990000;">
     <top>
-        <Label text="Best Friends Library" style="-fx-font-size: 20px; -fx-background-color: lightgray; -fx-padding: 10;" BorderPane.alignment="CENTER" />
+        <Label text="Best Friends Library" style="-fx-font-size: 20px; -fx-padding: 10;" BorderPane.alignment="CENTER" />
     </top>
     <center>
         <VBox spacing="20" alignment="CENTER">

@@ -8,7 +8,7 @@
 
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Client.view.MyLibraryViewController"
-            prefWidth="480" prefHeight="320" style="-fx-background-color: #a51414;">
+            prefWidth="480" prefHeight="320" style="-fx-background-color: B14747;">
 
     <Label layoutX="20" layoutY="20" text="My Library" style="-fx-text-fill: white; -fx-font-size: 16;" />
 
