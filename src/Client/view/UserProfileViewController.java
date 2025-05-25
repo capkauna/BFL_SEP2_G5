@@ -3,6 +3,7 @@ package Client.view;
 import Client.viewmodel.UserProfileVM;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,6 +12,8 @@ public class UserProfileViewController
 {
 
   @FXML private ImageView userAvatar;
+
+  @FXML private Label UserProfile;
 
   @FXML private TextField nameField;
   @FXML private TextField phoneField;
@@ -22,8 +25,9 @@ public class UserProfileViewController
   @FXML private Button myLibraryButton;
   @FXML private Button lentBooksButton;
   @FXML private Button borrowedBooksButton;
-  @FXML private Button backButton;
+  @FXML private Button back;
   @FXML private Button settingsButton;
+  @FXML private Button edit;
 
   private UserProfileVM viewModel;
 

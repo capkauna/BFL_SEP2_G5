@@ -5,36 +5,43 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="background" prefHeight="360" prefWidth="600" style="-fx-background-color: #990000;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.EditBookViewController">
-    <children>
+<AnchorPane fx:id="background" prefHeight="360" prefWidth="600"
+            style="-fx-background-color: #990000;"
+            xmlns="http://javafx.com/javafx/22"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Client.view.EditBookViewController">
+    <Button fx:id="back" layoutX="10" layoutY="10.0" onAction="#onCancelClicked"
+            prefHeight="40.0" prefWidth="43.0" style="-fx-font-size: 18px;"
+            text="←"/>
 
-        <Button fx:id="backArrow" layoutX="10" layoutY="10.0" onAction="#onCancelClicked" prefHeight="40.0" prefWidth="43.0" style="-fx-font-size: 18px;" text="←" />
+    <TextField fx:id="titleField" layoutX="50" layoutY="40" prefHeight="26.0"
+               prefWidth="481.0" promptText="Book name"/>
 
-        <TextField fx:id="titleField" layoutX="50" layoutY="40" prefHeight="26.0" prefWidth="481.0" promptText="Book name" />
+    <TextField fx:id="authorField" layoutX="50.0" layoutY="80.0"
+               prefHeight="26.0" prefWidth="482.0" promptText="Author name"/>
 
-        <TextField fx:id="authorField" layoutX="50.0" layoutY="80.0" prefHeight="26.0" prefWidth="482.0" promptText="Author name" />
+    <HBox layoutX="50" layoutY="120" spacing="20">
+        <TextField fx:id="genreField" prefWidth="230" promptText="Genre"/>
+        <TextField fx:id="publishingYear" prefWidth="230"
+                   promptText="Publishing year"/>
+    </HBox>
 
-        <HBox layoutX="50" layoutY="120" spacing="20">
-            <TextField fx:id="genreField" prefWidth="230" promptText="Genre" />
-            <TextField fx:id="publishingYear" prefWidth="230" promptText="Publishing year" />
-        </HBox>
+    <HBox layoutX="50" layoutY="160" spacing="20">
+        <TextField fx:id="type" prefWidth="230" promptText="Type"/>
+        <TextField fx:id="isbnField" prefWidth="230" promptText="ISBN"/>
+    </HBox>
 
-        <HBox layoutX="50" layoutY="160" spacing="20">
-            <TextField fx:id="type" prefWidth="230" promptText="Type" />
-            <TextField fx:id="isbnField" prefWidth="230" promptText="ISBN" />
-        </HBox>
+    <HBox layoutX="50" layoutY="200" spacing="20">
+        <TextField fx:id="year" prefWidth="230" promptText="Year"/>
+        <TextField fx:id="Language" prefWidth="230" promptText="Language"/>
+    </HBox>
 
-        <HBox layoutX="50" layoutY="200" spacing="20">
-            <TextField fx:id="year" prefWidth="230" promptText="Year" />
-            <TextField fx:id="Language" prefWidth="230" promptText="Language" />
-        </HBox>
+    <HBox layoutX="50" layoutY="240" spacing="20">
+        <Button fx:id="addImage" prefWidth="230" text="Add image"/>
+        <TextField fx:id="URL" prefWidth="230" promptText="URL"/>
+    </HBox>
 
-        <HBox layoutX="50" layoutY="240" spacing="20">
-            <Button fx:id="addImage" prefWidth="230" text="Add image" />
-            <TextField fx:id="URL" prefWidth="230" promptText="URL" />
-        </HBox>
+    <Button fx:id="Submit" layoutX="225" layoutY="290" prefWidth="150"
+            text="Submit"/>
 
-        <Button fx:id="Submit" layoutX="225" layoutY="290" prefWidth="150" text="Submit" />
-
-    </children>
 </AnchorPane>

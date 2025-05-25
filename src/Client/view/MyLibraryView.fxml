@@ -15,5 +15,5 @@
     <Button fx:id="viewBookButton" layoutX="175" layoutY="250" onAction="#onViewBookClicked" prefWidth="130" text="View Book" />
     <Button fx:id="removeBookButton" layoutX="330" layoutY="250" onAction="#onRemoveBookClicked" prefWidth="130" text="Remove book" />
 
-    <Button fx:id="backButton" layoutX="20" layoutY="290" onAction="#onBackClicked" prefWidth="80" text="← Back" />
+    <Button fx:id="back" layoutX="20" layoutY="290" onAction="#onBackClicked" prefWidth="80" text="← Back" />
 </AnchorPane>

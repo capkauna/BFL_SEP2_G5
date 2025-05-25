@@ -22,7 +22,7 @@ public class WaitingListService
   JdbcUserDAO userRepository;
   JdbcBookDAO bookRepository;
 
-  public WaitingListService(JdbcWaitingListDAO waitingListRepository)
+  public WaitingListService()
   {
     try
     {
@@ -70,6 +70,23 @@ public class WaitingListService
       waitingList.add(new WaitingListEntry(entry.getEntryId(), u, book, entry.getAddedAt()));
     }
     return waitingList;
+  }
+  public WaitingListEntry addEntry(User user, Book book) throws SQLException
+  {
+    List<WaitingListEntry> existingEntries = waitingListRepository.exists(user.getUserId(), book.getBookId());
+    if (!existingEntries.isEmpty())
+    {
+      return existingEntries.get(0); // Entry already exists, return it
+    }
+    List<WaitingListEntry> newEntry = waitingListRepository.addEntry(user.getUserId(), book.getBookId());
+    return newEntry.get(0); // Return the newly created entry
+  }
+  public WaitingListEntry addEntryDTO (WaitingListEntryDTO dto) throws SQLException {
+    // 1) turn DTO → domain objects
+    User user = userRepository.findByUserName(dto.getUsername());
+    Book book = bookRepository.findById(dto.getBookId());
+    // 2) delegate to your existing logic
+    return addEntry(user, book);
   }
 
 }

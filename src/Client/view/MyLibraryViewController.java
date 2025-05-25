@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import Client.viewmodel.MyLibraryVM;
 
@@ -13,6 +14,8 @@ public class MyLibraryViewController
   @FXML private Button addBookButton;
   @FXML private Button viewBookButton;
   @FXML private Button removeBookButton;
+  @FXML private Label MyLibrary;
+  @FXML private Button back;
   //private ActionEvent actionEvent;
 
   private ViewHandler viewHandler;

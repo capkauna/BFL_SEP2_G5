@@ -35,7 +35,7 @@
 
     <Button fx:id="backButton" layoutX="10" layoutY="350" onAction="#onBackClicked" text="←" />
    <Button fx:id="viewbook" layoutX="166.0" layoutY="349.0" mnemonicParsing="false" onAction="#onViewBookClicked" onZoomFinished="#onViewBookClicked" prefHeight="26.0" prefWidth="168.0" text="View Book" />
-   <TableView fx:id="searchResults" layoutX="20.0" layoutY="100.0" prefHeight="243.0" prefWidth="460.0">
+   <TableView fx:id="bookTable" layoutX="20.0" layoutY="100.0" prefHeight="243.0" prefWidth="460.0">
      <columns>
        <TableColumn fx:id="titlecolumn" prefWidth="94.39999008178711" text="Title" />
        <TableColumn fx:id="authorcolumn" prefWidth="112.0" text="Author" />

@@ -1,9 +1,13 @@
 package Client.view;
 
 import Client.viewmodel.EditUserVM;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+
 
 public class EditUserViewController {
 
@@ -16,6 +20,12 @@ public class EditUserViewController {
   @FXML private TextArea moreInfoField;
   @FXML private TextField newPasswordField;
   @FXML private TextField currentPasswordField;
+  @FXML private Button back;
+@FXML private Label EditUser;
+@FXML private Button addImage;
+@FXML private Button Submit;
+
+
 
   private EditUserVM viewModel;
   private ViewHandler viewHandler;

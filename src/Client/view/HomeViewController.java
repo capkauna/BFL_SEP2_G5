@@ -1,15 +1,23 @@
 package Client.view;
 
 import Client.viewmodel.HomeVM;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+
 
 public class HomeViewController {
   @FXML private TextArea notificationLog;
+@FXML private Button myLibraryButton;
+@FXML private Button myAccountButton;
+@FXML private Button findBookButton;
+@FXML private Button findUserButton;
 
   private ViewHandler viewHandler;
   private HomeVM viewModel;
+
 
   public void init(ViewHandler viewHandler, HomeVM viewModel) {
     this.viewHandler = viewHandler;

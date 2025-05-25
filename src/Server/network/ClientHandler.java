@@ -1,28 +1,27 @@
   package Server.network;
 
-  import Server.database.JdbcWaitingListDAO;
-  import Server.database.WaitingListDAO;
-  import Server.model.WaitingListEntry;
-  import Shared.network.Request;
-  import Shared.network.Response;
-  import Shared.dto.enums.Action;
+  import Server.database.*;
+  import Server.model.*;
+  import Server.service.WaitingListService;
+  import Shared.dto.WaitingListEntryDTO;
+  import Shared.network.*;
+  import Shared.dto.enums.*;
   import Server.service.AuthService;
-  import Server.model.User;
+
+
   import java.util.List;
-
-  import Server.database.BookDAO;
-  import Server.database.JdbcBookDAO;
-  import Server.model.Book;
-
   import java.io.ObjectInputStream;
   import java.io.ObjectOutputStream;
   import java.net.Socket;
+
+  import static Shared.dto.enums.Action.GET_WAITING_LIST;
 
   public class ClientHandler implements Runnable {
     private final Socket socket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private final AuthService authService;
+    private final WaitingListService waitingListService = new WaitingListService();
 
     public ClientHandler(Socket socket, AuthService authService) {
       this.socket = socket;
@@ -74,23 +73,51 @@
             }
 
           }
-          case ADD_TO_WAITING_LIST -> {
-            // TODO:
-            //  call bookService.addToWaitingList(...)
-            try
-            {
-              WaitingListDAO wd = JdbcWaitingListDAO.getInstance();
-              WaitingListEntry entry = (WaitingListEntry) request.getPayload();
-              yield new Response(true, entry, null);
-            }
-            catch (Exception e)
-            {
-              yield new Response(false, null, "Failed to add to waiting list: " + e.getMessage());
+          case ADD_TO_WAITING_LIST ->
+          {
+            WaitingListEntryDTO dto = (WaitingListEntryDTO) request.getPayload();
+            WaitingListEntry entry = waitingListService.addEntryDTO(dto);
+            // return the newly-created entry back to the client
+            yield new Response(true, entry, null);
             }
 
+            case GET_WAITING_LIST -> {
+            //not done yet
+              try {
+                WaitingListDAO wd = JdbcWaitingListDAO.getInstance();
+                List<WaitingListRecord> waitingList = wd.findAll();
+                yield new Response(true, waitingList, null);
+              } catch (Exception e) {
+                yield new Response(false, null, "Failed to get waiting list: " + e.getMessage());
+              }
+            }
+          case LEND_BOOK -> {
+            //not really done, this is a lot of wilding
+            try {
+              Lend lendRequest = (Lend) request.getPayload();
+              BookDAO bookDAO = JdbcBookDAO.getInstance();
+              UserDAO userDAO = JdbcUserDAO.getInstance();
+              LendDAO lends = JdbcLendDAO.getInstance();
 
+              Book book = bookDAO.findById(lendRequest.getBookId());
+              User user = userDAO.findById(lendRequest.getBorrowerId());
 
+              if (book != null && user != null) {
+                // Assuming lendBook method exists in the service
+                Lend lend =Lend.lendBook(book, user);
+
+                yield new Response(true, lend,  "Book lent successfully.");
+              } else {
+                yield new Response(false, null, "Invalid book or user.");
+              }
+            } catch (Exception e) {
+              yield new Response(false, null, "Error lending book: " + e.getMessage());
+            }
           }
+
+
+
+
           default -> new Response(false, null, "Unknown action.");
         };
       } catch (Exception e) {

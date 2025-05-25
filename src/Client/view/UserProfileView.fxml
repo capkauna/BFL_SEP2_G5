@@ -21,7 +21,7 @@
 <AnchorPane prefHeight="400" prefWidth="600" style="-fx-background-color: #990000;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.UserProfileViewController">
 
     <!-- Back Arrow Button -->
-    <Button fx:id="backButton" layoutX="10" layoutY="10" onAction="#onBack" style="-fx-background-color: transparent;">
+    <Button fx:id="back" layoutX="10" layoutY="10" onAction="#onBack" style="-fx-background-color: transparent;">
     </Button>
 
     <!-- Page Title -->

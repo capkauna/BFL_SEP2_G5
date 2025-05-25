@@ -80,7 +80,7 @@ public class BookInfoViewController
         unavailableCheckBox.setSelected(viewModel.isUnavailable());
 }*/
 
-   
+
 
   public void onLendButtonClicked()
   {
@@ -114,6 +114,9 @@ public class BookInfoViewController
     // You can add more logic here, such as opening a dialog to edit the book details
   }
 
+  /*@FXML private void onHistoryClicked() {
+    viewModel.showHistory();
+  }*/
 
   public void init(ViewHandler viewHandler, BookInfoVM bookInfoVM)
   {

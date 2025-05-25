@@ -2,7 +2,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="Client.view.WaitingListViewController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="Client.view.WaitingListController">
     <center>
         <TableView fx:id="waitingListTable" prefWidth="300">
             <columns>

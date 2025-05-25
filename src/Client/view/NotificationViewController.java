@@ -3,12 +3,16 @@ package Client.view;
 import Client.viewmodel.NotificationsVM;
 import Server.model.Notification;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 public class NotificationViewController
 {
+@FXML private Button returnButton;
   @FXML private ListView<String> notificationList;
   private NotificationsVM viewModel;
+
 
   public void init(NotificationsVM vm) {
     this.viewModel = vm;

@@ -61,8 +61,8 @@ public class ViewHandler
         }
       }
 
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+      primaryStage.setScene(new Scene(root));
+      primaryStage.show();
     }
     catch (IOException e)
     {

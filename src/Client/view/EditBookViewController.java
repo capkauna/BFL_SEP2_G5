@@ -2,7 +2,9 @@ package Client.view;
 
 import Client.viewmodel.EditBookVM;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 public class EditBookViewController
 {
@@ -14,6 +16,15 @@ public class EditBookViewController
   @FXML private TextField descriptionArea;
   @FXML private TextField imagePathField;
   @FXML private TextField errorLabel;
+ @FXML private Button back;
+@FXML private TextField publishingYear;
+@FXML private TextField type;
+@FXML private TextField year;
+@FXML private TextField Language;
+@FXML private Button addImage;
+@FXML private  TextField URL;
+@FXML private Button Submit;
+
 
   private EditBookVM viewModel;
   private ViewHandler viewHandler;
