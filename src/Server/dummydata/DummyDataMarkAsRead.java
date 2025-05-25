@@ -3,18 +3,12 @@ package Server.dummydata;
 import Server.model.Book;
 import Server.model.User;
 import Server.model.actionmanagers.MarkAsRead;
-import Server.repository.BookDAO;
-import Server.repository.UserDAO;
-import Server.repository.MarkAsReadDAO;
-import Server.repository.JdbcBookDAO;
-import Server.repository.JdbcUserDAO;
-import Server.repository.JdbcMarkAsReadDAO;
-
-
-import Server.model.Book;
-import Server.model.User;
-import Server.model.actionmanagers.MarkAsRead;
-import Server.repository.*;
+import Server.database.BookDAO;
+import Server.database.UserDAO;
+import Server.database.MarkAsReadDAO;
+import Server.database.JdbcBookDAO;
+import Server.database.JdbcUserDAO;
+import Server.database.JdbcMarkAsReadDAO;
 
 import java.sql.SQLException;
 import java.util.List;

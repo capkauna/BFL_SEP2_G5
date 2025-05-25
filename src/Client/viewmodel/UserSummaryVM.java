@@ -6,11 +6,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class UserSummaryVM {
+  private String CurrentUserName;
   private final StringProperty userName = new SimpleStringProperty();
   private final IntegerProperty booksInLibrary = new SimpleIntegerProperty();
   private final IntegerProperty booksRead = new SimpleIntegerProperty();
 
-  public UserSummaryVM(String userName, int booksInLibrary, int booksRead) {
+  public UserSummaryVM(String currentUserName, String userName, int booksInLibrary, int booksRead) {
+    this.CurrentUserName = currentUserName;
     this.userName.set(userName);
     this.booksInLibrary.set(booksInLibrary);
     this.booksRead.set(booksRead);

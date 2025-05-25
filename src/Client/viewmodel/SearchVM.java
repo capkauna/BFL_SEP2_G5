@@ -1,6 +1,6 @@
 package Client.viewmodel;
 
-import Server.repository.JdbcBookDAO;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,7 +14,11 @@ public class SearchVM
   private final ObservableList<String> owners;
   private final ObservableList<String> borrowers;
 
-  public SearchVM(JdbcBookDAO instance) {
+
+
+  public SearchVM() {
+
+    //TODO: give a search service attrivute (or clientsockethandler) instead of a DAO
     searchResults = FXCollections.observableArrayList();
     genres = FXCollections.observableArrayList("All", "Fiction", "Manga", "History");
     formats = FXCollections.observableArrayList("All", "Paperback", "Hardcover", "EBook");

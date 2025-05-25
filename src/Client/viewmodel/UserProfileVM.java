@@ -6,6 +6,7 @@ import javafx.beans.property.StringProperty;
 
 public class UserProfileVM
 {
+  private String currentUserName;
   private final StringProperty name = new SimpleStringProperty();
   private final StringProperty phone = new SimpleStringProperty();
   private final StringProperty email = new SimpleStringProperty();
@@ -13,13 +14,14 @@ public class UserProfileVM
   //private final StringProperty moreInfo = new SimpleStringProperty();
   private final StringProperty avatar = new SimpleStringProperty();
 
-  public UserProfileVM(FullUserDTO user) {
+  public UserProfileVM(FullUserDTO user, String currentUserName) {
     name.set(user.getUserName());
     phone.set(user.getPhoneNumber());
     email.set(user.getEmail());
     address.set(user.getAddress());
     //moreInfo.set(user.getMoreInfo());
     avatar.set(user.getAvatar());
+    this.currentUserName = currentUserName;
   }
 
   public StringProperty nameProperty() { return name; }

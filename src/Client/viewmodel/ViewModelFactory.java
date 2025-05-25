@@ -1,42 +1,122 @@
 package Client.viewmodel;
 
-import Server.repository.JdbcBookDAO;
-import Client.view.ViewHandler;
-import Client.viewmodel.*;
-
-
-import java.sql.SQLException;
+import Client.network.AuthServiceClient;
+import Client.network.ClientSocketHandler;
+import Client.network.SocketAuthServiceClient;
+import Shared.dto.FullUserDTO;
 
 public class ViewModelFactory
 {
-  private final HomeVM homeVM;
-  private final SearchVM searchVM;
-  private final MyLibraryVM myLibraryVM;
-  private JdbcBookDAO bookDAO;
+  //private final AuthServiceClient authClient;
+  private final ClientSocketHandler socketHandler;
+  private FullUserDTO userToView;
 
-  public ViewModelFactory() throws SQLException
+  // capture who just logged in
+  private String currentUsername;
+
+  public ViewModelFactory()
   {
-    //here is what is depeneded on what
-    this.homeVM = new HomeVM();
-    this.searchVM = new SearchVM(JdbcBookDAO.getInstance()); //connects to DAO
-    this.myLibraryVM = new MyLibraryVM(JdbcBookDAO.getInstance(), new ViewHandler(this));
+    //this.authClient = new SocketAuthServiceClient();
+    this.socketHandler = new ClientSocketHandler();
+  }
+  // used by LoginController once login succeeds:
+  public void setCurrentUsername(String username) {
+    this.currentUsername = username;
+  }
+
+  public LogInVM getLogInVM() {
+    // pass the factory itself so LoginVM can tell it who logged in
+    return new LogInVM(socketHandler, this);
   }
 
   public HomeVM getHomeVM() {
-    return homeVM;
+    if (currentUsername == null)
+    {
+      throw new IllegalStateException("must log in before creating HomeVM");
+    }
+    return new HomeVM(socketHandler, currentUsername);
   }
 
   public SearchVM getSearchVM() {
-    return searchVM;
+
+    return new SearchVM();
   }
 
-  public MyLibraryVM getMyLibraryVM()
-  {
-    return myLibraryVM;
+  public MyLibraryVM getMyLibraryVM() {
+    if (currentUsername == null) {
+      throw new IllegalStateException("must log in before creating MyLibraryVM");
+    }
+    return new MyLibraryVM(socketHandler, currentUsername);
   }
 
   public BookInfoVM getBookInfoVM() {
-    return new BookInfoVM();
+    if (currentUsername == null)
+    {
+      throw new IllegalStateException("must log in before creating HomeVM");
+    }
+    return new BookInfoVM(currentUsername);
   }
 
+  public BookListVM getBookListVM() {
+    if (currentUsername == null) {
+      throw new IllegalStateException("must log in before creating BookListVM");
+    }
+    return new BookListVM(currentUsername);
+  }
+
+  public EditBookVM getEditBookVM()
+  {
+    if (currentUsername == null)
+    {
+      throw new IllegalArgumentException("Username cannot be null or empty");
+    }
+    return new EditBookVM(currentUsername);
+  }
+
+  public EditUserVM getEditUserVM()
+  {
+    if (currentUsername == null)
+    {
+      throw new IllegalArgumentException("Username cannot be null or empty");
+    }
+    return new EditUserVM(currentUsername);
+  }
+  public NotificationsVM getNotificationsVM()
+  {
+    if (currentUsername == null)
+    {
+      throw new IllegalStateException("must log in before seeing Notifications");
+    }
+    return new NotificationsVM(currentUsername);
+  }
+  public ReaderNotesVM getReaderNotesVM()
+  {
+    if (currentUsername == null)
+    {
+      throw new IllegalStateException("must log in before creating ReaderNotesVM");
+    }
+    return new ReaderNotesVM(currentUsername);
+  }
+  public UserListVM getUserListVM()
+  {
+    return new UserListVM();
+  }
+  public UserProfileVM getUserProfileVM()
+  {
+    if (currentUsername == null)
+    {
+      throw new IllegalArgumentException("Username cannot be null or empty");
+    }
+    return new UserProfileVM(userToView ,currentUsername);
+  }
+  //TODO: revisit this
+  public UserSummaryVM getUserSummaryVM()
+  {
+    if (currentUsername == null)
+    {
+      throw new IllegalArgumentException("Username cannot be null or empty");
+    }
+    return new UserSummaryVM(currentUsername, userToView.getFullName(), 3, 20);
+  }
 }
+

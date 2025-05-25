@@ -3,12 +3,10 @@ package Server.dummydata;
 import Server.model.Book;
 import Server.model.User;
 import Server.model.WaitingListEntry;
-import Server.repository.*;
+import Server.database.*;
 
 import java.sql.SQLException;
 import java.util.List;
-import Shared.dto.enums.Genre;
-import Shared.dto.enums.Format;
 
 /**
  * Dummy runner for populating and testing the waiting list functionality.

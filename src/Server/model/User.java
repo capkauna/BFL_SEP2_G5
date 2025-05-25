@@ -82,6 +82,13 @@ public User() {
     this.avatar = avatarPath;
   }
 
+  //only for client side use
+  public User (String userName, String rawPassword)
+  {
+    this.userName = userName;
+    this.setPassword(rawPassword);
+  }
+
 
   //VALIDATORS
 //TODO add check that username doesn't already exist in database
@@ -242,6 +249,13 @@ public User() {
     // Use the private constructor that takes an already‐hashed password:
     User u = new User(id, userName, fullName, email,
         passwordHash, phoneNumber, address, avatar);
+    return u;
+  }
+
+  public static User fromClient(String username, String rawPassword)
+  {
+    // This is used for client-side authentication, so we don't need to hash the password:
+    User u = new User(username, rawPassword);
     return u;
   }
   //Optional setter so DAO can inject the generated id.

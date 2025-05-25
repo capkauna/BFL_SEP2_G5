@@ -3,10 +3,7 @@ package Server.dummydata;
 import Server.model.Book;
 import Server.model.Lend;
 import Server.model.User;
-import Server.repository.*;
-
-import Shared.dto.enums.Genre;
-import Shared.dto.enums.Format;
+import Server.database.*;
 
 public class DummyLendRunner {
   public static void main(String[] args) {

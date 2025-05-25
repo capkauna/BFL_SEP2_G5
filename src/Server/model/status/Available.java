@@ -1,10 +1,10 @@
 package Server.model.status;
 
+import Server.model.Lend;
 import Server.model.WaitingListEntry;
 import Shared.dto.enums.BookStatus;
 import Server.model.Book;
 import Server.model.User;
-import Server.model.actionmanagers.BookLending;
 
 public class Available implements Status
 {
@@ -16,7 +16,7 @@ public class Available implements Status
     {
       throw new UnsupportedOperationException("You cannot borrow your own book. Consider making it unavailable instead.");
     }
-    BookLending lending = new BookLending(b, u);
+    Lend.lendBook(b,u);
     b.setStatus(new Borrowed(u));
   }
 

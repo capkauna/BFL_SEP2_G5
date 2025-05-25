@@ -1,6 +1,6 @@
 package Server.dummydata;
 
-import Server.repository.*;
+import Server.database.*;
 import Server.model.*;
 import Shared.dto.enums.Format;
 import Shared.dto.enums.Genre;

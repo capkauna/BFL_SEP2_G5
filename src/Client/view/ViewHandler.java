@@ -8,38 +8,54 @@ import Client.viewmodel.*;
 
 import java.io.IOException;
 
-public class ViewHandler {
+public class ViewHandler
+{
   private Stage primaryStage;
   private final ViewModelFactory viewModelFactory;
 
-  public ViewHandler(ViewModelFactory viewModelFactory) {
+  public ViewHandler(ViewModelFactory viewModelFactory)
+  {
     this.viewModelFactory = viewModelFactory;
   }
 
-  public void start(Stage primaryStage) {
+  public void start(Stage primaryStage)
+  {
     this.primaryStage = primaryStage;
-    openView("Client/view/HomeView.fxml");
+    openView("Client/view/LoginView.fxml");
   }
 
-  public void openView(String fxmlFile) {
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlFile));
+  public void openView(String fxmlFile)
+  {
+    try
+    {
+      FXMLLoader loader = new FXMLLoader(
+          getClass().getClassLoader().getResource(fxmlFile));
       Parent root = loader.load();
 
       Object controller = loader.getController();
-      if (controller instanceof HomeViewController homeController) {
-        homeController.init(this, viewModelFactory.getHomeVM());
-      } else if (controller instanceof SearchViewController searchController) {
-        searchController.init(this, viewModelFactory.getSearchVM());
-      } else if (controller instanceof MyLibraryViewController libController) {
-        libController.init(this, viewModelFactory.getMyLibraryVM());
+      switch (controller)
+      {
+        case LoginController loginController ->
+            loginController.init(this, viewModelFactory.getLogInVM());
+        case HomeViewController homeController ->
+            homeController.init(this, viewModelFactory.getHomeVM());
+        case SearchViewController searchController ->
+            searchController.init(this, viewModelFactory.getSearchVM());
+        case MyLibraryViewController libController ->
+            libController.init(this, viewModelFactory.getMyLibraryVM());
+        // …add more cases for UserPageViewController, UserListViewController, etc.
+        default ->
+        {
+          // No-op or log unexpected controller
+        }
       }
 
-      Scene scene = new Scene(root);
-      primaryStage.setScene(scene);
-      primaryStage.show();
-    } catch (IOException e) {
-      e.printStackTrace();
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+    catch (IOException e)
+    {
+      throw new RuntimeException(e);
     }
   }
 }

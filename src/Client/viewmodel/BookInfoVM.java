@@ -1,7 +1,17 @@
 package Client.viewmodel;
 
+import Shared.dto.BookSummary;
+
 public class BookInfoVM
 {
+
+  private String username;
+
+  public BookInfoVM( String username) {
+    this.username = username;
+  }
+
+
   public String getTitle() {
     return "Crime and Punishment";
   }

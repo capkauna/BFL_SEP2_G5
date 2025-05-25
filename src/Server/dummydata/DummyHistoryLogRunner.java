@@ -3,10 +3,7 @@ package Server.dummydata;
 import Server.model.Book;
 import Server.model.HistoryLog;
 import Server.model.User;
-import Server.repository.*;
-
-import Shared.dto.enums.Genre;
-import Shared.dto.enums.Format;
+import Server.database.*;
 
 import java.util.List;
 

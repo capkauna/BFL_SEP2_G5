@@ -1,9 +1,11 @@
 package Shared.dto;
 
+import java.io.Serializable;
+
 // this is meant specifically for the main user view
-public class FullUserDTO
+public class FullUserDTO implements Serializable
 {
-  private String userName, fullName, email,phoneNumber, address, avatar;
+  private String userName, fullName, email, phoneNumber, address, avatar;
 
   public FullUserDTO(String userName, String fullName, String email,  String phoneNumber, String address, String avatar)
   {

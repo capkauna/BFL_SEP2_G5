@@ -1,6 +1,6 @@
 package Server.service;
 
-import Server.repository.*;
+import Server.database.*;
 import Server.model.User;
 
 import java.sql.SQLException;

@@ -1,20 +1,31 @@
 package Client.viewmodel;
 
 
+import Client.network.AuthServiceClient;
+import Client.network.ClientSocketHandler;
 import Client.view.ViewHandler;
-import Server.repository.JdbcBookDAO;
+import Server.database.JdbcBookDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class MyLibraryVM
 {
+
+  //private final AuthServiceClient authClient;
+  private final ClientSocketHandler socketHandler;
+  private final String username;
   private final ObservableList<String> books;
 
-  public MyLibraryVM(JdbcBookDAO instance, ViewHandler viewHandler)
-  {
 
+
+  public MyLibraryVM(ClientSocketHandler socketHandler,String username) {
+    //this.authClient = authClient;
+    this.socketHandler = socketHandler;
+    this.username = username;
     this.books = FXCollections.observableArrayList();
+
   }
+
 
 
   public ObservableList<String> getBooks(){
