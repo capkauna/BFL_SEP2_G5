@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="Client.view.WaitingListViewController">
+
+    <top>
+        <Label text="Waiting List" style="-fx-font-size: 20px; -fx-padding: 10;" BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <TableView fx:id="waitingListTable" prefWidth="600" prefHeight="300">
+            <columns>
+                <TableColumn fx:id="bookIdColumn" text="Book ID" prefWidth="80"/>
+                <TableColumn fx:id="titleColumn" text="Book Title" prefWidth="150"/>
+                <TableColumn fx:id="userIdColumn" text="User ID" prefWidth="100"/>
+                <TableColumn fx:id="userNameColumn" text="User Name" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button fx:id="removeButton" text="Remove from waiting list" onAction="#onRemoveClicked"/>
+            <Button fx:id="lendButton" text="Lend book" onAction="#onLendClicked"/>
+        </HBox>
+    </bottom>
+</BorderPane>
