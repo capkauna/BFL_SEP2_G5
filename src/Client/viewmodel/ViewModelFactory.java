@@ -5,6 +5,8 @@ import Client.network.ClientSocketHandler;
 import Client.network.SocketAuthServiceClient;
 import Shared.dto.FullUserDTO;
 
+import java.io.IOException;
+
 public class ViewModelFactory
 {
   //private final AuthServiceClient authClient;
@@ -14,11 +16,18 @@ public class ViewModelFactory
   // capture who just logged in
   private String currentUsername;
 
-  public ViewModelFactory()
-  {
-    //this.authClient = new SocketAuthServiceClient();
-    this.socketHandler = new ClientSocketHandler();
+
+  public ViewModelFactory() {
+    socketHandler = new ClientSocketHandler();
+    try {
+      socketHandler.connect("localhost", 1234); // make sure port matches server
+    } catch (IOException e) {
+      System.err.println("Failed to connect to server: " + e.getMessage());
+      e.printStackTrace();
+    }
   }
+
+
   // used by LoginController once login succeeds:
   public void setCurrentUsername(String username) {
     this.currentUsername = username;
