@@ -64,4 +64,38 @@ public class BookInfoVM {
     description.set(b.getDescription());
     imagePath.set(b.getAvatar());
   }
+
+  public String getTitle()
+  {
+    return title.get();
+  }
+  public String getAuthor()
+  {
+    return author.get();
+  }
+  public String getIsbn()
+  {
+    return isbn.get();
+  }
+  public String getGenre()
+  {
+    return genre.get();
+  }
+  public String getFormat()
+  {
+    return format.get();
+  }
+  public String getStatus()
+  {
+    return status.get();
+  }
+  public String getDescription()
+  {
+    return description.get();
+  }
+  public String getImagePath()
+  {
+    return imagePath.get();
+  }
+
 }

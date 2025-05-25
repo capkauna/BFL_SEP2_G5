@@ -50,7 +50,7 @@ public class ViewHandler
         case EditBookViewController userPage ->
             userPage.init(this, viewModelFactory.getEditBookVM());
         case BookInfoViewController bookInfoController ->
-            bookInfoController.init(this, viewModelFactory.getBookInfoVM());
+            bookInfoController.init(this, viewModelFactory.getBookInfoVM(), 0);//TODO: Pass actual bookId
         case WaitingListViewController waitingListController ->
             waitingListController.init(this, viewModelFactory.getWaitingListVM(),
                 viewModelFactory.getCurrentUsername());
@@ -67,6 +67,10 @@ public class ViewHandler
       primaryStage.show();
     }
     catch (IOException e)
+    {
+      throw new RuntimeException(e);
+    }
+    catch (ClassNotFoundException e)
     {
       throw new RuntimeException(e);
     }
@@ -87,7 +91,7 @@ public class ViewHandler
 
       primaryStage.setScene(new Scene(root));
       primaryStage.show();
-    } catch (IOException e) {
+    } catch (IOException | ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
   }
