@@ -52,7 +52,14 @@ public class SearchVM
     searchResults.add("Found: " + query);
     searchResults.add("Book XYZ by Author");
   }
-}
+
+  //get all books
+
+  public void viewBookDetails(String selected)
+  {
+
+  }
+}*/
 
 
 //  private final BookDAO dao;

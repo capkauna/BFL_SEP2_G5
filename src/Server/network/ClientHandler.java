@@ -1,5 +1,8 @@
   package Server.network;
 
+  import Server.database.JdbcWaitingListDAO;
+  import Server.database.WaitingListDAO;
+  import Server.model.WaitingListEntry;
   import Shared.network.Request;
   import Shared.network.Response;
   import Shared.dto.enums.Action;
@@ -61,7 +64,7 @@
 
           }
           case GET_ALL_BOOKS -> {
-            // TODO:
+
             try {
               BookDAO dao = JdbcBookDAO.getInstance();
               List<Book> books = dao.findAll();
@@ -72,8 +75,21 @@
 
           }
           case ADD_TO_WAITING_LIST -> {
-            // TODO: call bookService.addToWaitingList(...)
-            yield new Response(false, null, "Not implemented yet.");
+            // TODO:
+            //  call bookService.addToWaitingList(...)
+            try
+            {
+              WaitingListDAO wd = JdbcWaitingListDAO.getInstance();
+              WaitingListEntry entry = (WaitingListEntry) request.getPayload();
+              yield new Response(true, entry, null);
+            }
+            catch (Exception e)
+            {
+              yield new Response(false, null, "Failed to add to waiting list: " + e.getMessage());
+            }
+
+
+
           }
           default -> new Response(false, null, "Unknown action.");
         };

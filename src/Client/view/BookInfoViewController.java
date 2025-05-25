@@ -33,6 +33,27 @@ public class BookInfoViewController
 
 
   }
+  /*// Bind labels to VM properties
+        titleLabel.textProperty().bind(viewModel.titleProperty());
+        authorLabel.textProperty().bind(viewModel.authorProperty());
+        genreLabel.textProperty().bind(viewModel.genreProperty());
+        isbnLabel.textProperty().bind(viewModel.isbnProperty());
+        ownerLabel.textProperty().bind(viewModel.ownerProperty());
+        borrowedLabel.textProperty().bind(viewModel.borrowedProperty());
+        languageLabel.textProperty().bind(viewModel.languageProperty());
+        yearLabel.textProperty().bind(viewModel.yearProperty());
+        readerNotes.textProperty().bind(viewModel.notesProperty());
+
+  // Load book image
+        if (viewModel.getImagePath() != null && !viewModel.getImagePath().isEmpty()) {
+  bookImage.setImage(new Image(viewModel.getImagePath()));
+}
+
+        readCheckBox.setSelected(viewModel.isRead());
+        unavailableCheckBox.setSelected(viewModel.isUnavailable());
+}*/
+
+   
 
   public void onLendButtonClicked()
   {

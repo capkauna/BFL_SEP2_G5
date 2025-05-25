@@ -150,6 +150,29 @@ public class JdbcWaitingListDAO implements WaitingListDAO
     return list;
   }
 
+  public List<WaitingListEntry> getByUserId(int userId) {
+    List<WaitingListEntry> list = new ArrayList<>();
+    String sql = "SELECT w.entry_id, w.user_id, u.username, w.book_id, w.added_at, b.title " +
+        "FROM waiting_list w " +
+        "JOIN users u ON w.user_id = u.user_id " +
+        "JOIN books b ON w.book_id = b.book_id " +
+        "WHERE w.user_id = ? ORDER BY w.added_at ASC";
+    try (Connection conn = DBConnection.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+      stmt.setInt(1, userId);
+      ResultSet rs = stmt.executeQuery();
+      while (rs.next()) {
+        list.add(mapResultSetToEntry(rs));
+      }
+    } catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return list;
+    }
+
+
+
   @Override
   public List<WaitingListRecord> findAll() throws SQLException {
     String sqlQuery = "SELECT entry_id, book_id, user_id, added_at FROM waiting_list";
@@ -187,5 +210,6 @@ public class JdbcWaitingListDAO implements WaitingListDAO
 
     return new WaitingListEntry(entryId, user, book, addedAt);
   }
-}
+  }
+
 

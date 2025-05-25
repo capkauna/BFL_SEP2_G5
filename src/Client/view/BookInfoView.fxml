@@ -1,71 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/8"
-            fx:controller="Client.view.BookInfoViewController"
-            prefHeight="400.0" prefWidth="600.0">
-    <children>
-        <Label layoutX="20" layoutY="10" text="Book Info" style="-fx-text-fill: white; -fx-font-size: 18px;" />
-
-        <ImageView fx:id="coverImage" layoutX="20" layoutY="40" fitHeight="120" fitWidth="100" />
-
-        <TextArea fx:id="descriptionArea" layoutX="140" layoutY="40" prefWidth="420" prefHeight="100" promptText="Book description..." />
-
-        <TextField fx:id="noteField" layoutX="20" layoutY="180" prefWidth="540" promptText="Add note..." />
-
-        <Button layoutX="20" layoutY="220" text="Add Note" />
-        <Button layoutX="120" layoutY="220" text="Lend" />
-        <Button layoutX="200" layoutY="220" text="Return" />
-        <Button layoutX="300" layoutY="220" text="Get PDF" />
-
-        <CheckBox layoutX="20" layoutY="260" text="Read" />
-        <CheckBox layoutX="100" layoutY="260" text="Mark unavailable" />
-    </children>
-</AnchorPane>
-
-
-
-
-
-
-
-
-<!--<?import javafx.scene.image.ImageView?>-->
-<!--<AnchorPane xmlns:fx="http://javafx.com/fxml"-->
+<!--<AnchorPane xmlns:fx="http://javafx.com/fxml/1"-->
+<!--            xmlns="http://javafx.com/javafx/8"-->
 <!--            fx:controller="Client.view.BookInfoViewController"-->
-<!--            prefWidth="500" prefHeight="400"-->
-<!--            style="-fx-background-color: #a51414;">-->
-
-<!--<Button fx:id="backButton" layoutX="10" layoutY="10" text="←" onAction="#onBackClicked"/>-->
-<!--<ImageView fx:id="bookImage" layoutX="20" layoutY="50" fitWidth="100" fitHeight="140"/>-->
-
-<!--<VBox layoutX="130" layoutY="50" spacing="5">-->
-<!--    <Label fx:id="titleLabel" text="Title"/>-->
-<!--    <Label fx:id="authorLabel" text="Author"/>-->
-<!--    <Label fx:id="genreLabel" text="Genre"/>-->
-<!--    <Label fx:id="isbnLabel" text="ISBN"/>-->
-<!--    <Label fx:id="ownerLabel" text="Owner"/>-->
-<!--    <Label fx:id="borrowedLabel" text="Borrowed by"/>-->
-<!--    <Label fx:id="languageLabel" text="Language"/>-->
-<!--    <Label fx:id="yearLabel" text="Year"/>-->
-<!--</VBox>-->
-
-<!--<CheckBox fx:id="unavailableCheckBox" layoutX="360" layoutY="50" text="mark unavailable"/>-->
-<!--<CheckBox fx:id="readCheckBox" layoutX="360" layoutY="80" text="read"/>-->
-
-<!--<Button layoutX="50" layoutY="210" text="Waiting list"/>-->
-<!--<Button layoutX="250" layoutY="210" text="History"/>-->
-
-<!--<TextArea fx:id="readerNotes" layoutX="50" layoutY="250" prefWidth="400" prefHeight="60"-->
-<!--          promptText="Notes from readers" editable="false"/>-->
-
-<!--<Button layoutX="40" layoutY="330" text="Lend"/>-->
-<!--<Button layoutX="180" layoutY="330" text="Add note"/>-->
-<!--<Button layoutX="320" layoutY="330" text="Book was returned"/>-->
-
+<!--            prefHeight="400.0" prefWidth="600.0">-->
+<!--    <children>-->
+<!--        <Label layoutX="20" layoutY="10" text="Book Info" style="-fx-text-fill: white; -fx-font-size: 18px;" />-->
+<!--        <ImageView fx:id="coverImage" layoutX="20" layoutY="40" fitHeight="120" fitWidth="100" />-->
+<!--        <TextArea fx:id="descriptionArea" layoutX="140" layoutY="40" prefWidth="420" prefHeight="100" promptText="Book description..." />-->
+<!--        <TextField fx:id="noteField" layoutX="20" layoutY="180" prefWidth="540" promptText="Add note..." />-->
+<!--        <Button layoutX="20" layoutY="220" text="Add Note" />-->
+<!--        <Button layoutX="120" layoutY="220" text="Lend" />-->
+<!--        <Button layoutX="200" layoutY="220" text="Return" />-->
+<!--        <Button layoutX="300" layoutY="220" text="Get PDF" />-->
+<!--        <CheckBox layoutX="20" layoutY="260" text="Read" />-->
+<!--        <CheckBox layoutX="100" layoutY="260" text="Mark unavailable" />-->
+<!--    </children>-->
 <!--</AnchorPane>-->
+
+<AnchorPane prefHeight="400" prefWidth="500" style="-fx-background-color: #a51414;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.BookInfoViewController">
+
+    <Button fx:id="back" layoutX="10" layoutY="10" onAction="#onBackClicked" text="←" />
+    <ImageView fx:id="bookImage" fitHeight="140" fitWidth="100" layoutX="36.0" layoutY="36.0" />
+
+    <VBox layoutX="142.0" layoutY="14.0" prefHeight="174.0" prefWidth="344.0" spacing="5">
+        <Label fx:id="titleLabel" text="Title" />
+        <Label fx:id="authorLabel" text="Author" />
+        <Label fx:id="genreLabel" text="Genre" />
+        <Label fx:id="isbnLabel" text="ISBN" />
+        <Label fx:id="ownerLabel" text="Owner" />
+        <Label fx:id="borrowedLabel" text="Borrowed by" />
+        <Label fx:id="languageLabel" text="Language" />
+        <Label fx:id="yearLabel" text="Year" />
+    </VBox>
+
+    <CheckBox fx:id="unavailableCheckBox" layoutX="360" layoutY="50" text="mark unavailable" />
+    <CheckBox fx:id="readCheckBox" layoutX="360" layoutY="80" text="read" />
+
+    <Button fx:id="waitinglist" layoutX="50" layoutY="210" prefHeight="26.0" prefWidth="189.0" text="Waiting list" />
+    <Button fx:id="history" layoutX="250" layoutY="210" prefHeight="26.0" prefWidth="196.0" text="History" />
+
+    <TextArea fx:id="booknotes" editable="false" layoutX="50" layoutY="250" prefHeight="60" prefWidth="400" promptText="Notes from readers" />
+
+    <Button fx:id="lendbutton" layoutX="190.0" layoutY="330.0" prefHeight="26.0" prefWidth="112.0" text="Lend" onAction="onLendButtonClicked" />
+    <Button fx:id="addnote" layoutX="50.0" layoutY="330.0" prefHeight="26.0" prefWidth="112.0" text="Add note" onAction="onAddNoteButtonClicked" />
+    <Button fx:id="returnbutton" layoutX="320" layoutY="330" prefHeight="26.0" prefWidth="126.0" text="Book was returned" />
+
+</AnchorPane>

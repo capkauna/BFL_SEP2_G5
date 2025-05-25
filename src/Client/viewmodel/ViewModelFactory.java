@@ -49,7 +49,7 @@ public class ViewModelFactory
 
   public SearchVM getSearchVM() {
 
-    return new SearchVM();
+    return new SearchVM(socketHandler);
   }
 
   public MyLibraryVM getMyLibraryVM() {
@@ -127,6 +127,14 @@ public class ViewModelFactory
       throw new IllegalArgumentException("Username cannot be null or empty");
     }
     return new UserSummaryVM(currentUsername, userToView.getFullName(), 3, 20);
+  }
+  public WaitingListVM getWaitingListVM()
+  {
+    if (currentUsername == null)
+    {
+      throw new IllegalStateException("must log in before creating WaitingListVM");
+    }
+    return new WaitingListVM(getCurrentUsername());
   }
 }
 

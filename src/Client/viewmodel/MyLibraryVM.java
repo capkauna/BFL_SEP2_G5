@@ -2,8 +2,6 @@ package Client.viewmodel;
 
 
 import Client.network.ClientSocketHandler;
-import Client.view.ViewHandler;
-import Server.database.JdbcBookDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,7 +10,7 @@ public class MyLibraryVM
 
   //private final AuthServiceClient authClient;
   private final ClientSocketHandler socketHandler;
-  private final String username;
+  private final String currentUserName;
   private final ObservableList<String> books;
 
 
@@ -20,7 +18,7 @@ public class MyLibraryVM
   public MyLibraryVM(ClientSocketHandler socketHandler,String username) {
     //this.authClient = authClient;
     this.socketHandler = socketHandler;
-    this.username = username;
+    this.currentUserName = username;
     this.books = FXCollections.observableArrayList();
 
   }
