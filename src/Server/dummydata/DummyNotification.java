@@ -1,11 +1,10 @@
 package Server.dummydata;
 
 import Server.model.Notification;
-import Server.repository.JdbcNotificationDAO;
-import Server.repository.NotificationDAO;
+import Server.database.JdbcNotificationDAO;
+import Server.database.NotificationDAO;
 
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class DummyNotification

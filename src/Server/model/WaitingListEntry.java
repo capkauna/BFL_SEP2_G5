@@ -20,6 +20,12 @@ public WaitingListEntry(int entryId, User user, Book book, LocalDateTime addedAt
     this.addedAt = addedAt;
     this.book = book;
   }
+  //constructor without entryId or addedAt for adding to waiting list
+  public WaitingListEntry(User user, Book book) {
+    this.user = user;
+    this.book = book;
+    this.addedAt = LocalDateTime.now();
+  }
 
   public int getEntryId() {
     return entryId;
@@ -35,5 +41,16 @@ public WaitingListEntry(int entryId, User user, Book book, LocalDateTime addedAt
 
   public Book getBook() {
     return book;
+  }
+  public void setEntryId(int entryId) {
+    this.entryId = entryId;
+  }
+
+  public static WaitingListEntry addToWaitingList(Book b, User u)
+  {
+    return new WaitingListEntry(u, b);
+
+    // Logic to add the entry to the waiting list
+    // This could involve adding it to a database or an in-memory list
   }
 }

@@ -1,9 +1,10 @@
 package Server.model.status;
 
+import Server.model.Lend;
+import Server.model.WaitingListEntry;
 import Shared.dto.enums.BookStatus;
 import Server.model.Book;
 import Server.model.User;
-import Server.model.actionmanagers.BookLending;
 
 public class Available implements Status
 {
@@ -15,11 +16,11 @@ public class Available implements Status
     {
       throw new UnsupportedOperationException("You cannot borrow your own book. Consider making it unavailable instead.");
     }
-    BookLending lending = new BookLending(b, u);
+    Lend.lendBook(b,u);
     b.setStatus(new Borrowed(u));
   }
 
-  @Override public void markAsReturned(Book b)
+  @Override public void markAsReturned(Book b, User u)
   {
     throw new UnsupportedOperationException("Book is already available to lend.");
   }
@@ -28,6 +29,17 @@ public class Available implements Status
   {
     b.setStatus(new Unavailable());
   }
+
+  @Override public void addToWaitingList(Book b, User u)
+  {
+    if (b.getOwner().getUserId() == u.getUserId())
+    {
+      throw new IllegalArgumentException("You cannot add yourself to the waiting list for your own book.");
+    }
+    //I honestly don't like this, but we don't have time to figure it out properly
+    WaitingListEntry.addToWaitingList(b, u);
+  }
+
   @Override public String toString()
   {
     return "Available";

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class User
@@ -79,6 +80,13 @@ public User() {
     this.phoneNumber    = phoneNumber;
     this.address        = address;
     this.avatar = avatarPath;
+  }
+
+  //only for client side use
+  public User (String userName, String rawPassword)
+  {
+    this.userName = userName;
+    this.setPassword(rawPassword);
   }
 
 
@@ -243,6 +251,13 @@ public User() {
         passwordHash, phoneNumber, address, avatar);
     return u;
   }
+
+  public static User fromClient(String username, String rawPassword)
+  {
+    // This is used for client-side authentication, so we don't need to hash the password:
+    User u = new User(username, rawPassword);
+    return u;
+  }
   //Optional setter so DAO can inject the generated id.
   public void setUserId(int id) {
     if (this.userId != null) {
@@ -272,5 +287,8 @@ public User() {
             '}';
   }
 
-
+  public String getUsername()
+  {
+    return userName;
+  }
 }

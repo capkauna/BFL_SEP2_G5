@@ -4,7 +4,7 @@ import Server.model.status.*;
 import Shared.dto.enums.Format;
 import Shared.dto.enums.Genre;
 
-public class Book
+public class Book implements java.io.Serializable
 {
   private String title, author, isbn, description, image;
   private Genre genre;
@@ -211,12 +211,16 @@ public class Book
   {
     status.lendTo(this, user);
   }
-  public void markAsReturned()
+  public void markAsReturned(User user)
   {
-    status.markAsReturned(this);
+    status.markAsReturned(this, user);
   }
   public void setUnavailable()
   {
     status.setUnavailable(this);
+  }
+  public void addToWaitingList(User user)
+  {
+    status.addToWaitingList(this, user);
   }
 }

@@ -3,12 +3,10 @@ package Server.dummydata;
 import Server.model.Book;
 import Server.model.User;
 import Server.model.WaitingListEntry;
-import Server.repository.*;
+import Server.database.*;
 
 import java.sql.SQLException;
 import java.util.List;
-import Shared.dto.enums.Genre;
-import Shared.dto.enums.Format;
 
 /**
  * Dummy runner for populating and testing the waiting list functionality.
@@ -24,12 +22,12 @@ public class DummyWaitingListRunner
       BookDAO bookDAO = JdbcBookDAO.getInstance();
       WaitingListDAO waitingListDAO = JdbcWaitingListDAO.getInstance();
 
-      // Create users
+//      // Create users
 //      User user3 = new User("Tomas1223", "Tomas Cat", "tomas1123@cat.com", "pass1", "111222333", "Cat Alley 1", null);
 //      User user4 = new User("Jerry1224", "Jerry Mouse", "jerry1123@mouse.com", "pass2", "444555666", "Mouse Hole 2", null);
 //      user3 = userDAO.create(user3);
 //      user4 = userDAO.create(user4);
-
+//
 //      // Create books owned by each user
 //      Book book4 = new Book("Cat and Mouse", "Author X", 2023, Genre.FICTION, "1111222233334", Format.HARDCOVER, "Fun chase story", null, user4);
 //      Book book5 = new Book("Quiet House", "Author Y", 2023, Genre.NON_FICTION, "5555666677778", Format.EBOOK, "About silence", null, user3);

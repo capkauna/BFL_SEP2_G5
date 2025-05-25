@@ -3,10 +3,7 @@ package Server.dummydata;
 import Server.model.Book;
 import Server.model.HistoryLog;
 import Server.model.User;
-import Server.repository.*;
-
-import Shared.dto.enums.Genre;
-import Shared.dto.enums.Format;
+import Server.database.*;
 
 import java.util.List;
 
@@ -17,27 +14,30 @@ public class DummyHistoryLogRunner {
       BookDAO bookDAO = JdbcBookDAO.getInstance();
       HistoryLogDAO historyDAO = JdbcHistoryLogDAO.getInstance();
 
-      User owner = userDAO.create(new User(
-          "Charllli",
-          "Charlie Rob",
-          "chr@example.com",
-          "haha123",
-          "77777777",
-          "Silent Rd",
-          null
-      ));
+//      User owner = userDAO.create(new User(
+//          "Charllli",
+//          "Charlie Rob",
+//          "chr@example.com",
+//          "haha123",
+//          "77777777",
+//          "Silent Rd",
+//          null
+//      ));
+//
+//      Book book = bookDAO.create(new Book(
+//          "Harry Potter and the Prisoner of Azkaban",
+//          "J. K. Rowling",
+//          1999,
+//          Genre.ROMANCE,
+//          "9999888877776",
+//          Format.PAPERBACK,
+//          "Classic comedy scripts",
+//          null,
+//          owner
+//      ));
+      User owner = userDAO.findByUserName("Charllli");
+      Book book = bookDAO.findById(4);
 
-      Book book = bookDAO.create(new Book(
-          "Harry Potter and the Prisoner of Azkaban",
-          "J. K. Rowling",
-          1999,
-          Genre.ROMANCE,
-          "9999888877776",
-          Format.PAPERBACK,
-          "Classic comedy scripts",
-          null,
-          owner
-      ));
 
       historyDAO.addLog(book.getBookId(), "Book added to library.");
       historyDAO.addLog(book.getBookId(), "Book lent to user.");

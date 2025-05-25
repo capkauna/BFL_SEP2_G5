@@ -2,7 +2,8 @@ package Client.view;
 
 import Client.viewmodel.EditUserVM;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class EditUserViewController {
 
@@ -17,8 +18,10 @@ public class EditUserViewController {
   @FXML private TextField currentPasswordField;
 
   private EditUserVM viewModel;
+  private ViewHandler viewHandler;
 
-  public void init(EditUserVM viewModel) {
+  public void init(EditUserVM viewModel, ViewHandler viewHandler) {
+    this.viewHandler = viewHandler;
     this.viewModel = viewModel;
 
     usernameField.textProperty().bindBidirectional(viewModel.usernameProperty());
@@ -44,6 +47,7 @@ public class EditUserViewController {
 
   @FXML
   private void onBack() {
-    System.out.println("Back clicked");
+    viewHandler.openView("UserPageView.fxml");
   }
 }
+

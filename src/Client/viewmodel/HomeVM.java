@@ -1,27 +1,20 @@
 package Client.viewmodel;
 
+
+import Client.network.ClientSocketHandler;
 import Client.view.ViewHandler;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 
 public class HomeVM
 {
-  private final ViewHandler viewHandler;
+  private final ClientSocketHandler authClient;
+  private final String username;
 
-  public HomeVM(ViewHandler viewHandler) {
-    this.viewHandler = viewHandler;
-  }
 
-  public void openLibraryView() {
-    viewHandler.openView("MyLibraryView.fxml");
-  }
-  public void openUserProfileView() {
-    viewHandler.openView("UserProfileView.fxml");
+  public HomeVM(ClientSocketHandler authClient,String username) {
+    this.authClient = authClient;
+    this.username = username;
   }
 
-  public void openSearchView() {
-    viewHandler.openView("SearchView.fxml");
-  }
-
-  public void openUserListView() {
-    viewHandler.openView("UserListView.fxml");
-  }
 }

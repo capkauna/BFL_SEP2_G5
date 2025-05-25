@@ -1,93 +1,39 @@
 package Client.viewmodel;
 
-import Client.network.AuthServiceClient;
-import Client.network.SocketAuthServiceClient;
-import javafx.scene.control.Label;
-
+import Client.network.ClientSocketHandler;
+import Shared.dto.enums.Action;
+import Shared.network.Request;
+import Shared.network.Response;
 
 public class LogInVM {
-  private final AuthServiceClient authClient;
+  private final ClientSocketHandler socketHandler;
+  private final ViewModelFactory factory;
 
-  public LogInVM() {
-    // pick your implementation here:
-    this.authClient = new SocketAuthServiceClient();
+  public LogInVM(ClientSocketHandler socketHandler, ViewModelFactory factory) {
+    this.socketHandler = socketHandler;
+    this.factory = factory;
   }
 
-  /**
-   * Attempts login via the AuthService over sockets.
-   * Shows/hides the errorLabel based on outcome.
-   */
-  public void login(String username, String password, Label errorLabel) {
+  public boolean login(String username, String password) {
     try {
-      boolean ok = authClient.login(username, password);
-      if (ok) {
-        System.out.println("Login successful for user: " + username);
-        errorLabel.setVisible(false);
-        // TODO: launch main window
+      // 🔁 Send credentials as a String array
+      String[] credentials = new String[]{username, password};
+      Request request = new Request(Action.LOGIN, credentials);
+
+      socketHandler.sendRequest(request);
+      Response response = socketHandler.readResponse();
+
+      if (response.isSuccess()) {
+        factory.setCurrentUsername(username);  // You could also extract it from the response if needed
+        return true;
       } else {
-        System.out.println("Invalid credentials for user: " + username);
-        errorLabel.setText("Invalid username or password.");
-        errorLabel.setVisible(true);
+        System.err.println("Login failed: " + response.getErrorMessage());
+        return false;
       }
+
     } catch (Exception e) {
-      e.printStackTrace();
-      errorLabel.setText("Error connecting to auth server.");
-      errorLabel.setVisible(true);
+      System.err.println("Login failed: " + e.getMessage());
+      return false;
     }
   }
 }
-
-//for direct testing if login works
-/*
-
-import Server.model.*;
-import Server.repository.*;
-
-import java.sql.SQLException;
-import java.util.Optional;
-import javafx.scene.control.Label;
-
-public class LogInVM
-{
-  private final UserDAO userDAO;
-
-  public LogInVM() throws SQLException{
-    this.userDAO =  JdbcUserDAO.getInstance();
-  }
-
-
-  public void login(String username, String password, Label errorLabel) {
-    try {
-      Optional<User> opt = userDAO.findByUserName(username);
-      if (opt.isPresent()) {
-        User user = opt.get();
-        // use the model’s built-in check, not raw.equals(hashed)
-        if (user.validatePassword(password)) {
-          System.out.println("Login successful for user: " + username);
-          errorLabel.setVisible(false);
-          // TODO: launch main window
-        } else {
-          System.out.println("Invalid password for user: " + username);
-          errorLabel.setText("Invalid username or password.");
-          errorLabel.setVisible(true);
-        }
-      } else {
-        System.out.println("No such user: " + username);
-        errorLabel.setText("Invalid username or password.");
-        errorLabel.setVisible(true);
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-      errorLabel.setText("Error accessing database.");
-      errorLabel.setVisible(true);
-    }
-  }
-
-  // no changes to validatePassword in VM; delegate to User.validatePassword(...)
-  private boolean verifyPassword(String raw, String hashed) {
-    return raw.equals(hashed);
-  }
-
-}
-
- */

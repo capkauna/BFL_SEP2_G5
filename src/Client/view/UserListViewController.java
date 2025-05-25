@@ -14,9 +14,12 @@ public class UserListViewController {
   @FXML private TableColumn<UserSummaryVM, Integer> libraryColumn;
   @FXML private TableColumn<UserSummaryVM, Integer> readColumn;
 
+  private ViewHandler viewHandler;
   private UserListVM viewModel;
 
-  public void init(UserListVM viewModel) {
+
+  public void init(ViewHandler viewHandler, UserListVM viewModel) {
+    this.viewHandler = viewHandler;
     this.viewModel = viewModel;
 
     nameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
@@ -28,6 +31,7 @@ public class UserListViewController {
 
   @FXML
   private void onBack() {
-    System.out.println("Back clicked");
+    viewHandler.openView("HomeView.fxml");
   }
 }
+

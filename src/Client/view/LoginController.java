@@ -17,41 +17,65 @@ public class LoginController
   @FXML private Button cancelButton;
   @FXML private Label errorLabel;
 
+  private ViewHandler viewHandler;
   private LogInVM viewModel;
 
-  public void init(LogInVM vm){
+  public void init(ViewHandler vh, LogInVM vm){
+    this.viewHandler = vh;
     this.viewModel = vm;
+    errorLabel.setVisible(false); // Initially hide the error label
   }
 
-  @FXML
-  public void onLoginClicked(ActionEvent actionEvent)
-  {
-    String username = usernameField.getText();
-    String password = passwordField.getText();
-
-    if (username.isEmpty() || password.isEmpty())
-    {
-      // Show error message
-      errorLabel.setText("Please enter both username and password.");
-      System.out.println("Please enter both username and password.");
+  @FXML private void onLoginClicked(ActionEvent event) {
+    String user = usernameField.getText();
+    String pass = passwordField.getText();
+    try {
+      if (viewModel.login(user, pass)) {
+        // successful → hand off to ViewHandler to open the home view
+        viewHandler.openView("Client/view/HomeView.fxml");
+      } else {
+        errorLabel.setText("Invalid username or password.");
+        errorLabel.setVisible(true);
+      }
+    } catch (Exception e) {
+      errorLabel.setText("Error connecting to auth server.");
       errorLabel.setVisible(true);
-      return;
+      e.printStackTrace();
     }
-    //TODO: Validate username and password
-
-    // Perform login logic here:
-    viewModel.login(username, password, errorLabel);
-
-    System.out.println("Logging in with username: " + username + " and password: " + password);
   }
 
-  @FXML
-  public void onCancelClicked(ActionEvent actionEvent)
-  {
-    // Close the application or go back to the previous screen
-    System.out.println("Cancel button clicked. Closing application.");
-    System.exit(0); // This will terminate the Java application
-    // You can use Platform.exit() to close the application
-    // Platform.exit();
-  }
+@FXML
+public void onCancelClicked(ActionEvent actionEvent)
+{
+  // Close the application or go back to the previous screen
+  System.out.println("Cancel button clicked. Closing application.");
+  System.exit(0); // This will terminate the Java application
+  // You can use Platform.exit() to close the application
+  // Platform.exit();
 }
+}
+//  @FXML
+
+//  public void onLoginClicked(ActionEvent actionEvent) throws Exception
+//  {
+//    String username = usernameField.getText();
+//    String password = passwordField.getText();
+//
+//    if (username.isEmpty() || password.isEmpty())
+//    {
+//      // Show error message
+//      errorLabel.setText("Please enter both username and password.");
+//      System.out.println("Please enter both username and password.");
+//      errorLabel.setVisible(true);
+//      return;
+//    }
+
+
+//    // Perform login logic here:
+//    viewModel.login(username, password);
+//
+//    System.out.println("Logging in with username: " + username + " and password: " + password);
+//  }
+
+
+//}

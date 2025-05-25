@@ -4,9 +4,9 @@ import Server.model.Book;
 import Server.model.User;
 import Server.model.WaitingListRecord;
 import Server.model.WaitingListEntry;
-import Server.repository.JdbcBookDAO;
-import Server.repository.JdbcUserDAO;
-import Server.repository.JdbcWaitingListDAO;
+import Server.database.JdbcBookDAO;
+import Server.database.JdbcUserDAO;
+import Server.database.JdbcWaitingListDAO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class WaitingListService
     }
   }
 
-  public List<WaitingListEntry> getAllWaitingLists() throws SQLException
+  public List<WaitingListEntry> getFullWaitingList() throws SQLException
   {
     List<WaitingListRecord> waitingListDao = waitingListRepository.findAll();
     List<WaitingListEntry> waitingList = new ArrayList<>();
@@ -42,7 +42,19 @@ public class WaitingListService
       Book book = bookRepository.findById(entry.getBookId());
       waitingList.add(new WaitingListEntry(entry.getEntryId(), user, book, entry.getAddedAt()));
     }
-
     return waitingList;
   }
+
+  public List<WaitingListEntry> getBookWaitingList(Book b) throws SQLException
+  {
+    List<WaitingListEntry> waitingListDao = waitingListRepository.getByBookId(b.getBookId());
+    List<WaitingListEntry> waitingList = new ArrayList<>();
+    for (WaitingListEntry entry : waitingListDao)
+    {
+      User user = userRepository.findById(entry.getUser().getUserId());
+      waitingList.add(new WaitingListEntry(entry.getEntryId(), user, b, entry.getAddedAt()));
+    }
+    return waitingList;
+  }
+
 }
