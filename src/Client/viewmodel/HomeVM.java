@@ -1,6 +1,6 @@
 package Client.viewmodel;
 
-import Client.network.AuthServiceClient;
+
 import Client.network.ClientSocketHandler;
 import Client.view.ViewHandler;
 import javafx.event.ActionEvent;

@@ -5,6 +5,11 @@
   import Shared.dto.enums.Action;
   import Server.service.AuthService;
   import Server.model.User;
+  import java.util.List;
+
+  import Server.database.BookDAO;
+  import Server.database.JdbcBookDAO;
+  import Server.model.Book;
 
   import java.io.ObjectInputStream;
   import java.io.ObjectOutputStream;
@@ -56,8 +61,15 @@
 
           }
           case GET_ALL_BOOKS -> {
-            // TODO: call bookService.getAllBooks();
-            yield new Response(false, null, "Not implemented yet.");
+            // TODO:
+            try {
+              BookDAO dao = JdbcBookDAO.getInstance();
+              List<Book> books = dao.findAll();
+              yield new Response(true, books, null);
+            } catch (Exception e) {
+              yield new Response(false, null, "Failed to get books: " + e.getMessage());
+            }
+
           }
           case ADD_TO_WAITING_LIST -> {
             // TODO: call bookService.addToWaitingList(...)

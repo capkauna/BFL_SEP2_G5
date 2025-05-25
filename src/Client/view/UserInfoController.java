@@ -1,7 +1,6 @@
 package Client.view;
 
-import Client.network.AuthServiceClient;
-import Client.network.SocketAuthServiceClient;
+
 import Client.viewmodel.UserProfileVM;
 import javafx.scene.control.Label;
 

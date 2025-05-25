@@ -1,5 +1,6 @@
 package Client.view;
 
+import Client.viewmodel.BookInfoVM;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -65,4 +66,7 @@ public class BookInfoViewController
     // You can add more logic here, such as opening a dialog to edit the book details
   }
 
+  public void init(ViewHandler viewHandler, BookInfoVM bookInfoVM)
+  {
+  }
 }

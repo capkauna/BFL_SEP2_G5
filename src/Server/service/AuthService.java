@@ -18,7 +18,9 @@ public class AuthService {
     return Optional.empty();
   }
 
-  public Optional<User> getUserByUsername(String username) throws SQLException {
-    return JdbcUserDAO.getInstance().findByUserNameOpt(username);
-  }
+//  public Optional<User> getUserByUsername(String username) throws SQLException {
+//    return JdbcUserDAO.getInstance().findByUserNameOpt(username);
+//  }
+
+
 }

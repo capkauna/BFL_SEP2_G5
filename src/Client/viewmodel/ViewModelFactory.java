@@ -1,8 +1,6 @@
 package Client.viewmodel;
 
-import Client.network.AuthServiceClient;
 import Client.network.ClientSocketHandler;
-import Client.network.SocketAuthServiceClient;
 import Shared.dto.FullUserDTO;
 
 import java.io.IOException;
@@ -32,6 +30,9 @@ public class ViewModelFactory
   public void setCurrentUsername(String username) {
     this.currentUsername = username;
   }
+  public String getCurrentUsername() {
+    return currentUsername;
+  }
 
   public LogInVM getLogInVM() {
     // pass the factory itself so LoginVM can tell it who logged in
@@ -43,7 +44,7 @@ public class ViewModelFactory
     {
       throw new IllegalStateException("must log in before creating HomeVM");
     }
-    return new HomeVM(socketHandler, currentUsername);
+    return new HomeVM(socketHandler, getCurrentUsername());
   }
 
   public SearchVM getSearchVM() {
@@ -55,7 +56,7 @@ public class ViewModelFactory
     if (currentUsername == null) {
       throw new IllegalStateException("must log in before creating MyLibraryVM");
     }
-    return new MyLibraryVM(socketHandler, currentUsername);
+    return new MyLibraryVM(socketHandler, getCurrentUsername());
   }
 
   public BookInfoVM getBookInfoVM() {
@@ -63,14 +64,14 @@ public class ViewModelFactory
     {
       throw new IllegalStateException("must log in before creating HomeVM");
     }
-    return new BookInfoVM(currentUsername);
+    return new BookInfoVM(getCurrentUsername());
   }
 
   public BookListVM getBookListVM() {
     if (currentUsername == null) {
       throw new IllegalStateException("must log in before creating BookListVM");
     }
-    return new BookListVM(currentUsername);
+    return new BookListVM(getCurrentUsername());
   }
 
   public EditBookVM getEditBookVM()
@@ -79,7 +80,7 @@ public class ViewModelFactory
     {
       throw new IllegalArgumentException("Username cannot be null or empty");
     }
-    return new EditBookVM(currentUsername);
+    return new EditBookVM(getCurrentUsername());
   }
 
   public EditUserVM getEditUserVM()
@@ -88,7 +89,7 @@ public class ViewModelFactory
     {
       throw new IllegalArgumentException("Username cannot be null or empty");
     }
-    return new EditUserVM(currentUsername);
+    return new EditUserVM(getCurrentUsername());
   }
   public NotificationsVM getNotificationsVM()
   {
@@ -96,7 +97,7 @@ public class ViewModelFactory
     {
       throw new IllegalStateException("must log in before seeing Notifications");
     }
-    return new NotificationsVM(currentUsername);
+    return new NotificationsVM(getCurrentUsername());
   }
   public ReaderNotesVM getReaderNotesVM()
   {
@@ -104,7 +105,7 @@ public class ViewModelFactory
     {
       throw new IllegalStateException("must log in before creating ReaderNotesVM");
     }
-    return new ReaderNotesVM(currentUsername);
+    return new ReaderNotesVM(getCurrentUsername());
   }
   public UserListVM getUserListVM()
   {
@@ -116,7 +117,7 @@ public class ViewModelFactory
     {
       throw new IllegalArgumentException("Username cannot be null or empty");
     }
-    return new UserProfileVM(userToView ,currentUsername);
+    return new UserProfileVM(userToView ,getCurrentUsername());
   }
   //TODO: revisit this
   public UserSummaryVM getUserSummaryVM()

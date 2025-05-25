@@ -43,6 +43,17 @@ public class ViewHandler
             searchController.init(this, viewModelFactory.getSearchVM());
         case MyLibraryViewController libController ->
             libController.init(this, viewModelFactory.getMyLibraryVM());
+        case UserProfileViewController userPage ->
+            userPage.init(viewModelFactory.getUserProfileVM());
+        case UserListViewController userList ->
+            userList.init(this, viewModelFactory.getUserListVM());
+        case EditBookViewController userPage ->
+            userPage.init(this, viewModelFactory.getEditBookVM());
+        case BookInfoViewController bookInfoController ->
+            bookInfoController.init(this, viewModelFactory.getBookInfoVM());
+
+
+
         // …add more cases for UserPageViewController, UserListViewController, etc.
         default ->
         {
