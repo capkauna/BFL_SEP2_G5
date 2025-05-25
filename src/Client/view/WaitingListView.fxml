@@ -10,23 +10,24 @@
     </top>
 
     <center>
-        <TableView fx:id="waitingListTable" prefWidth="600" prefHeight="300">
+        <TableView fx:id="waitingListTable" prefWidth="500" prefHeight="250">
             <columns>
-                <TableColumn fx:id="bookIdColumn" text="Book ID" prefWidth="80"/>
-                <TableColumn fx:id="titleColumn" text="Book Title" prefWidth="150"/>
-                <TableColumn fx:id="userIdColumn" text="User ID" prefWidth="100"/>
-                <TableColumn fx:id="userNameColumn" text="User Name" prefWidth="150"/>
+                <TableColumn fx:id="entryIdColumn" text="Entry # in List" prefWidth="150" />
+                <TableColumn fx:id="userIdColumn" text="User ID" prefWidth="120" />
+                <TableColumn fx:id="addedAtColumn" text="Added At" prefWidth="200" />
             </columns>
         </TableView>
     </center>
+
 
     <bottom>
         <HBox spacing="10" alignment="CENTER">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Button fx:id="removeButton" text="Remove from waiting list" onAction="#onRemoveClicked"/>
-            <Button fx:id="lendButton" text="Lend book" onAction="#onLendClicked"/>
+            <Button fx:id="addToListButton" text="Add Me to Waiting List" onAction="#onAddToListClicked" />
+            <Button fx:id="lendButton" text="Lend to Selected User" onAction="#onLendClicked" />
+            <Button fx:id="closeButton" text="Close" onAction="#onCloseClicked" />
         </HBox>
     </bottom>
 </BorderPane>
