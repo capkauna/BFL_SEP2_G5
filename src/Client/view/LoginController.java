@@ -32,7 +32,7 @@ public class LoginController
     try {
       if (viewModel.login(user, pass)) {
         // successful → hand off to ViewHandler to open the home view
-        viewHandler.openView("/Client/view/HomeView.fxml");
+        viewHandler.openView("Client/view/HomeView.fxml");
       } else {
         errorLabel.setText("Invalid username or password.");
         errorLabel.setVisible(true);

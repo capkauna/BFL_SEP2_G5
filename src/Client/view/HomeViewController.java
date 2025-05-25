@@ -26,18 +26,18 @@ public class HomeViewController {
   }
 
   @FXML private void onMyLibrary(ActionEvent actionEvent) {
-    viewHandler.openView("/Client/view/MyLibraryView.fxml");
+    viewHandler.openView("Client/view/MyLibraryView.fxml");
   }
 
   @FXML private void onMyAccount(ActionEvent actionEvent) {
-    viewHandler.openView("/Client/view/UserPageView.fxml");
+    viewHandler.openView("Client/view/UserPageView.fxml");
   }
 
   @FXML private void onFindBook(ActionEvent actionEvent){
-    viewHandler.openView("/Client/view/SearchView.fxml");
+    viewHandler.openView("Client/view/SearchView.fxml");
   }
 
   @FXML private void onFindUser(ActionEvent actionEvent){
-    viewHandler.openView("/Client/view/UserListView.fxml");
+    viewHandler.openView("Client/view/UserListView.fxml");
   }
 }
