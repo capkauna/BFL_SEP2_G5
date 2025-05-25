@@ -20,7 +20,8 @@ public class SearchViewController
   private ViewHandler viewHandler;
   private SearchVM viewModel;
 
-  public void init(ViewHandler vh, SearchVM vm) {
+  public void init(ViewHandler vh, SearchVM vm)
+  {
     this.viewHandler = vh;
     this.viewModel = vm;
 
@@ -30,16 +31,31 @@ public class SearchViewController
     borrowedChoice.setItems(viewModel.getBorrowerUsernames());
 
     searchResults.setItems(viewModel.getSearchResults());
+    searchField.textProperty().addListener(
+        (obs, oldText, newText) -> viewModel.performSearch(newText));
+    searchResults.setOnMouseClicked(event ->
+
+    {
+      String selected = searchResults.getSelectionModel().getSelectedItem();
+      if (selected != null)
+      {
+        System.out.println("Selected: " + selected);
+
+      }
+    });
   }
 
-  @FXML private void onSearchClicked() {
+  @FXML private void onSearchClicked()
+  {
     String query = searchField.getText();
     viewModel.performSearch(query);
   }
 
-  @FXML private void onBackClicked() {
+  @FXML private void onBackClicked()
+  {
     viewHandler.openView("HomeView.fxml");
   }
+
 }
 
 //  @FXML

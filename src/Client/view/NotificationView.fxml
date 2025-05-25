@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #990000;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.NotificationViewController">
+
+    <ListView fx:id="notificationList" layoutX="20.0" layoutY="47.0" prefHeight="333.0" prefWidth="560.0" style="-fx-font-size: 14px;" />
+   <Button fx:id="returnButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReturn" text="←" />
+</AnchorPane>
