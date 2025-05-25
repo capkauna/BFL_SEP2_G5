@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <!--<?xml version="1.0" encoding="UTF-8"?>-->
 <!--<?import java.lang.*?>-->
@@ -17,24 +18,19 @@
 <!--            prefHeight="400.0" prefWidth="600.0" >-->
 <!--</AnchorPane>-->
 
-<AnchorPane prefHeight="400" prefWidth="600" style="-fx-background-color: #990000;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.UserProfileViewController">
+<AnchorPane prefHeight="400" prefWidth="600" style="-fx-background-color: #990000;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.UserProfileViewController">
 
     <!-- Back Arrow Button -->
     <Button fx:id="backButton" layoutX="10" layoutY="10" onAction="#onBack" style="-fx-background-color: transparent;">
     </Button>
 
     <!-- Page Title -->
-    <Label layoutX="51.0" layoutY="7.0" prefHeight="18.0" prefWidth="89.0" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="UserPage" />
+    <Label fx:id="UserProfile" layoutX="51.0" layoutY="7.0" prefHeight="30.0" prefWidth="180.0" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="UserProfile" />
 
-
-    <!-- User Avatar and Info Fields -->
-    <ImageView fx:id="userAvatar" fitHeight="113.0" fitWidth="180.0" layoutX="30" layoutY="50" style="-fx-border-color: white; -fx-background-color: lightgray;" />
-    <Label layoutX="77.0" layoutY="91.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="User avatar" />
-
-    <TextField fx:id="nameField" editable="false" layoutX="244.0" layoutY="50.0" prefHeight="26.0" prefWidth="195.0" promptText="Name" style="-fx-background-color: #D3D3D3;" />
-    <TextField fx:id="phoneField" editable="false" layoutX="244.0" layoutY="87.0" prefHeight="26.0" prefWidth="195.0" promptText="Phone" style="-fx-background-color: #D3D3D3;" />
-    <TextField fx:id="emailField" editable="false" layoutX="244.0" layoutY="124.0" prefHeight="26.0" prefWidth="195.0" promptText="Email" style="-fx-background-color: #D3D3D3;" />
-    <TextField fx:id="addressField" editable="false" layoutX="244.0" layoutY="160.0" prefHeight="26.0" prefWidth="195.0" promptText="Address" style="-fx-background-color: #D3D3D3;" />
+    <TextField fx:id="nameField" editable="false" layoutX="294.0" layoutY="53.0" prefHeight="26.0" prefWidth="195.0" promptText="Name" style="-fx-background-color: #D3D3D3;" />
+    <TextField fx:id="phoneField" editable="false" layoutX="294.0" layoutY="93.0" prefHeight="26.0" prefWidth="195.0" promptText="Phone" style="-fx-background-color: #D3D3D3;" />
+    <TextField fx:id="emailField" editable="false" layoutX="294.0" layoutY="127.0" prefHeight="26.0" prefWidth="195.0" promptText="Email" style="-fx-background-color: #D3D3D3;" />
+    <TextField fx:id="addressField" editable="false" layoutX="294.0" layoutY="163.0" prefHeight="26.0" prefWidth="195.0" promptText="Address" style="-fx-background-color: #D3D3D3;" />
 
     <Button fx:id="settingsButton" layoutX="22.0" layoutY="10.0" onAction="#onEditUser" style="-fx-background-color: transparent;">
     </Button>
@@ -47,12 +43,8 @@
 
     <!-- More Info Field -->
     <TextField fx:id="moreInfoField" editable="false" layoutX="30" layoutY="320" prefWidth="540" promptText="More info (calling times, out of town, etc)" style="-fx-background-color: #D3D3D3; -fx-font-weight: bold; -fx-alignment: CENTER;" />
-    <ButtonBar layoutX="370.0" layoutY="67.0" prefHeight="40.0" prefWidth="200.0" />
-    <Button layoutX="531.0" layoutY="11.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="54.0" text="C" textAlignment="CENTER" textFill="#b14747" textOverrun="WORD_ELLIPSIS">
-        <font>
-            <Font size="24.0" />
-        </font>
-    </Button>
+    <Button fx:id="edit" layoutX="557.0" layoutY="9.0" mnemonicParsing="false" onAction="#onEditUser" prefHeight="26.0" prefWidth="26.0" text="⚙" textAlignment="CENTER" textFill="#b14747" textOverrun="WORD_ELLIPSIS" />
     <Button layoutX="10.0" layoutY="10.0" onAction="#onBack" text="←" />
+   <ImageView fx:id="userAvatar" fitHeight="146.0" fitWidth="130.0" layoutX="105.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" />
 
 </AnchorPane>
