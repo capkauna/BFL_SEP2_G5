@@ -11,7 +11,7 @@
             xmlns="http://javafx.com/javafx/17"
             fx:controller="Client.view.HomeViewController">
 
-   <Pane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f6afd5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <Pane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #990000;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
       <children>
          <Label layoutX="202.0" layoutY="21.0" text="Best Friend Library">
             <font>

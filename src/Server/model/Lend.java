@@ -31,7 +31,7 @@ public class Lend {
     return lendId;
   }
 
-  //TODO: make sure this is the book's owner id, not the borrower
+
   public Integer getOwnerId() {
     return ownerId;
   }
@@ -51,7 +51,7 @@ public class Lend {
   public LocalDate getEndDate() {
     return endDate;
   }
-//TODO make sure this gets called upon book return
+
   public void setEndDate() {
     this.endDate = LocalDate.now();
 

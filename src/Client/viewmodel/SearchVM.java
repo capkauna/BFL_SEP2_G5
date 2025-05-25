@@ -1,22 +1,76 @@
 package Client.viewmodel;
 
 
+import Client.network.ClientSocketHandler;
+import Server.model.Book;
+import Shared.dto.enums.Action;
+import Shared.network.Request;
+import Shared.network.Response;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.util.List;
+
+import java.util.logging.SocketHandler;
 
 import static java.util.Arrays.stream;
 
-public class SearchVM
+
+
+public class SearchVM {
+  private final ObservableList<Book> books = FXCollections.observableArrayList();
+  private final ClientSocketHandler socketHandler;
+
+  private Book selectedBook;
+
+  public SearchVM(ClientSocketHandler socketHandler) {
+    this.socketHandler = socketHandler;
+  }
+
+  public void loadBooks() {
+    try {
+      Request req = new Request(Action.GET_ALL_BOOKS, null);
+      socketHandler.sendRequest(req);
+      Response resp = socketHandler.readResponse();
+      if (resp.isSuccess()) {
+        List<Book> list = (List<Book>) resp.getData();
+        books.setAll(list);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public ObservableList<Book> getBooks() {
+    return books;
+  }
+
+  public void setSelectedBook(Book book) {
+    this.selectedBook = book;
+  }
+
+  public Book getSelectedBook() {
+    return selectedBook;
+  }
+}
+
+
+
+/*public class SearchVM
 {
+
   private final ObservableList<String> searchResults;
   private final ObservableList<String> genres;
   private final ObservableList<String> formats;
   private final ObservableList<String> owners;
   private final ObservableList<String> borrowers;
 
+  private final ClientSocketHandler socketHandler;
 
 
-  public SearchVM() {
+
+  public SearchVM(SocketHandler socketHandler) {
+
+    this.socketHandler = (ClientSocketHandler) socketHandler;
 
     //TODO: give a search service attrivute (or clientsockethandler) instead of a DAO
     searchResults = FXCollections.observableArrayList();

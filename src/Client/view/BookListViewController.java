@@ -6,6 +6,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
 public class BookListViewController
 {
@@ -25,6 +26,7 @@ public class BookListViewController
   @FXML private CheckBox unavailableCheckBox;
   @FXML private CheckBox readCheckBox;
   @FXML private TextArea readerNotes;
+  @FXML private GridPane List;
 
   private ViewHandler viewHandler;
   private BookInfoVM viewModel;
