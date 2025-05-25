@@ -7,8 +7,8 @@
     <center>
         <TableView fx:id="waitingListTable" prefHeight="420.0" prefWidth="209.0">
             <columns>
-                <TableColumn fx:id="usernameColumn" prefWidth="156.8000122308731" text="Username" />
-            <TableColumn prefWidth="144.79998779296875" text="Added at" />
+                <TableColumn fx:id="usernameColumn" prefWidth="128.59998166561127" text="Username" />
+            <TableColumn fx:id="addedat" prefWidth="173.79998779296875" text="Added at" />
             </columns>
         </TableView>
     </center>

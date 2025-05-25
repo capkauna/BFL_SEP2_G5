@@ -57,7 +57,7 @@ public class EditUserViewController {
 
   @FXML
   private void onBack() {
-    viewHandler.openView("UserPageView.fxml");
+    viewHandler.openView("Client/view/UserProfileView.fxml");
   }
 }
 

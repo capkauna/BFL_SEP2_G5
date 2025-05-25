@@ -3,6 +3,7 @@ package Client.viewmodel;
 
 import Client.network.ClientSocketHandler;
 import Server.model.Book;
+import Shared.dto.BookSummary;
 import Shared.dto.enums.Action;
 import Shared.network.Request;
 import Shared.network.Response;
@@ -17,38 +18,45 @@ import static java.util.Arrays.stream;
 
 
 public class SearchVM {
-  private final ObservableList<Book> books = FXCollections.observableArrayList();
+  private final ObservableList<BookSummary> books = FXCollections.observableArrayList();
   private final ClientSocketHandler socketHandler;
 
-  private Book selectedBook;
+  private BookSummary selectedBook;
 
   public SearchVM(ClientSocketHandler socketHandler) {
     this.socketHandler = socketHandler;
   }
 
   public void loadBooks() {
+    System.out.println("->Sending GET_ALL_BOOKS request to server");
     try {
       Request req = new Request(Action.GET_ALL_BOOKS, null);
       socketHandler.sendRequest(req);
       Response resp = socketHandler.readResponse();
+      System.out.println(" <- Got response: " + resp.isSuccess());
+      
       if (resp.isSuccess()) {
-        List<Book> list = (List<Book>) resp.getData();
+        List<BookSummary> list = (List<BookSummary>) resp.getData();
+        System.out.println("Loaded books: " + list.size());
         books.setAll(list);
+      } else {
+        System.err.println("Failed to load books: " + resp.getErrorMessage());
       }
     } catch (Exception e) {
       e.printStackTrace();
+      System.out.println("Error loading books");
     }
   }
 
-  public ObservableList<Book> getBooks() {
+  public ObservableList<BookSummary> getBooks() {
     return books;
   }
 
-  public void setSelectedBook(Book book) {
+  public void setSelectedBook(BookSummary book) {
     this.selectedBook = book;
   }
 
-  public Book getSelectedBook() {
+  public BookSummary getSelectedBook() {
     return selectedBook;
   }
 }

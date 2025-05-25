@@ -32,7 +32,7 @@ public class UserProfileViewController
   private UserProfileVM viewModel;
   private ViewHandler viewHandler;
 
-  public void init(ViewHandler viewHandler,UserProfileVM viewModel) {
+  public void init(ViewHandler viewHandler, UserProfileVM viewModel) {
     this.viewModel = viewModel;
     this.viewHandler = viewHandler;
 

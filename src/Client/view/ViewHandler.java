@@ -51,7 +51,9 @@ public class ViewHandler
             userPage.init(this, viewModelFactory.getEditBookVM());
         case BookInfoViewController bookInfoController ->
             bookInfoController.init(this, viewModelFactory.getBookInfoVM());
-
+        case WaitingListViewController waitingListController ->
+            waitingListController.init(this, viewModelFactory.getWaitingListVM(),
+                viewModelFactory.getCurrentUsername());
 
 
         // …add more cases for UserPageViewController, UserListViewController, etc.
@@ -66,6 +68,26 @@ public class ViewHandler
     }
     catch (IOException e)
     {
+      throw new RuntimeException(e);
+    }
+  }
+  public void openBookInfoView(int bookId) {
+    try {
+      FXMLLoader loader = new FXMLLoader(
+          getClass().getClassLoader().getResource("Client/view/BookInfoView.fxml")
+      );
+      Parent root = loader.load();
+
+      BookInfoViewController ctrl = loader.getController();
+      ctrl.init(
+          this,
+          viewModelFactory.getBookInfoVM(),
+          bookId
+      );
+
+      primaryStage.setScene(new Scene(root));
+      primaryStage.show();
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }

@@ -4,6 +4,7 @@ import Client.network.ClientSocketHandler;
 import Shared.dto.enums.Action;
 import Shared.network.Request;
 import Shared.network.Response;
+import Shared.dto.FullUserDTO;
 
 public class LogInVM {
   private final ClientSocketHandler socketHandler;
@@ -24,6 +25,10 @@ public class LogInVM {
       Response response = socketHandler.readResponse();
 
       if (response.isSuccess()) {
+        /*this i will delete if wrong(FullUserDto)
+        FullUserDTO user = (FullUserDTO) response.getData();
+        factory.setUserToView(user);
+        */
         factory.setCurrentUsername(username);  // You could also extract it from the response if needed
         return true;
       } else {

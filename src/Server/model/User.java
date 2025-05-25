@@ -3,6 +3,7 @@ package Server.model;
 
 import Server.util.DBConnection;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-public class User
+public class User implements Serializable
 {
   private String userName;
   private String fullName;

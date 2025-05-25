@@ -31,12 +31,12 @@ public class MyLibraryViewController
 
   public void onAddBookClicked(ActionEvent actionEvent)
   {
-    viewHandler.openView("BookInfoView.fxml");
+    viewHandler.openView("Client/view/BookInfoView.fxml");
   }
 
   public void onViewBookClicked(ActionEvent actionEvent)
   {
-    viewHandler.openView("BookInfoView.fxml");
+    viewHandler.openView("Client/view/BookInfoView.fxml");
   }
 
   public void onRemoveBookClicked(ActionEvent actionEvent)

@@ -5,32 +5,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import javax.swing.text.html.ImageView;
+import java.io.IOException;
 
 public class BookInfoViewController
 {
 
-  @FXML private Label titleLabel;
-  @FXML private Label authorLabel;
-  @FXML private Label yearLabel;
-  @FXML private Label genreLabel;
-  @FXML private Label isbnLabel;
-  @FXML private Label languageLabel;
-  @FXML private Label ownerLabel;
-  @FXML private Label borrowedLabel;
+  @FXML private Label titleLabel, statusLabel,authorLabel,yearLabel,
+      genreLabel,format, isbnLabel,languageLabel, ownerLabel,borrowedLabel;
 
-  @FXML private Button waitinglist;
-  @FXML private Button history;
-  @FXML private Button lendbutton;
-  @FXML private Button getpdfbutton;
-  @FXML private Button addnote;
-  @FXML private Button back;
-  @FXML private Button edit;//добавить в fxml
-  @FXML private Button returnButton;
+  @FXML private Button waitinglist, history,lendbutton,getpdfbutton,addnote,
+      back,edit,returnButton;
   @FXML private  ImageView bookImage;
-  @FXML private TextArea booknotes;
+  @FXML private TextArea booknotes, descriptionarea;
 
-  @FXML private CheckBox unavailableCheckBox;
-  @FXML private CheckBox readCheckBox;
+  @FXML private CheckBox unavailableCheckBox,readCheckBox;
 
   private ViewHandler viewHandler;
   private BookInfoVM viewModel;
@@ -117,9 +105,35 @@ public class BookInfoViewController
   /*@FXML private void onHistoryClicked() {
     viewModel.showHistory();
   }*/
-
-  public void init(ViewHandler viewHandler, BookInfoVM bookInfoVM)
+  public void init(ViewHandler vh, BookInfoVM vm, int bookId)
+      throws IOException, ClassNotFoundException
   {
+    this.viewHandler = vh;
+    this.viewModel          = vm;
+
+    // bind UI to VM properties
+    titleLabel.textProperty().bind(vm.titleProperty());
+    authorLabel.textProperty().bind(vm.authorProperty());
+    isbnLabel.textProperty().bind(vm.isbnProperty());
+    genreLabel.textProperty().bind(vm.genreProperty());
+    format.textProperty().bind(vm.formatProperty());
+    descriptionarea.textProperty().bind(vm.descriptionProperty());
+    statusLabel.textProperty().bind(vm.statusProperty());
+
+    // load the image once the path is set
+    vm.imagePathProperty().addListener((obs, oldP, newP) -> {
+      if (newP != null && !newP.isBlank()) {
+       // bookImage.setImage(new Image(newP));
+        //handle later
+      }
+    });
+
+    // finally, fetch from the server
+    vm.loadBookInfo(bookId);
+  }
+
+  @FXML private void onBackClicked() {
+    viewHandler.openView("Client/view/BookListView.fxml");
   }
 
   @FXML

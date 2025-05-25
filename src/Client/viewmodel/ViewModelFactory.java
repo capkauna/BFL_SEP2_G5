@@ -117,7 +117,19 @@ public class ViewModelFactory
     {
       throw new IllegalArgumentException("Username cannot be null or empty");
     }
-    return new UserProfileVM(userToView ,getCurrentUsername());
+    /*if (userToView == null) {
+      //here is thing that our app crashes all the time
+      userToView.setUserName(currentUsername);
+      userToView.setFullName("Demo User");
+      userToView.setPhoneNumber("0000000000");
+      userToView.setEmail("demo@example.com");
+      userToView.setAddress("Demo Street");
+
+    }*/
+    return new UserProfileVM(userToView, getCurrentUsername());
+  }
+  public void setUserToView(FullUserDTO user) {
+    this.userToView = user;
   }
   //TODO: revisit this
   public UserSummaryVM getUserSummaryVM()

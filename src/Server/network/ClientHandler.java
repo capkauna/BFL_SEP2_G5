@@ -2,19 +2,20 @@
 
   import Server.database.*;
   import Server.model.*;
+  import Server.service.BookInfoService;
   import Server.service.WaitingListService;
+  import Shared.dto.BookSummary;
   import Shared.dto.WaitingListEntryDTO;
   import Shared.network.*;
   import Shared.dto.enums.*;
   import Server.service.AuthService;
 
-
+  import java.sql.SQLException;
   import java.util.List;
   import java.io.ObjectInputStream;
   import java.io.ObjectOutputStream;
   import java.net.Socket;
 
-  import static Shared.dto.enums.Action.GET_WAITING_LIST;
 
   public class ClientHandler implements Runnable {
     private final Socket socket;
@@ -22,8 +23,11 @@
     private ObjectOutputStream out;
     private final AuthService authService;
     private final WaitingListService waitingListService = new WaitingListService();
+    private final BookInfoService bookInfoService = new BookInfoService();
 
-    public ClientHandler(Socket socket, AuthService authService) {
+    public ClientHandler(Socket socket, AuthService authService)
+        throws SQLException
+    {
       this.socket = socket;
       this.authService = authService;
     }
@@ -66,12 +70,42 @@
 
             try {
               BookDAO dao = JdbcBookDAO.getInstance();
-              List<Book> books = dao.findAll();
-              yield new Response(true, books, null);
+              List<BookSummary> summaries = bookInfoService.getAllBookSummaries();
+              System.out.println(" -> Server received GET_ALL_BOOKS request. ");
+              yield new Response(true, summaries, null);
+
             } catch (Exception e) {
               yield new Response(false, null, "Failed to get books: " + e.getMessage());
             }
 
+          }
+          case GET_BOOK_INFO -> {
+            try{
+            int bookId = (Integer) request.getPayload();
+
+
+            // fetch domain object
+            Book b = bookInfoService.getBookInfo(bookId);
+
+            // map to a serializable DTO
+            var dto = new BookSummary(
+                b.getBookId(),
+                b.getTitle(),
+                b.getAuthor(),
+                b.getIsbn(),
+                b.getOwner().getUserName(),
+                b.getFormat(),
+                b.getGenre(),
+                b.getStatus().toString(),
+                b.getDescription(),
+                b.getImage()
+            );
+
+            yield new Response(true, dto, null);
+          } catch (SQLException e)
+            {
+              yield new Response(false, null , "No book found");
+            }
           }
           case ADD_TO_WAITING_LIST ->
           {

@@ -48,6 +48,6 @@ public class BookListViewController
   }
 
   @FXML private void onBackClicked() {
-    viewHandler.openView("MyLibraryView.fxml");
+    viewHandler.openView("Client/view/MyLibraryView.fxml");
   }
 }
