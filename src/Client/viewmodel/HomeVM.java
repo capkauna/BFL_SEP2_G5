@@ -1,27 +1,15 @@
 package Client.viewmodel;
 
 import Client.view.ViewHandler;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 
 public class HomeVM
 {
-  private final ViewHandler viewHandler;
 
-  public HomeVM(ViewHandler viewHandler) {
-    this.viewHandler = viewHandler;
-  }
 
-  public void openLibraryView() {
-    viewHandler.openView("MyLibraryView.fxml");
-  }
-  public void openUserProfileView() {
-    viewHandler.openView("UserProfileView.fxml");
+  public HomeVM() {
+    // Здесь может быть логика отображения, например, загрузка уведомлений
   }
 
-  public void openSearchView() {
-    viewHandler.openView("SearchView.fxml");
-  }
-
-  public void openUserListView() {
-    viewHandler.openView("UserListView.fxml");
-  }
 }

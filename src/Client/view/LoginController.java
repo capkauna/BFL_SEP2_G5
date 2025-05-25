@@ -38,6 +38,7 @@ public class LoginController
       return;
     }
 
+
     // Perform login logic here:
     viewModel.login(username, password, errorLabel);
 

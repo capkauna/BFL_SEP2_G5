@@ -1,61 +1,80 @@
 package Client.viewmodel;
 
-import Server.model.Book;
-import Server.repository.BookDAO;
-import Client.view.ViewHandler;
-import Shared.util.Session;
 
-import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
+import Client.view.ViewHandler;
+import Server.repository.JdbcBookDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class MyLibraryVM
 {
-  private final BookDAO dao;
-  private final ViewHandler viewHandler;
-  private Book selectedBook;
+  private final ObservableList<String> books;
 
-  public MyLibraryVM(BookDAO dao, ViewHandler viewHandler) {
-    this.dao = dao;
-    this.viewHandler = viewHandler;
+  public MyLibraryVM(JdbcBookDAO instance, ViewHandler viewHandler)
+  {
+
+    this.books = FXCollections.observableArrayList();
   }
 
-  public List<String> getMyBooks() {
-    try {
-      return dao.findByOwner(Session.getLoggedInUser()).stream()
-          .map(Book::getTitle)
-          .collect(Collectors.toList());
-    } catch (SQLException e) {
-      return List.of("Error: " + e.getMessage());
-    }
+
+  public ObservableList<String> getBooks(){
+    return books;
   }
 
-  public void selectedBookByTitle(String title) {
-    try {
-      selectedBook = dao.findByTitle(title).stream()
-          .filter(book -> book.getOwner().getUserId() == Session.getLoggedInUser().getUserId())
-          .findFirst().orElse(null);
-    } catch (SQLException e) {
-      selectedBook = null;
-    }
+  public void removeSelectedBook(String book) {
+    books.remove(book);
   }
 
-  public void editSelectedBook() {
-    if (selectedBook != null) {
-      viewHandler.openView("EditBookView.fxml");
-    }
-  }
-
-  public void deleteSelectedBook() {
-    if (selectedBook != null) {
-      try {
-        dao.delete(selectedBook.getBookId());
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-  public void goHome() {
-    viewHandler.openView("HomeView.fxml");
+  public ObservableList<String> getMyBooks()
+  {
+    return books;
   }
 }
+//  private final BookDAO dao;
+//  private final ViewHandler viewHandler;
+//  private Book selectedBook;
+//
+//  public MyLibraryVM(BookDAO dao, ViewHandler viewHandler) {
+//    this.dao = dao;
+//    this.viewHandler = viewHandler;
+//  }
+//
+//  public List<String> getMyBooks() {
+//    try {
+//      return dao.findByOwner(Session.getLoggedInUser()).stream()
+//          .map(Book::getTitle)
+//          .collect(Collectors.toList());
+//    } catch (SQLException e) {
+//      return List.of("Error: " + e.getMessage());
+//    }
+//  }
+//
+//  public void selectedBookByTitle(String title) {
+//    try {
+//      selectedBook = dao.findByTitle(title).stream()
+//          .filter(book -> book.getOwner().getUserId() == Session.getLoggedInUser().getUserId())
+//          .findFirst().orElse(null);
+//    } catch (SQLException e) {
+//      selectedBook = null;
+//    }
+//  }
+//
+//  public void editSelectedBook() {
+//    if (selectedBook != null) {
+//      viewHandler.openView("EditBookView.fxml");
+//    }
+//  }
+//
+//  public void deleteSelectedBook() {
+//    if (selectedBook != null) {
+//      try {
+//        dao.delete(selectedBook.getBookId());
+//      } catch (SQLException e) {
+//        e.printStackTrace();
+//      }
+//    }
+//  }
+//  public void goHome() {
+//    viewHandler.openView("HomeView.fxml");
+//  }
+//}

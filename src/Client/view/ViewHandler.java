@@ -3,67 +3,42 @@ package Client.view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage; //this was sus, something about postgres hmm
-import Client.viewmodel.ViewModelFactory;
-import Client.view.*;
-
+import javafx.stage.Stage;
+import Client.viewmodel.*;
 
 import java.io.IOException;
 
-public class ViewHandler
-{
-  //viewmodel connects to controller, just note to myself cause i am lost
-
+public class ViewHandler {
   private Stage primaryStage;
   private final ViewModelFactory viewModelFactory;
 
-  public ViewHandler(ViewModelFactory viewModelFactory)
-  {
+  public ViewHandler(ViewModelFactory viewModelFactory) {
     this.viewModelFactory = viewModelFactory;
   }
 
-  public void start(Stage stage)
-  {
-    this.primaryStage = stage;
-    openView("HomeView.fxml");
+  public void start(Stage primaryStage) {
+    this.primaryStage = primaryStage;
+    openView("Client/view/HomeView.fxml");
   }
 
-  public void openView(String fxmlFile)
-  {
-    try
-    {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+  public void openView(String fxmlFile) {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlFile));
       Parent root = loader.load();
 
       Object controller = loader.getController();
-
-      if (controller instanceof HomeViewController homeController)
-      {
-        homeController.init(viewModelFactory.getHomeVM());
-      }
-      else if (controller instanceof SearchViewController searchViewController)
-      {
-        searchViewController.init(viewModelFactory.getSearchVM());
-      }
-      else if (controller instanceof MyLibraryViewController libController)
-      {
-        libController.init(viewModelFactory.getMyLibraryVM());
-      }
-      else if (controller instanceof SearchViewController searchViewController)
-      {
-        searchViewController.init(viewModelFactory.getSearchVM());
-      }
-      else if (controller instanceof MyLibraryViewController libController)
-      {
-        libController.init(viewModelFactory.getMyLibraryVM());
-        // to be continued for next pages
+      if (controller instanceof HomeViewController homeController) {
+        homeController.init(this, viewModelFactory.getHomeVM());
+      } else if (controller instanceof SearchViewController searchController) {
+        searchController.init(this, viewModelFactory.getSearchVM());
+      } else if (controller instanceof MyLibraryViewController libController) {
+        libController.init(this, viewModelFactory.getMyLibraryVM());
       }
 
-      primaryStage.setScene(new Scene(root));
+      Scene scene = new Scene(root);
+      primaryStage.setScene(scene);
       primaryStage.show();
-    }
-    catch (IOException e)
-    {
+    } catch (IOException e) {
       e.printStackTrace();
     }
   }
