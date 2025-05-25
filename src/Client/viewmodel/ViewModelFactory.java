@@ -9,17 +9,23 @@ import java.sql.SQLException;
 
 public class ViewModelFactory
 {
+  private final LogInVM logInVM;
   private final HomeVM homeVM;
   private final SearchVM searchVM;
   private final MyLibraryVM myLibraryVM;
   private JdbcBookDAO bookDAO;
 
-  public ViewModelFactory() throws SQLException
+  public ViewModelFactory(ViewHandler viewHandler) throws SQLException
   {
     //here is what is depeneded on what
+    this.logInVM = new LogInVM();
     this.homeVM = new HomeVM();
     this.searchVM = new SearchVM(JdbcBookDAO.getInstance()); //connects to DAO
-    this.myLibraryVM = new MyLibraryVM(JdbcBookDAO.getInstance(), new ViewHandler(this));
+    this.myLibraryVM = new MyLibraryVM(JdbcBookDAO.getInstance());
+  }
+
+  public  LogInVM getLogInVM() {
+    return logInVM;
   }
 
   public HomeVM getHomeVM() {

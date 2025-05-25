@@ -2,15 +2,21 @@ package Client.viewmodel;
 
 import Client.network.AuthServiceClient;
 import Client.network.SocketAuthServiceClient;
+import Client.view.ViewHandler;
 import javafx.scene.control.Label;
 
 
 public class LogInVM {
   private final AuthServiceClient authClient;
+  private ViewHandler viewHandler;
 
   public LogInVM() {
     // pick your implementation here:
     this.authClient = new SocketAuthServiceClient();
+  }
+
+  public void init(ViewHandler viewHandler) {
+    this.viewHandler = viewHandler;
   }
 
   /**
@@ -23,6 +29,7 @@ public class LogInVM {
       if (ok) {
         System.out.println("Login successful for user: " + username);
         errorLabel.setVisible(false);
+        viewHandler.openView("Client/view/HomeView.fxml"); //this to send from login to home view
         // TODO: launch main window
       } else {
         System.out.println("Invalid credentials for user: " + username);

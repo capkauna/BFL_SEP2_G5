@@ -11,7 +11,7 @@ public class Main extends Application {
   public void start(Stage primaryStage) throws Exception {
     ViewModelFactory viewModelFactory = new ViewModelFactory();
     ViewHandler viewHandler = new ViewHandler(viewModelFactory);
-    viewHandler.start(primaryStage);
+    viewModelFactory.getLogInVM().init(viewHandler);
   }
 
   public static void main(String[] args) {

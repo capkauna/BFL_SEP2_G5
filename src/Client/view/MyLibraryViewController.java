@@ -13,7 +13,7 @@ public class MyLibraryViewController
   @FXML private Button addBookButton;
   @FXML private Button viewBookButton;
   @FXML private Button removeBookButton;
-  private ActionEvent actionEvent;
+  //private ActionEvent actionEvent;
 
   private ViewHandler viewHandler;
   private MyLibraryVM viewModel;
@@ -26,19 +26,27 @@ public class MyLibraryViewController
     libraryList.setItems(viewModel.getMyBooks());
   }
 
-  FXMLLoader loader = new FXMLLoader(getClass().getResource("/Client/view/MyLibraryView.fxml"));
-  public void onAddBookClicked(javafx.event.ActionEvent actionEvent)
+  public void onAddBookClicked(ActionEvent actionEvent)
   {
     viewHandler.openView("BookInfoView.fxml");
   }
 
-  public void onViewBookClicked(javafx.event.ActionEvent actionEvent)
+  public void onViewBookClicked(ActionEvent actionEvent)
   {
     viewHandler.openView("BookInfoView.fxml");
   }
 
-  public void onRemoveBookClicked(javafx.event.ActionEvent actionEvent)
+  public void onRemoveBookClicked(ActionEvent actionEvent)
   {
-    viewModel.removeSelectedBook(libraryList.getSelectionModel().getSelectedItem());
+    String selectedBook = libraryList.getSelectionModel().getSelectedItem();
+    if (selectedBook != null) {
+      viewModel.removeSelectedBook(selectedBook);
+    }
+  }
+
+
+  @FXML
+  public void onBackClicked(ActionEvent actionEvent) {
+    viewHandler.openView("HomeView.fxml");
   }
 }

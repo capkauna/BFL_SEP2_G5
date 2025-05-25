@@ -1,42 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <!--UI thingy and starter page-->
-
-<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml" fx:controller="Client.view.HomeViewController" style="-fx-background-color: #990000;">
-    <top>
-        <Label text="Best Friends Library" style="-fx-font-size: 20px; -fx-padding: 10;" BorderPane.alignment="CENTER" />
-    </top>
-    <center>
-        <VBox spacing="20" alignment="CENTER">
-<!--            <Label text="Notifications (log)" style="-fx-background-color: lightgray; -fx-padding: 40;" />-->
-            <HBox spacing="50" alignment="CENTER">
-                <VBox spacing="10">
-                    <Button fx:id="myLibraryButton" text="My Library" onAction="#onMyLibrary" />
-                    <Button fx:id="findBookButton" text="Find book" onAction="#onFindBook" />
-                </VBox>
-                <TextArea fx:id="notificationLog" prefHeight="200" prefWidth="300" />
-                <VBox spacing="10">
-                    <Button fx:id="myAccountButton" text="My account" onAction="#onMyAccount" />
-                    <Button fx:id="findUserButton" text="Find User" onAction="#onFindUser" />
-                </VBox>
-            </HBox>
-        </VBox>
-    </center>
-</BorderPane>
-
-
 <!--<BorderPane xmlns="http://javafx.com/javafx"-->
 <!--            xmlns:fx="http://javafx.com/fxml"-->
 <!--            fx:controller="Client.view.HomeViewController"-->
 <!--            prefHeight="400.0" prefWidth="600.0">-->
-
-
 <!--    <top>-->
 <!--        <Label text="Best Friend Library"-->
 <!--               style="-fx-font-size: 24px, -fx-background-color: lightblue; -fx-padding: 10;"-->
@@ -55,8 +29,20 @@
 <!--        </HBox>-->
 <!--        </VBox>-->
 <!--    </center>-->
-
 <!--</BorderPane>-->
 
 
-
+<Pane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #990000;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="202.0" layoutY="21.0" text="Best Friend Library">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="myLibraryButton" layoutX="36.0" layoutY="81.0" mnemonicParsing="false" onAction="#onMyLibrary" prefHeight="87.0" prefWidth="117.0" text="Library" />
+      <Button fx:id="findUserButton" layoutX="448.0" layoutY="252.0" mnemonicParsing="false" onAction="#onFindUser" prefHeight="87.0" prefWidth="117.0" text="Find user" />
+      <Button fx:id="findBookButton" layoutX="36.0" layoutY="252.0" mnemonicParsing="false" onAction="#onFindBook" prefHeight="87.0" prefWidth="117.0" text="Find book" />
+      <Button fx:id="MyAccount" layoutX="448.0" layoutY="81.0" mnemonicParsing="false" onAction="#onMyAccount" prefHeight="87.0" prefWidth="117.0" text="My account" />
+      <TextArea fx:id="notificationLog" layoutX="164.0" layoutY="81.0" prefHeight="259.0" prefWidth="273.0" />
+   </children>
+</Pane>

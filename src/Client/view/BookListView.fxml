@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- сделала через чатджпт проверь как выглядит в scenebuilder -->
+<!-- вроде бы норм -->
+
+<AnchorPane prefHeight="450" prefWidth="600" style="-fx-background-color: #990000; -fx-padding: 20;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.BookListViewController">
+
+<children>
+    <Button layoutX="10" layoutY="10" onAction="#onBackClicked" text="←" />
+
+    <!-- Область содержимого -->
+    <VBox layoutX="20" layoutY="50" prefWidth="560" spacing="10">
+        <HBox spacing="20" style="-fx-background-color: #FFFFFF;">
+            <!-- Картинка -->
+            <ImageView fx:id="bookImage" fitHeight="150" fitWidth="100" />
+
+            <!-- Информация о книге -->
+            <GridPane fx:id="List" hgap="10" vgap="5">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="80" />
+                    <ColumnConstraints minWidth="200" />
+                </columnConstraints>
+
+                <Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label fx:id="titleLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label text="Author:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Label fx:id="authorLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Label text="Genre:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <Label fx:id="genreLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                <Label text="ISBN:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <Label fx:id="isbnLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                <Label text="Owner:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                <Label fx:id="ownerLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                <Label text="Borrowed by:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                <Label fx:id="borrowedLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                <Label text="Language:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                <Label fx:id="languageLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+                <Label text="Year:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                <Label fx:id="yearLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+            </GridPane>
+        </HBox>
+
+        <!-- Галочки -->
+        <HBox spacing="20">
+            <CheckBox fx:id="unavailableCheckBox" text="Unavailable" />
+            <CheckBox fx:id="readCheckBox" text="Read" />
+        </HBox>
+
+        <!-- Notes -->
+        <Label style="-fx-text-fill: white;" text="Reader Notes:" />
+        <TextArea fx:id="readerNotes" prefHeight="100" wrapText="true" />
+
+    </VBox>
+</children>
+</AnchorPane>

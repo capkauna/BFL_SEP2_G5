@@ -8,7 +8,7 @@
 
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="Client.view.MyLibraryViewController"
-            prefWidth="480" prefHeight="320" style="-fx-background-color: B14747;">
+            prefWidth="480" prefHeight="320" style="-fx-background-color: #B14747;">
 
     <Label layoutX="20" layoutY="20" text="My Library" style="-fx-text-fill: white; -fx-font-size: 16;" />
 
@@ -17,25 +17,7 @@
     <Button fx:id="addBookButton" text="Add new book" layoutX="20" layoutY="250" prefWidth="130" onAction="#onAddBookClicked"/>
     <Button fx:id="viewBookButton" text="View Book" layoutX="175" layoutY="250" prefWidth="130" onAction="#onViewBookClicked"/>
     <Button fx:id="removeBookButton" text="Remove book" layoutX="330" layoutY="250" prefWidth="130" onAction="#onRemoveBookClicked"/>
+
+    <Button fx:id="backButton" text="← Back" layoutX="20" layoutY="290" prefWidth="80" onAction="#onBackClicked"/>
 </AnchorPane>
 
-<!--<AnchorPane xmlns="http://javafx.com/javafx"-->
-<!--            xmlns:fx="http://javafx.com/fxml"-->
-<!--            fx:controller="Client.view.MyLibraryViewController"-->
-<!--            prefHeight="400.0" prefWidth="600.0">-->
-<!--          &lt;!&ndash;  spacing="10" style="-fx-padding: 20; -fx-background-color: #ffffff;">&ndash;&gt;-->
-
-<!--    <VBox>-->
-<!--        <Label text="My Library" style="-fx-font-size: 24px;"/>-->
-<!--        <ListView fx:id="libraryList" onMouseClicked="#onBookSelected"/>-->
-
-<!--        <HBox spacing="10">-->
-<!--            <Button text="Edit" onAction="#onEditClicked"/>-->
-<!--            <Button text="Delete" onAction="#onDeleteClicked"/>-->
-<!--        </HBox>-->
-
-<!--        <Button text="Back to Home" onAction="#onBackClicked"/>-->
-
-<!--    </VBox>-->
-
-<!--</AnchorPane>-->

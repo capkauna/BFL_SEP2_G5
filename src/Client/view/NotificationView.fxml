@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="Client.view.NotificationViewController"
+            prefWidth="600.0" prefHeight="400.0"
+            style="-fx-background-color: #990000;">
+
+    <ListView fx:id="notificationList"
+              layoutX="20.0" layoutY="20.0"
+              prefWidth="560.0" prefHeight="360.0"
+              style="-fx-font-size: 14px;"/>
+</AnchorPane>
