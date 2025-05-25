@@ -1,22 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/8"
+            fx:controller="Client.view.BookInfoViewController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <Label layoutX="20" layoutY="10" text="Book Info" style="-fx-text-fill: white; -fx-font-size: 18px;" />
+
+        <ImageView fx:id="coverImage" layoutX="20" layoutY="40" fitHeight="120" fitWidth="100" />
+
+        <TextArea fx:id="descriptionArea" layoutX="140" layoutY="40" prefWidth="420" prefHeight="100" promptText="Book description..." />
+
+        <TextField fx:id="noteField" layoutX="20" layoutY="180" prefWidth="540" promptText="Add note..." />
+
+        <Button layoutX="20" layoutY="220" text="Add Note" />
+        <Button layoutX="120" layoutY="220" text="Lend" />
+        <Button layoutX="200" layoutY="220" text="Return" />
+        <Button layoutX="300" layoutY="220" text="Get PDF" />
+
+        <CheckBox layoutX="20" layoutY="260" text="Read" />
+        <CheckBox layoutX="100" layoutY="260" text="Mark unavailable" />
+    </children>
+</AnchorPane>
+
+
+
+
+
+
+
 
 <!--<?import javafx.scene.image.ImageView?>-->
 <!--<AnchorPane xmlns:fx="http://javafx.com/fxml"-->
 <!--            fx:controller="Client.view.BookInfoViewController"-->
 <!--            prefWidth="500" prefHeight="400"-->
 <!--            style="-fx-background-color: #a51414;">-->
+
 <!--<Button fx:id="backButton" layoutX="10" layoutY="10" text="←" onAction="#onBackClicked"/>-->
 <!--<ImageView fx:id="bookImage" layoutX="20" layoutY="50" fitWidth="100" fitHeight="140"/>-->
+
 <!--<VBox layoutX="130" layoutY="50" spacing="5">-->
 <!--    <Label fx:id="titleLabel" text="Title"/>-->
 <!--    <Label fx:id="authorLabel" text="Author"/>-->
@@ -27,101 +54,18 @@
 <!--    <Label fx:id="languageLabel" text="Language"/>-->
 <!--    <Label fx:id="yearLabel" text="Year"/>-->
 <!--</VBox>-->
+
 <!--<CheckBox fx:id="unavailableCheckBox" layoutX="360" layoutY="50" text="mark unavailable"/>-->
 <!--<CheckBox fx:id="readCheckBox" layoutX="360" layoutY="80" text="read"/>-->
+
 <!--<Button layoutX="50" layoutY="210" text="Waiting list"/>-->
 <!--<Button layoutX="250" layoutY="210" text="History"/>-->
+
 <!--<TextArea fx:id="readerNotes" layoutX="50" layoutY="250" prefWidth="400" prefHeight="60"-->
 <!--          promptText="Notes from readers" editable="false"/>-->
+
 <!--<Button layoutX="40" layoutY="330" text="Lend"/>-->
 <!--<Button layoutX="180" layoutY="330" text="Add note"/>-->
 <!--<Button layoutX="320" layoutY="330" text="Book was returned"/>-->
+
 <!--</AnchorPane>-->
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.BookInfoViewController">
-
-<!--<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.BookInfoViewController">-->
-    <children>
-        <Pane fx:id="background" layoutX="-1.0" layoutY="-3.0" prefHeight="407.0" prefWidth="600.0" style="-fx-background-color: #990000;">
-            <children>
-                <Button id="lendbutton" fx:id="lendbutton" layoutX="27.0" layoutY="183.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="50.0" text="Lend" />
-                <ImageView fx:id="imageBook" fitHeight="139.0" fitWidth="117.0" layoutX="18.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" style="visibility: #000000;" />
-                <Button fx:id="waitingList" layoutX="209.0" layoutY="327.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="91.0" text="Waiting list" />
-                <Button fx:id="history" layoutX="334.0" layoutY="327.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="75.0" text="History" />
-                <Button id="addnote" fx:id="addnote" layoutX="27.0" layoutY="257.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="75.0" text="Add note" />
-                <Button fx:id="bookWasReturned" layoutX="447.0" layoutY="327.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="124.0" text="Book was returned" />
-                <Button fx:id="getpdfbutton" layoutX="88.0" layoutY="183.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="61.0" text="Get pdf" />
-                <Button fx:id="addmetoWaitingList" layoutX="27.0" layoutY="327.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="143.0" text="Add me to waiting list" />
-                <Label fx:id="noteslabel" blendMode="DARKEN" cache="true" cacheHint="SPEED" depthTest="DISABLE" layoutX="283.0" layoutY="226.0" prefHeight="25.0" prefWidth="124.0" text="Notes from readers">
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
-                <TextField fx:id="booknotes" layoutX="111.0" layoutY="257.0" prefHeight="59.0" prefWidth="460.0" />
-            <Button fx:id="back" layoutX="13.0" layoutY="10.0" mnemonicParsing="false" text="←" />
-            <Pane fx:id="info" layoutX="159.0" layoutY="19.0" prefHeight="197.0" prefWidth="413.0" style="-fx-background-color: #ffffff;">
-               <children>
-                  <Label fx:id="language" layoutX="11.0" layoutY="149.0" prefHeight="38.0" prefWidth="124.0" text="Language">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="status" layoutX="14.0" layoutY="92.0" prefHeight="38.0" prefWidth="244.0" text="Status">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="ISBN" layoutX="264.0" layoutY="121.0" prefHeight="38.0" prefWidth="124.0" text="ISBN">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                      <Label fx:id="borrowedlabel" layoutX="11.0" layoutY="121.0" prefHeight="38.0" prefWidth="244.0" text="Borrowed by">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                      <Label fx:id="ownerlabel" layoutX="16.0" layoutY="61.0" prefHeight="38.0" prefWidth="244.0" text="Owner">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="titlelabel" layoutX="14.0" prefHeight="38.0" prefWidth="382.0" text="Title to load">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="authorlabel" layoutX="14.0" layoutY="30.0" prefHeight="38.0" prefWidth="382.0" text="Author to load">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="yearlabel" layoutX="264.0" layoutY="61.0" prefHeight="38.0" prefWidth="143.0" text="Year to load">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="genrelabel" layoutX="264.0" layoutY="92.0" prefHeight="38.0" prefWidth="143.0" text="Genre to load">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                      <CheckBox fx:id="readmark" layoutX="144.0" layoutY="149.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="75.0" text="Read">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </CheckBox>
-                      <CheckBox fx:id="markunavailable" layoutX="229.0" layoutY="149.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="163.0" text="Mark unavailable">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </CheckBox>
-               </children>
-            </Pane>
-            <Button fx:id="edit" layoutX="558.0" layoutY="10.0" mnemonicParsing="false" text="⚙" />
-            </children>
-        </Pane>
-    </children>
-</AnchorPane>
