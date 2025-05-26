@@ -9,6 +9,7 @@ public interface LendDAO {
 
 
 Lend create(Lend lend) throws SQLException;
+  Lend createFull(Lend lend) throws SQLException;
 
 
   Lend findById(int id) throws SQLException;

@@ -16,7 +16,6 @@ public class Available implements Status
     {
       throw new UnsupportedOperationException("You cannot borrow your own book. Consider making it unavailable instead.");
     }
-    Lend.lendBook(b,u);
     b.setStatus(new Borrowed(u));
   }
 

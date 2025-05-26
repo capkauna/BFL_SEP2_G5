@@ -1,10 +1,9 @@
 package Server.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class ConnectToDatabase {
+public class TwoConnectToDatabase
+{
 
 
   public static void main(String[] args) {
@@ -87,25 +86,34 @@ public class ConnectToDatabase {
                                          comment TEXT
                    );
 """;
-    try {
+    try
+    {
 
       Class.forName("org.postgresql.Driver");
+    }catch (ClassNotFoundException e) {
+        System.err.println("PostgreSQL driver not found");
+        e.printStackTrace();
+        return;
+      }
 
 
-      try (Connection connection = DriverManager.getConnection(
-          "jdbc:postgresql://localhost:5432/BestFriendLibrary",
-          "postgres",
-          "AAA25")){
-        System.out.println("SUCCESS");
-      } catch (SQLException e) {
+    try (Connection conn = DBConnection.getConnection();
+        Statement  stmt = conn.createStatement()) {
+
+      // Split on semicolons, trimming whitespace
+      for (String sql : createTableSQL.split(";")) {
+        sql = sql.trim();
+        if (sql.isEmpty()) continue;
+        stmt.execute(sql);
+      }
+
+      System.out.println("Schema and tables created successfully.");
+    } catch (SQLException e) {
         System.out.println("ERROR");
         e.printStackTrace();
       }
-    } catch (ClassNotFoundException e) {
-      System.out.println("Driver PostgreSQL not found:");
-      e.printStackTrace();
     }
   }
 
 
-}
+

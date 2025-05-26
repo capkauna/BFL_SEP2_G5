@@ -44,6 +44,51 @@ public class JdbcLendDAO implements LendDAO {
       return lend;
     }
   }
+  //this method creates a lend and updates the book's status in a single transaction
+  @Override
+  public Lend createFull(Lend lend) throws SQLException {
+    // turn off auto‐commit so we can bundle both statements
+    boolean oldAutoCommit = c.getAutoCommit();
+    c.setAutoCommit(false);
+
+    try {
+      // 1) insert into lends
+      String lendSql =
+          "INSERT INTO lends (user_id, book_id, borrower_id, start_date) " +
+              "VALUES (?, ?, ?, CURRENT_DATE) RETURNING lend_id";
+      try (PreparedStatement lendStmt = c.prepareStatement(lendSql)) {
+        lendStmt.setInt(1, lend.getOwnerId());
+        lendStmt.setInt(2, lend.getBookId());
+        lendStmt.setInt(3, lend.getBorrowerId());
+        ResultSet rs = lendStmt.executeQuery();
+        if (rs.next()) {
+          lend.setLendId(rs.getInt("lend_id"));
+        }
+      }
+
+      // 2) update the book’s status in the same transaction
+      //    assume you store the raw status string "Borrowed by <username>"
+      String newStatus = "Borrowed by " + lend.getBorrowerId();
+      String bookSql =
+          "UPDATE books SET status = ? WHERE book_id = ?";
+      try (PreparedStatement bookStmt = c.prepareStatement(bookSql)) {
+        bookStmt.setString(1, newStatus);
+        bookStmt.setInt(2, lend.getBookId());
+        bookStmt.executeUpdate();
+      }
+
+      c.commit();
+      return lend;
+    }
+    catch (SQLException ex) {
+      c.rollback();              // undo both if something went wrong
+      throw ex;
+    }
+    finally {
+      c.setAutoCommit(oldAutoCommit);
+    }
+  }
+
 
 
   @Override

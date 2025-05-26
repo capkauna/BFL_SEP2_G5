@@ -6,8 +6,9 @@ import java.sql.SQLException;
 
 public class DBConnection
 {
-  //port for everyone but Mara commented out for saving purposes
-  //private static final String URL      = "jdbc:postgresql://localhost:5432/bestfriendlibrary" + "?currentSchema=library";
+  //make sure you update these fields to match your database configuration
+  //made sure you already have a database called "bestfriendlibrary" created before you move to the next step (TwoConnectToDatabase.java)
+
   private static final String URL      = "jdbc:postgresql://localhost:5432/bestfriendlibrary" + "?currentSchema=library";
   private static final String USER     = "postgres";
   private static final String PASSWORD = "amyclaw";

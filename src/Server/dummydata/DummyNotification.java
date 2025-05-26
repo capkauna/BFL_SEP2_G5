@@ -37,7 +37,7 @@ public class DummyNotification
         all.forEach(n ->
             System.out.println("[\" + n.getNotificationId() + \"] \" + n.getMessage() + \" (\" + n.getNotificationDate() + \")"));
 
-                // 3. Mark the first one as read
+        // 3. Mark the first one as read
     if (!all.isEmpty()) {
       int targetId = all.get(0).getNotificationId();
       notificationDAO.markAsRead(targetId);

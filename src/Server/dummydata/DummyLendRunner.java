@@ -33,7 +33,7 @@ public class DummyLendRunner {
       Book book = bookDAO.findById(2);
 
 
-      int borrowingPeriod = 14; // days
+      //int borrowingPeriod = 14; // days
       Lend l1 = Lend.lendBook(book, borrower);
       Lend lend = lendDAO.create(l1);
 
