@@ -12,7 +12,7 @@ import Server.dbstart.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 public class JdbcBookDAO implements BookDAO {
   private static JdbcBookDAO instance;
@@ -84,13 +84,13 @@ public class JdbcBookDAO implements BookDAO {
   }
 
   @Override
-  public List<Book> findAll() throws SQLException {
+  public ArrayList<Book> findAll() throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
             """;
-    List<Book> books = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql);
         ResultSet rs = ps.executeQuery()) {
@@ -103,14 +103,14 @@ public class JdbcBookDAO implements BookDAO {
   }
 
   @Override
-  public List<Book> findByTitle(String searchString) throws SQLException {
+  public ArrayList<Book> findByTitle(String searchString) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
              WHERE b.title LIKE ?
             """;
-    List<Book> books = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
@@ -125,14 +125,14 @@ public class JdbcBookDAO implements BookDAO {
   }
 
   @Override
-  public List<Book> findByAuthor(String searchString) throws SQLException {
+  public ArrayList<Book> findByAuthor(String searchString) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
              WHERE b.author LIKE ?
             """;
-    List<Book> books = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
@@ -146,14 +146,14 @@ public class JdbcBookDAO implements BookDAO {
     return books;
   }
   @Override
-  public List<Book> findByGenre(Genre genre) throws SQLException {
+  public ArrayList<Book> findByGenre(Genre genre) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
              WHERE b.genre = ?
             """;
-    List<Book> books = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
@@ -167,14 +167,14 @@ public class JdbcBookDAO implements BookDAO {
     return books;
   }
   @Override
-  public List<Book> findByFormat(Format format) throws SQLException {
+  public ArrayList<Book> findByFormat(Format format) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
              WHERE b.format = ?
             """;
-    List<Book> books = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
@@ -188,14 +188,14 @@ public class JdbcBookDAO implements BookDAO {
     return books;
   }
   @Override
-  public List<Book> findByOwner(User owner) throws SQLException {
+  public ArrayList<Book> findByOwner(User owner) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
              WHERE b.owner_id = ?
             """;
-    List<Book> books = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
@@ -209,14 +209,14 @@ public class JdbcBookDAO implements BookDAO {
     return books;
   }
   @Override
-  public List<Book> findByStatus(Status status) throws SQLException {
+  public ArrayList<Book> findByStatus(Status status) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
              WHERE b.status = ?
             """;
-    List<Book> books = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
@@ -231,14 +231,14 @@ public class JdbcBookDAO implements BookDAO {
   }
   //TODO check this again
   @Override
-  public List<Book> findByBorrowedBy(User borrowedBy) throws SQLException {
+  public ArrayList<Book> findByBorrowedBy(User borrowedBy) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
              WHERE b.status LIKE ?
             """;
-    List<Book> books = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 
@@ -252,14 +252,14 @@ public class JdbcBookDAO implements BookDAO {
     return books;
   }
   @Override
-  public List<Book> findByIsbn(String searchString) throws SQLException {
+  public ArrayList<Book> findByIsbn(String searchString) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
                    b.description, b.image, b.owner_id, b.status, b.year
               FROM books b
              WHERE b.isbn LIKE ?
             """;
-    List<Book> books = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
 

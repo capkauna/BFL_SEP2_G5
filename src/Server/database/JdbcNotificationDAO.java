@@ -6,7 +6,7 @@ import Server.dbstart.DBConnection;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList;
 
 public class JdbcNotificationDAO implements NotificationDAO
 {
@@ -30,7 +30,7 @@ public class JdbcNotificationDAO implements NotificationDAO
   }
 
   @Override
-  public List<Notification> addNotification(int userId, String message, int bookId) throws SQLException {
+  public ArrayList<Notification> addNotification(int userId, String message, int bookId) throws SQLException {
     String sql = "INSERT INTO notification_log (user_id, message, notification_date, book_id) VALUES (?, ?, NOW(), ?)";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -45,8 +45,8 @@ public class JdbcNotificationDAO implements NotificationDAO
   }
 
   @Override
-  public List<Notification> getNotifications(int userId) {
-    List<Notification> notifications = new ArrayList<>();
+  public ArrayList<Notification> getNotifications(int userId) {
+    ArrayList<Notification> notifications = new ArrayList<>();
     String sql = "SELECT * FROM notification_log WHERE user_id = ? ORDER BY notification_date DESC";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -62,7 +62,7 @@ public class JdbcNotificationDAO implements NotificationDAO
   }
 
   @Override
-  public List<Notification> markAsRead(int notificationId) {
+  public ArrayList<Notification> markAsRead(int notificationId) {
     String sql = "UPDATE notification_log SET message = REPLACE(message, '[UNREAD]', '[READ]') WHERE notification_id = ?";
     int userId = -1;
     try (Connection conn = DBConnection.getConnection();
@@ -70,7 +70,7 @@ public class JdbcNotificationDAO implements NotificationDAO
       stmt.setInt(1, notificationId);
       stmt.executeUpdate();
 
-      // Retrieve userId from notification for updated list
+      // Retrieve userId from notification for updated ArrayList
       try (PreparedStatement ps = conn.prepareStatement("SELECT user_id FROM notification_log WHERE notification_id = ?")) {
         ps.setInt(1, notificationId);
         ResultSet rs = ps.executeQuery();
@@ -85,7 +85,7 @@ public class JdbcNotificationDAO implements NotificationDAO
   }
 
   @Override
-  public List<Notification> deleteNotification(int notificationId) {
+  public ArrayList<Notification> deleteNotification(int notificationId) {
     int userId = -1;
     try (Connection conn = DBConnection.getConnection()) {
       // Get user ID first

@@ -14,7 +14,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 public class JdbcLendDAO implements LendDAO {
   private final Connection c;
@@ -116,38 +116,38 @@ public class JdbcLendDAO implements LendDAO {
   }
 
   @Override
-  public List<Lend> findAll() throws SQLException {
+  public ArrayList<Lend> findAll() throws SQLException {
     String sql = "SELECT * FROM lends";
     try (PreparedStatement stmt = c.prepareStatement(sql)) {
       ResultSet rs = stmt.executeQuery();
-      List<Lend> lends = new ArrayList<>();
+      ArrayList<Lend> lends = new ArrayList<>();
       while (rs.next()) lends.add(mapRowToLend(rs));
       return lends;
     }
   }
 
   @Override
-  public List<Lend> findByBookId(int bookId) throws SQLException {
+  public ArrayList<Lend> findByBookId(int bookId) throws SQLException {
     return findByField("book_id", bookId);
   }
 
   @Override
-  public List<Lend> findByLenderId(int userId) throws SQLException {
+  public ArrayList<Lend> findByLenderId(int userId) throws SQLException {
     return findByField("user_id", userId);
   }
 
   @Override
-  public List<Lend> findByBorrowerId(int borrowerId) throws SQLException {
+  public ArrayList<Lend> findByBorrowerId(int borrowerId) throws SQLException {
     return findByField("borrower_id", borrowerId);
   }
 
   @Override
-  public List<Lend> findActiveLends() throws SQLException {
+  public ArrayList<Lend> findActiveLends() throws SQLException {
     String sql = "SELECT * FROM lends WHERE end_date IS NULL";
     try (PreparedStatement stmt = c.prepareStatement(sql))
     {
       ResultSet rs = stmt.executeQuery();
-      List<Lend> lends = new ArrayList<>();
+      ArrayList<Lend> lends = new ArrayList<>();
       while (rs.next())
       {
         lends.add(mapRowToLend(rs));
@@ -157,12 +157,12 @@ public class JdbcLendDAO implements LendDAO {
   }
 
   @Override
-  public List<Lend> findReturnedLends() throws SQLException {
+  public ArrayList<Lend> findReturnedLends() throws SQLException {
     String sql = "SELECT * FROM lends WHERE end_date IS NOT NULL";
     try (PreparedStatement stmt = c.prepareStatement(sql))
     {
       ResultSet rs = stmt.executeQuery();
-      List<Lend> lends = new ArrayList<>();
+      ArrayList<Lend> lends = new ArrayList<>();
       while (rs.next())
       {
         lends.add(mapRowToLend(rs));
@@ -258,23 +258,23 @@ public class JdbcLendDAO implements LendDAO {
     }
   }
 
-  private List<Lend> findByField(String fieldName, int value) throws SQLException {
+  private ArrayList<Lend> findByField(String fieldName, int value) throws SQLException {
     String sql = "SELECT * FROM lends WHERE " + fieldName + " = ?";
     try (PreparedStatement stmt = c.prepareStatement(sql)) {
       stmt.setInt(1, value);
       ResultSet rs = stmt.executeQuery();
-      List<Lend> lends = new ArrayList<>();
+      ArrayList<Lend> lends = new ArrayList<>();
       while (rs.next()) lends.add(mapRowToLend(rs));
       return lends;
     }
   }
 
-  private List<Lend> findByBooleanField(String fieldName, boolean value) throws SQLException {
+  private ArrayList<Lend> findByBooleanField(String fieldName, boolean value) throws SQLException {
     String sql = "SELECT * FROM lends WHERE " + fieldName + " = ?";
     try (PreparedStatement stmt = c.prepareStatement(sql)) {
       stmt.setBoolean(1, value);
       ResultSet rs = stmt.executeQuery();
-      List<Lend> lends = new ArrayList<>();
+      ArrayList<Lend> lends = new ArrayList<>();
       while (rs.next()) lends.add(mapRowToLend(rs));
       return lends;
     }

@@ -4,7 +4,7 @@ package Client.viewmodel;
 import Shared.network.Request;
 import Shared.network.Response;
 import Shared.dto.enums.Action;
-import Shared.dto.BookSummary;
+import Shared.dto.BookSummaryDTO;
 import Client.network.ClientSocketHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -54,7 +54,7 @@ public class BookInfoVM {
       throw new RuntimeException("Failed to load book: " + resp.getErrorMessage());
     }
 
-    BookSummary b = (BookSummary) resp.getData();
+    BookSummaryDTO b = (BookSummaryDTO) resp.getData();
     title.set(b.getTitle());
     author.set(b.getAuthor());
     isbn.set(b.getIsbn());

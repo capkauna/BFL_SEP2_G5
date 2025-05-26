@@ -6,7 +6,7 @@
   import Server.model.status.Status;
 
   import java.sql.SQLException;
-  import java.util.List;
+  import java.util.ArrayList;
 
   public interface BookDAO
   {
@@ -17,15 +17,15 @@
 
     //Read
     Book findById(int id) throws SQLException;
-    List<Book> findAll() throws SQLException;
-    List<Book> findByTitle(String title) throws SQLException;
-    List<Book> findByIsbn(String isbn)throws SQLException;
-    List<Book> findByAuthor(String author)throws SQLException;
-    List<Book> findByGenre(Genre genre)throws SQLException;
-    List<Book>findByFormat(Format format)throws SQLException;
-    List<Book> findByOwner(User owner)throws SQLException;
-    List<Book>findByStatus(Status status)throws SQLException;
-    List<Book> findByBorrowedBy(User borrowedBy)throws SQLException;
+    ArrayList<Book> findAll() throws SQLException;
+    ArrayList<Book> findByTitle(String title) throws SQLException;
+    ArrayList<Book> findByIsbn(String isbn)throws SQLException;
+    ArrayList<Book> findByAuthor(String author)throws SQLException;
+    ArrayList<Book> findByGenre(Genre genre)throws SQLException;
+    ArrayList<Book>findByFormat(Format format)throws SQLException;
+    ArrayList<Book> findByOwner(User owner)throws SQLException;
+    ArrayList<Book>findByStatus(Status status)throws SQLException;
+    ArrayList<Book> findByBorrowedBy(User borrowedBy)throws SQLException;
 
 
     //Update

@@ -3,10 +3,10 @@ package Shared.dto.enums;
 public enum Genre
 {
   FICTION("Fiction"),
-  NON_FICTION("Non-Fiction"),
+  NON_FICTION("Non_Fiction"),
   MYSTERY("Mystery"),
   FANTASY("Fantasy"),
-  SCIENCE_FICTION("Science Fiction"),
+  SCIENCE_FICTION("Science_Fiction"),
   BIOGRAPHY("Biography"),
   HISTORY("History"),
   ROMANCE("Romance"),

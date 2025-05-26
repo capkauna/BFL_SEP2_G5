@@ -4,14 +4,13 @@
   import Server.model.*;
   import Server.service.BookInfoService;
   import Server.service.WaitingListService;
-  import Shared.dto.BookSummary;
+  import Shared.dto.BookSummaryDTO;
   import Shared.dto.WaitingListEntryDTO;
   import Shared.network.*;
-  import Shared.dto.enums.*;
   import Server.service.AuthService;
 
   import java.sql.SQLException;
-  import java.util.List;
+  import java.util.ArrayList;
   import java.io.ObjectInputStream;
   import java.io.ObjectOutputStream;
   import java.net.Socket;
@@ -39,9 +38,11 @@
         in = new ObjectInputStream(socket.getInputStream());
 
         while (true) {
-          Request request = (Request) in.readObject();
-          Response response = handleRequest(request);
-          out.writeObject(response);
+          Object obj = in.readObject();
+          if(obj instanceof Request request){
+            Response response = handleRequest(request);
+            out.writeObject(response);
+          }
           out.flush();
         }
 
@@ -70,7 +71,7 @@
 
             try {
               BookDAO dao = JdbcBookDAO.getInstance();
-              List<BookSummary> summaries = bookInfoService.getAllBookSummaries();
+              ArrayList<BookSummaryDTO> summaries = bookInfoService.getAllBookSummaries();
               System.out.println(" -> Server received GET_ALL_BOOKS request. ");
               yield new Response(true, summaries, null);
 
@@ -88,7 +89,7 @@
             Book b = bookInfoService.getBookInfo(bookId);
 
             // map to a serializable DTO
-            var dto = new BookSummary(
+            var dto = new BookSummaryDTO(
                 b.getBookId(),
                 b.getTitle(),
                 b.getAuthor(),
@@ -109,8 +110,8 @@
           }
           case ADD_TO_WAITING_LIST ->
           {
-            WaitingListEntryDTO dto = (WaitingListEntryDTO) request.getPayload();
-            WaitingListEntry entry = waitingListService.addEntryDTO(dto);
+            WaitingListEntryDTO waitingListEntry = (WaitingListEntryDTO) request.getPayload();
+            WaitingListEntry entry = waitingListService.addEntryDTO(waitingListEntry);
             // return the newly-created entry back to the client
             yield new Response(true, entry, null);
             }
@@ -119,10 +120,10 @@
             //not done yet
               try {
                 WaitingListDAO wd = JdbcWaitingListDAO.getInstance();
-                List<WaitingListRecord> waitingList = wd.findAll();
+                ArrayList<WaitingListRecord> waitingList = wd.findAll();
                 yield new Response(true, waitingList, null);
               } catch (Exception e) {
-                yield new Response(false, null, "Failed to get waiting list: " + e.getMessage());
+                yield new Response(false, null, "Failed to get waiting ArrayList: " + e.getMessage());
               }
             }
           case LEND_BOOK -> {

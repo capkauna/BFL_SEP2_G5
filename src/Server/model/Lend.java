@@ -1,9 +1,11 @@
 package Server.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Lend {
+public class Lend implements Serializable
+{
   private Integer lendId, ownerId, bookId, borrowerId;
   private LocalDate startDate, endDate;
 //

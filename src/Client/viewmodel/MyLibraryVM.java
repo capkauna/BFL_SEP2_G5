@@ -47,13 +47,13 @@ public class MyLibraryVM
 //    this.viewHandler = viewHandler;
 //  }
 //
-//  public List<String> getMyBooks() {
+//  public ArrayList<String> getMyBooks() {
 //    try {
 //      return dao.findByOwner(Session.getLoggedInUser()).stream()
 //          .map(Book::getTitle)
 //          .collect(Collectors.toList());
 //    } catch (SQLException e) {
-//      return List.of("Error: " + e.getMessage());
+//      return ArrayList.of("Error: " + e.getMessage());
 //    }
 //  }
 //

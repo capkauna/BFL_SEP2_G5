@@ -1,10 +1,11 @@
 package Shared.dto;
 
-import Shared.dto.enums.BookStatus;
 import Shared.dto.enums.Format;
 import Shared.dto.enums.Genre;
 
-public class BookSummary
+import java.io.Serializable;
+
+public class BookSummaryDTO implements Serializable
 {
   private final int bookId;
   private final String title, author, ownerName, isbn, description,status, avatar;
@@ -12,7 +13,7 @@ public class BookSummary
   private final Genre genre;
 
 
-  public BookSummary (int bookId, String title, String author, String isbn,
+  public BookSummaryDTO(int bookId, String title, String author, String isbn,
       String ownerName, Format format, Genre genre, String status,
       String description, String avatar)
   {

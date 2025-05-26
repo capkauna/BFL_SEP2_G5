@@ -3,7 +3,7 @@ package Server.database;
 import Server.model.actionmanagers.MarkAsRead;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 public interface MarkAsReadDAO {
   // Create
@@ -12,8 +12,8 @@ public interface MarkAsReadDAO {
   // Read
   MarkAsRead findById(int id) throws SQLException;
   MarkAsRead findByUserAndBook(int userId, int bookId) throws SQLException;
-  List<MarkAsRead> findByUser(int userId) throws SQLException;
-  List<MarkAsRead> findAll() throws SQLException;
+  ArrayList<MarkAsRead> findByUser(int userId) throws SQLException;
+  ArrayList<MarkAsRead> findAll() throws SQLException;
 
   // Update
   void update(MarkAsRead entry) throws SQLException;
