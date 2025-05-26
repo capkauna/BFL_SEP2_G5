@@ -160,14 +160,64 @@ public class JdbcLendDAO implements LendDAO {
 
   @Override
   public void markAsReturned(int lendId) throws SQLException {
-    String sql = "UPDATE lends SET end_date = ? WHERE lend_id = ?";
+    // 1) turn off auto‐commit so we can atomically update both tables
+    boolean oldAuto = c.getAutoCommit();
+    c.setAutoCommit(false);
 
-    try (PreparedStatement stmt = c.prepareStatement(sql)) {
-      stmt.setDate(1, Date.valueOf(LocalDate.now()));
-      stmt.setInt(2, lendId);
-      stmt.executeUpdate();
+    try {
+      // 2) lookup which book this lend refers to
+      int bookId;
+      String findSql = "SELECT book_id FROM lends WHERE lend_id = ?";
+      try (PreparedStatement ps = c.prepareStatement(findSql)) {
+        ps.setInt(1, lendId);
+        try (ResultSet rs = ps.executeQuery()) {
+          if (!rs.next()) {
+            throw new SQLException("No lend found with id=" + lendId);
+          }
+          bookId = rs.getInt("book_id");
+        }
+      }
+
+      // 3) update the lend’s end_date
+      String lendSql = "UPDATE lends SET end_date = ? WHERE lend_id = ?";
+      try (PreparedStatement ps = c.prepareStatement(lendSql)) {
+        ps.setDate(1, Date.valueOf(LocalDate.now()));
+        ps.setInt(2, lendId);
+        ps.executeUpdate();
+      }
+
+      // 4) mark the book back to available in the same transaction
+      String bookSql = "UPDATE books SET status = ? WHERE book_id = ?";
+      try (PreparedStatement ps = c.prepareStatement(bookSql)) {
+        ps.setString(1, "AVAILABLE");
+        ps.setInt(2, bookId);
+        ps.executeUpdate();
+      }
+
+      // 5) if everything succeeded
+      c.commit();
+    } catch (SQLException ex) {
+      // rollback both lend‐ and book‐updates if anything went wrong
+      c.rollback();
+      throw ex;
+    } finally {
+      // restore original auto‐commit mode
+      c.setAutoCommit(oldAuto);
     }
   }
+
+
+  //  @Override
+  //this is a method that does not record the book's status change
+//  public void markAsReturned(int lendId) throws SQLException {
+//    String sql = "UPDATE lends SET end_date = ? WHERE lend_id = ?";
+//
+//    try (PreparedStatement stmt = c.prepareStatement(sql)) {
+//      stmt.setDate(1, Date.valueOf(LocalDate.now()));
+//      stmt.setInt(2, lendId);
+//      stmt.executeUpdate();
+//    }
+//  }
 
   @Override
   public void update(Lend lend) throws SQLException {
