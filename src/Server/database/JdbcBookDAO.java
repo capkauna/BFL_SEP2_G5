@@ -11,6 +11,7 @@ import Server.util.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JdbcBookDAO implements BookDAO {
@@ -321,22 +322,35 @@ public class JdbcBookDAO implements BookDAO {
       ps.executeUpdate();
     }
   }
-
   private Book mapResultSetToBook(ResultSet rs) throws SQLException {
     int    id          = rs.getInt("book_id");
     String title       = rs.getString("title");
     String author      = rs.getString("author");
-    Genre  genre       = Genre.valueOf(rs.getString("genre"));
+    String rawGenre    = rs.getString("genre");    // e.g. "Science Fiction"
     String isbn        = rs.getString("isbn");
-    Format format      = Format.valueOf(rs.getString("format"));
+    String rawFormat   = rs.getString("format");   // e.g. "HARDCOVER"
     String description = rs.getString("description");
     String image       = rs.getString("image");
     int    ownerId     = rs.getInt("owner_id");
-    String rawStatus   = rs.getString("status");
+    String rawStatus   = rs.getString("status");  // e.g. "Borrowed by ash"
     int    year        = rs.getInt("year");
 
+    // 1) Map the genreName back to the enum constant
+    Genre genre = Arrays.stream(Genre.values())
+        .filter(g -> g.getGenreName().equalsIgnoreCase(rawGenre))
+        .findFirst()
+        .orElseThrow(() ->
+            new SQLException("Unknown genre in DB: " + rawGenre)
+        );
+
+    // 2) Parse the format via your helper
+    Format format = Format.fromString(rawFormat);
+
+    // 3) Lookup owner
     User owner = userDao.findById(ownerId);
-    Status status = parseStatus(rawStatus, owner);
+
+    // 4) Parse status string
+    Status status = parseStatus(rawStatus);
 
     return new Book(
         id,
@@ -349,17 +363,27 @@ public class JdbcBookDAO implements BookDAO {
         description,
         image,
         owner,
-        status);
-
+        status
+    );
   }
 
-
-//TODO check what is this (this is bad, needs to be fixed)
-  private Status parseStatus(String raw, User owner) {
-    if (raw.startsWith("Borrowed by ")) {
-      // borrower name part ignored here; real impl would lookup borrower
-      return new Borrowed(owner);
+  private Status parseStatus(String rawStatus) throws SQLException {
+    if (rawStatus == null || rawStatus.isBlank() || rawStatus.equalsIgnoreCase("AVAILABLE")) {
+      return new Available();
     }
+
+    String prefix = "Borrowed by ";
+    if (rawStatus.startsWith(prefix)) {
+      String borrowerName = rawStatus.substring(prefix.length());
+      User borrower = userDao.findByUserName(borrowerName);
+      if (borrower == null) {
+        throw new SQLException("No such borrower username in status: " + borrowerName);
+      }
+      return new Borrowed(borrower);
+    }
+
+    // fallback
     return new Available();
   }
+
 }

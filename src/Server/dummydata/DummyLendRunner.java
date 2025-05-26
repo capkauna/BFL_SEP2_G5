@@ -37,7 +37,7 @@ public class DummyLendRunner {
 
       //int borrowingPeriod = 14; // days
       Lend l1 = Lend.lendBook(books, borrower1);
-      Lend lend = lendDAO.createFull(l1);
+      Lend lend = lendDAO.create(l1);
 
       System.out.println("Lend created:");
       System.out.printf(

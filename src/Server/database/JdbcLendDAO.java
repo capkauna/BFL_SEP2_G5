@@ -1,18 +1,32 @@
 package Server.database;
 
+import Server.model.Book;
 import Server.model.Lend;
+import Server.model.User;
+import Server.model.status.Available;
+import Server.model.status.Borrowed;
+import Server.model.status.Status;
 import Server.util.DBConnection;
+import Shared.dto.FullUserDTO;
+import Shared.dto.enums.Format;
+import Shared.dto.enums.Genre;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JdbcLendDAO implements LendDAO {
   private final Connection c;
+  private static JdbcBookDAO instance;
+  private final UserDAO userDao;
 
-  public JdbcLendDAO(Connection connection) {
+  public JdbcLendDAO(Connection connection) throws SQLException
+  {
     this.c = connection;
+    this.userDao = JdbcUserDAO.getInstance();
+
   }
 
   public static LendDAO getInstance() {
@@ -25,70 +39,70 @@ public class JdbcLendDAO implements LendDAO {
   }
 
 
-  @Override
-  public Lend create(Lend lend) throws SQLException {
-    String sql =
-        "INSERT INTO lends (user_id, book_id, borrower_id, start_date) " +
-            "VALUES (?, ?, ?, CURRENT_DATE) RETURNING lend_id";
-    try (PreparedStatement stmt = c.prepareStatement(sql)) {
-      stmt.setInt(1, lend.getOwnerId());
-      stmt.setInt(2, lend.getBookId());
-      stmt.setInt(3, lend.getBorrowerId());
-
-      ResultSet rs = stmt.executeQuery();
-
-    ResultSet keys = stmt.executeQuery();
-      if (keys.next()) {
-        lend.setLendId(keys.getInt(1));
-      }
-      return lend;
-    }
-  }
   //this method creates a lend and updates the book's status in a single transaction
   @Override
-  public Lend createFull(Lend lend) throws SQLException {
-    // turn off auto‐commit so we can bundle both statements
-    boolean oldAutoCommit = c.getAutoCommit();
+
+  public Lend create(Lend lend) throws SQLException {
+    boolean oldAuto = c.getAutoCommit();
     c.setAutoCommit(false);
 
     try {
-      // 1) insert into lends
+      // ——— A) Load domain objects ———
+      Book book = loadBook(lend.getBookId());
+      User borrower = loadUser(lend.getBorrowerId());
+
+      // ——— B) Run the domain action ———
+      book.lendTo(borrower);
+
+      // ——— C) Persist the new Lend row ———
       String lendSql =
           "INSERT INTO lends (user_id, book_id, borrower_id, start_date) " +
               "VALUES (?, ?, ?, CURRENT_DATE) RETURNING lend_id";
-      try (PreparedStatement lendStmt = c.prepareStatement(lendSql)) {
-        lendStmt.setInt(1, lend.getOwnerId());
-        lendStmt.setInt(2, lend.getBookId());
-        lendStmt.setInt(3, lend.getBorrowerId());
-        ResultSet rs = lendStmt.executeQuery();
-        if (rs.next()) {
-          lend.setLendId(rs.getInt("lend_id"));
+      try (PreparedStatement ps = c.prepareStatement(lendSql)) {
+        ps.setInt(1, lend.getOwnerId());
+        ps.setInt(2, lend.getBookId());
+        ps.setInt(3, lend.getBorrowerId());
+        try (ResultSet rs = ps.executeQuery()) {
+          if (rs.next()) lend.setLendId(rs.getInt("lend_id"));
         }
       }
 
-      // 2) update the book’s status in the same transaction
-      //    assume you store the raw status string "Borrowed by <username>"
-      String newStatus = "Borrowed by " + lend.getBorrowerId();
-      String bookSql =
-          "UPDATE books SET status = ? WHERE book_id = ?";
-      try (PreparedStatement bookStmt = c.prepareStatement(bookSql)) {
-        bookStmt.setString(1, newStatus);
-        bookStmt.setInt(2, lend.getBookId());
-        bookStmt.executeUpdate();
-      }
+      // ——— D) Persist the updated book status ———
+      JdbcBookDAO.getInstance().update(book);
 
       c.commit();
       return lend;
-    }
-    catch (SQLException ex) {
-      c.rollback();              // undo both if something went wrong
+    } catch (SQLException ex) {
+      c.rollback();
       throw ex;
-    }
-    finally {
-      c.setAutoCommit(oldAutoCommit);
+    } finally {
+      c.setAutoCommit(oldAuto);
     }
   }
 
+
+
+
+
+  //  @Override
+  //  public Lend create(Lend lend) throws SQLException {
+  //    String sql =
+  //        "INSERT INTO lends (user_id, book_id, borrower_id, start_date) " +
+  //            "VALUES (?, ?, ?, CURRENT_DATE) RETURNING lend_id";
+  //    try (PreparedStatement stmt = c.prepareStatement(sql)) {
+  //      stmt.setInt(1, lend.getOwnerId());
+  //      stmt.setInt(2, lend.getBookId());
+  //      stmt.setInt(3, lend.getBorrowerId());
+  //
+  //      ResultSet rs = stmt.executeQuery();
+  //
+  //    ResultSet keys = stmt.executeQuery();
+  //      if (keys.next()) {
+  //        lend.setLendId(keys.getInt(1));
+  //      }
+  //      return lend;
+  //    }
+  //  }
 
 
   @Override
@@ -159,52 +173,51 @@ public class JdbcLendDAO implements LendDAO {
   }
 
   @Override
-  public void markAsReturned(int lendId) throws SQLException {
-    // 1) turn off auto‐commit so we can atomically update both tables
+  public void markAsReturned(int lendId, int userId) throws SQLException {
     boolean oldAuto = c.getAutoCommit();
     c.setAutoCommit(false);
 
     try {
-      // 2) lookup which book this lend refers to
+      // ——— A) Find the Lend record & bookId ———
       int bookId;
-      String findSql = "SELECT book_id FROM lends WHERE lend_id = ?";
-      try (PreparedStatement ps = c.prepareStatement(findSql)) {
+      LocalDate start;
+      try (PreparedStatement ps = c.prepareStatement(
+          "SELECT book_id, start_date FROM lends WHERE lend_id = ?"
+      )) {
         ps.setInt(1, lendId);
         try (ResultSet rs = ps.executeQuery()) {
-          if (!rs.next()) {
-            throw new SQLException("No lend found with id=" + lendId);
-          }
+          if (!rs.next()) throw new SQLException("No lend " + lendId);
           bookId = rs.getInt("book_id");
+          start  = rs.getDate("start_date").toLocalDate();
         }
       }
 
-      // 3) update the lend’s end_date
-      String lendSql = "UPDATE lends SET end_date = ? WHERE lend_id = ?";
-      try (PreparedStatement ps = c.prepareStatement(lendSql)) {
+      // ——— B) Load domain book and call returnBook() ———
+      Book book = loadBook(bookId);
+      User accessUser = userDao.findById(userId);
+      book.markAsReturned(accessUser);
+
+      // ——— C) Update the lend end_date ———
+      try (PreparedStatement ps = c.prepareStatement(
+          "UPDATE lends SET end_date = ? WHERE lend_id = ?"
+      )) {
         ps.setDate(1, Date.valueOf(LocalDate.now()));
         ps.setInt(2, lendId);
         ps.executeUpdate();
       }
 
-      // 4) mark the book back to available in the same transaction
-      String bookSql = "UPDATE books SET status = ? WHERE book_id = ?";
-      try (PreparedStatement ps = c.prepareStatement(bookSql)) {
-        ps.setString(1, "AVAILABLE");
-        ps.setInt(2, bookId);
-        ps.executeUpdate();
-      }
+      // ——— D) Persist the updated book status ———
+      JdbcBookDAO.getInstance().update(book);
 
-      // 5) if everything succeeded
       c.commit();
     } catch (SQLException ex) {
-      // rollback both lend‐ and book‐updates if anything went wrong
       c.rollback();
       throw ex;
     } finally {
-      // restore original auto‐commit mode
       c.setAutoCommit(oldAuto);
     }
   }
+
 
 
   //  @Override
@@ -283,5 +296,111 @@ public class JdbcLendDAO implements LendDAO {
 
     return new Lend(id, ownerId, bookId, borrowerId, startDate, endDate);
   }
+
+
+
+  // Helpers you can add to this DAO to avoid duplicating mapping logic:
+  private Book mapRowToBook(ResultSet rs) throws SQLException {
+    int    id          = rs.getInt("book_id");
+    String title       = rs.getString("title");
+    String author      = rs.getString("author");
+    String rawGenre    = rs.getString("genre");    // e.g. "Science Fiction"
+    String isbn        = rs.getString("isbn");
+    String rawFormat   = rs.getString("format");   // e.g. "HARDCOVER"
+    String description = rs.getString("description");
+    String image       = rs.getString("image");
+    int    ownerId     = rs.getInt("owner_id");
+    String rawStatus   = rs.getString("status");  // e.g. "Borrowed by ash"
+    int    year        = rs.getInt("year");
+
+    // 1) Map the genreName back to the enum constant
+    Genre genre = Arrays.stream(Genre.values())
+        .filter(g -> g.getGenreName().equalsIgnoreCase(rawGenre))
+        .findFirst()
+        .orElseThrow(() ->
+            new SQLException("Unknown genre in DB: " + rawGenre)
+        );
+
+    // 2) Parse the format via your helper
+    Format format = Format.fromString(rawFormat);
+
+    // 3) Lookup owner
+    User owner = userDao.findById(ownerId);
+
+    // 4) Parse status string
+    Status status = parseStatus(rawStatus);
+
+    return new Book(
+        id,
+        title,
+        author,
+        year,
+        genre,
+        isbn,
+        format,
+        description,
+        image,
+        owner,
+        status
+    );
+  }
+
+  private Status parseStatus(String rawStatus) throws SQLException {
+    if (rawStatus == null || rawStatus.isBlank() || rawStatus.equalsIgnoreCase("AVAILABLE")) {
+      return new Available();
+    }
+
+    String prefix = "Borrowed by ";
+    if (rawStatus.startsWith(prefix)) {
+      String borrowerName = rawStatus.substring(prefix.length());
+      User borrower = userDao.findByUserName(borrowerName);
+      if (borrower == null) {
+        throw new SQLException("No such borrower username in status: " + borrowerName);
+      }
+      return new Borrowed(borrower);
+    }
+
+    // fallback
+    return new Available();
+  }
+
+  private User mapRowToUser(ResultSet rs) throws SQLException {
+    return User.fromDb(
+        rs.getInt("user_id"),
+        rs.getString("username"),
+        rs.getString("full_name"),
+        rs.getString("email"),
+        rs.getString("hashed_pw"),
+        rs.getString("phone_number"),
+        rs.getString("address"),
+        rs.getString("avatar")
+    );
+  }
+
+  private Book loadBook(int bookId) throws SQLException {
+    try (PreparedStatement ps = c.prepareStatement(
+        "SELECT * FROM books WHERE book_id = ?"
+    )) {
+      ps.setInt(1, bookId);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (!rs.next()) throw new SQLException("Book not found: " + bookId);
+        return mapRowToBook(rs);
+      }
+    }
+  }
+
+  private User loadUser(int userId) throws SQLException {
+    try (PreparedStatement ps = c.prepareStatement(
+        "SELECT * FROM users WHERE user_id = ?"
+    )) {
+      ps.setInt(1, userId);
+      try (ResultSet rs = ps.executeQuery()) {
+        if (!rs.next()) throw new SQLException("User not found: " + userId);
+        return mapRowToUser(rs);
+      }
+    }
+  }
+
+
 }
 

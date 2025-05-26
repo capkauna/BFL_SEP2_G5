@@ -9,7 +9,7 @@ public interface LendDAO {
 
 
 Lend create(Lend lend) throws SQLException;
-  Lend createFull(Lend lend) throws SQLException;
+
 
 
   Lend findById(int id) throws SQLException;
@@ -20,7 +20,7 @@ Lend create(Lend lend) throws SQLException;
   List<Lend> findActiveLends() throws SQLException;
   List<Lend> findReturnedLends() throws SQLException;
 
-  void markAsReturned(int lendId) throws SQLException;
+  void markAsReturned(int lendId, int activeUserId) throws SQLException;
   void update(Lend lend) throws SQLException;
 
 

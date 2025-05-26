@@ -149,8 +149,8 @@ public class ThreeDataBasePopulationOneRun
 
       Lend l1 = Lend.lendBook(book1, user5);
       Lend l2 = Lend.lendBook(book2, user6);
-      Lend lend = lends.createFull(l1);
-      Lend lend2 = lends.createFull(l2);
+      Lend lend = lends.create(l1);
+      Lend lend2 = lends.create(l2);
 
       historyLog.addLog(book1.getBookId(), "Book added to library.");
       historyLog.addLog(book1.getBookId(), "Book lent to user.");
