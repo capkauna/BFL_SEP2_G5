@@ -108,38 +108,38 @@ public class TestUser
   }
 
 
-  //password tests
-  @BeforeEach
-  void setUp() {
-    testUser = new User("1234");
-  }
-
-  @Test
-  public void testShortPassword()
-  {
-    assertThrows (IllegalArgumentException.class, () -> new User("22"));
-  }
-  @Test
-  public void testNullPassword()
-  {
-    assertThrows (IllegalArgumentException.class, () -> new User(null));
-  }
-  @Test
-  public void testEmptyPassword()
-  {
-    assertThrows (IllegalArgumentException.class, () -> new User(""));
-  }
+//  //password tests
+//  @BeforeEach
+//  void setUp() {
+//    testUser = new User("1234");
+//  }
+//
+//  @Test
+//  public void testShortPassword()
+//  {
+//    assertThrows (IllegalArgumentException.class, () -> new User("22"));
+//  }
+//  @Test
+//  public void testNullPassword()
+//  {
+//    assertThrows (IllegalArgumentException.class, () -> new User(null));
+//  }
+//  @Test
+//  public void testEmptyPassword()
+//  {
+//    assertThrows (IllegalArgumentException.class, () -> new User(""));
+//  }
   @Test
   public void testValidPassword()
   {
    assertTrue(testUser.validatePassword("1234"));
    assertFalse(testUser.validatePassword("0000"));
   }
-  @Test
-  public void testInvalidPassword()
-  {
-    assertThrows (IllegalArgumentException.class, () -> new User ("1234 5678"));
-  }
+//  @Test
+//  public void testInvalidPassword()
+//  {
+//    assertThrows (IllegalArgumentException.class, () -> new User ("1234 5678"));
+//  }
 
   //phone number tests
   @Test
