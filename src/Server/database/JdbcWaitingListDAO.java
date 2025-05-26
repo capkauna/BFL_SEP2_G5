@@ -4,7 +4,7 @@ import Server.model.Book;
 import Server.model.User;
 import Server.model.WaitingListEntry;
 import Server.model.WaitingListRecord;
-import Server.util.DBConnection;
+import Server.dbstart.DBConnection;
 
 import java.sql.*;
 import java.time.LocalDateTime;

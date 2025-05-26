@@ -3,7 +3,7 @@ package Server.database;
 import Server.model.Book;
 import Server.model.User;
 import Server.model.actionmanagers.MarkAsRead;
-import Server.util.DBConnection;
+import Server.dbstart.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

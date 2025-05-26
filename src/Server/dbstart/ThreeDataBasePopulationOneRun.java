@@ -1,4 +1,4 @@
-package Server.util;
+package Server.dbstart;
 
 import Server.database.*;
 import Server.model.Book;
@@ -161,20 +161,6 @@ public class ThreeDataBasePopulationOneRun
           "[UNREAD] You have a new book available.", book1.getBookId());
       notifications.addNotification(user8.getUserId(),
           "Book was returned and can be borrowed now", book5.getBookId());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
     catch (SQLException e)

@@ -6,8 +6,7 @@ import Server.model.User;
 import Server.model.status.Available;
 import Server.model.status.Borrowed;
 import Server.model.status.Status;
-import Server.util.DBConnection;
-import Shared.dto.FullUserDTO;
+import Server.dbstart.DBConnection;
 import Shared.dto.enums.Format;
 import Shared.dto.enums.Genre;
 

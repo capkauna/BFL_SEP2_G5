@@ -1,4 +1,4 @@
-package Server.util;
+package Server.dbstart;
 
 import java.sql.*;
 

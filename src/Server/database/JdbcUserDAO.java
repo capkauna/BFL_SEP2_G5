@@ -1,7 +1,7 @@
 package Server.database;
 
 import Server.model.*;
-import Server.util.DBConnection;
+import Server.dbstart.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
-package Server.network;
+package Server;
 
+import Server.network.ClientHandler;
 import Server.service.AuthService;
 
 import java.io.IOException;
