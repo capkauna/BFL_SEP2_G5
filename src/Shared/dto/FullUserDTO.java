@@ -6,15 +6,22 @@ import java.io.Serializable;
 public class FullUserDTO implements Serializable
 {
   private String userName, fullName, email, phoneNumber, address, avatar;
+  private int userId;
 
-  public FullUserDTO(String userName, String fullName, String email,  String phoneNumber, String address, String avatar)
+  public FullUserDTO(int userId, String userName, String fullName, String email,  String phoneNumber, String address, String avatar)
   {
+    this.userId = userId;
     this.userName = userName;
     this.fullName = fullName;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.avatar = avatar;
+  }
+
+  public int getUserId()
+  {
+    return userId;
   }
 
   public String getUserName()

@@ -1,6 +1,10 @@
 // Client/viewmodel/BookInfoVM.java
 package Client.viewmodel;
 
+import Client.state.SessionState;
+import Server.model.Lend;
+import Shared.dto.FullUserDTO;
+import Shared.dto.WaitingListEntryDTO;
 import Shared.network.Request;
 import Shared.network.Response;
 import Shared.dto.enums.Action;
@@ -10,10 +14,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class BookInfoVM {
+  private final ClientSocketHandler socketHandler;
   private String currentUser;
   private final ClientSocketHandler socket = new ClientSocketHandler();
+  private SessionState sessionState = SessionState.getInstance();
 
   private final StringProperty title       = new SimpleStringProperty();
   private final StringProperty author      = new SimpleStringProperty();
@@ -34,9 +42,10 @@ public class BookInfoVM {
   public StringProperty descriptionProperty(){ return description; }
   public StringProperty imagePathProperty()   { return imagePath; }
 
-  public BookInfoVM(String currentUser)
+  public BookInfoVM(ClientSocketHandler socketHandler, String currentUser)
   {
     this.currentUser = currentUser;
+    this.socketHandler = socketHandler;
     //this would be more relevant if we had time to separate owner to other differences
   }
   /**
@@ -98,4 +107,25 @@ public class BookInfoVM {
     return imagePath.get();
   }
 
+  public void lendBook(int bookId) {
+    System.out.println("->Sending LEND_BOOK request to server");
+    try {
+      FullUserDTO loggedUser = sessionState.getLoggedUser();
+      WaitingListEntryDTO entry = new WaitingListEntryDTO(bookId,loggedUser.getUserName(),
+          LocalDateTime.now());
+      Request req = new Request(Action.ADD_TO_WAITING_LIST, entry);
+      socketHandler.sendRequest(req);
+      Response resp = socketHandler.readResponse();
+      System.out.println(" <- Got response: " + resp.isSuccess());
+
+      if (resp.isSuccess()) {
+      System.out.println("Landed successfully");
+      } else {
+        System.err.println("Failed to load books: " + resp.getErrorMessage());
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("Error loading books");
+    }
+  }
 }

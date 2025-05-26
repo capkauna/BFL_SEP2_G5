@@ -18,6 +18,7 @@
     //Read
     Book findById(int id) throws SQLException;
     ArrayList<Book> findAll() throws SQLException;
+    ArrayList<Book> findMyBooks(int userId) throws SQLException;
     ArrayList<Book> findByTitle(String title) throws SQLException;
     ArrayList<Book> findByIsbn(String isbn)throws SQLException;
     ArrayList<Book> findByAuthor(String author)throws SQLException;

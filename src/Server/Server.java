@@ -2,6 +2,7 @@ package Server;
 
 import Server.network.ClientHandler;
 import Server.service.AuthService;
+import Server.service.ConnectionPool;
 
 import java.io.IOException;
 import java.net.ServerSocket;

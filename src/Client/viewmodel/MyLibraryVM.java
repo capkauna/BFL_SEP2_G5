@@ -2,8 +2,18 @@ package Client.viewmodel;
 
 
 import Client.network.ClientSocketHandler;
+import Client.state.SessionState;
+import Shared.dto.BookSummaryDTO;
+import Shared.dto.FullUserDTO;
+import Shared.dto.enums.Action;
+import Shared.network.Request;
+import Shared.network.Response;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MyLibraryVM
 {
@@ -12,20 +22,39 @@ public class MyLibraryVM
   private final ClientSocketHandler socketHandler;
   private final String currentUserName;
   private final ObservableList<String> books;
-
-
+  private SessionState sessionState = SessionState.getInstance();
 
   public MyLibraryVM(ClientSocketHandler socketHandler,String username) {
     //this.authClient = authClient;
     this.socketHandler = socketHandler;
     this.currentUserName = username;
     this.books = FXCollections.observableArrayList();
-
   }
 
+  public ObservableList<String> getMyBooks() {
+    System.out.println("->Sending GET_ALL_BOOKS request to server");
+    try {
+      FullUserDTO loggedUser = sessionState.getLoggedUser();
+      Request req = new Request(Action.GET_MY_BOOKS, loggedUser.getUserId());
+      socketHandler.sendRequest(req);
+      Response resp = socketHandler.readResponse();
+      System.out.println(" <- Got response: " + resp.isSuccess());
 
+      if (resp.isSuccess()) {
+        ArrayList<BookSummaryDTO> bookSummaryList = (ArrayList<BookSummaryDTO>) resp.getData();
+        System.out.println("Loaded books: " + bookSummaryList.size());
+        List<String> bookTitles = bookSummaryList.stream()
+            .map(bookSummaryDTO -> bookSummaryDTO.getTitle())
+            .collect(Collectors.toList());
+        books.setAll(bookTitles);
+      } else {
+        System.err.println("Failed to load books: " + resp.getErrorMessage());
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("Error loading books");
+    }
 
-  public ObservableList<String> getBooks(){
     return books;
   }
 
@@ -33,56 +62,5 @@ public class MyLibraryVM
     books.remove(book);
   }
 
-  public ObservableList<String> getMyBooks()
-  {
-    return books;
-  }
 }
-//  private final BookDAO dao;
-//  private final ViewHandler viewHandler;
-//  private Book selectedBook;
-//
-//  public MyLibraryVM(BookDAO dao, ViewHandler viewHandler) {
-//    this.dao = dao;
-//    this.viewHandler = viewHandler;
-//  }
-//
-//  public ArrayList<String> getMyBooks() {
-//    try {
-//      return dao.findByOwner(Session.getLoggedInUser()).stream()
-//          .map(Book::getTitle)
-//          .collect(Collectors.toList());
-//    } catch (SQLException e) {
-//      return ArrayList.of("Error: " + e.getMessage());
-//    }
-//  }
-//
-//  public void selectedBookByTitle(String title) {
-//    try {
-//      selectedBook = dao.findByTitle(title).stream()
-//          .filter(book -> book.getOwner().getUserId() == Session.getLoggedInUser().getUserId())
-//          .findFirst().orElse(null);
-//    } catch (SQLException e) {
-//      selectedBook = null;
-//    }
-//  }
-//
-//  public void editSelectedBook() {
-//    if (selectedBook != null) {
-//      viewHandler.openView("EditBookView.fxml");
-//    }
-//  }
-//
-//  public void deleteSelectedBook() {
-//    if (selectedBook != null) {
-//      try {
-//        dao.delete(selectedBook.getBookId());
-//      } catch (SQLException e) {
-//        e.printStackTrace();
-//      }
-//    }
-//  }
-//  public void goHome() {
-//    viewHandler.openView("HomeView.fxml");
-//  }
-//}
+

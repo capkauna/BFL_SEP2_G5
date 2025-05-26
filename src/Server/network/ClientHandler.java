@@ -3,8 +3,10 @@
   import Server.database.*;
   import Server.model.*;
   import Server.service.BookInfoService;
+  import Server.service.ConnectionPool;
   import Server.service.WaitingListService;
   import Shared.dto.BookSummaryDTO;
+  import Shared.dto.FullUserDTO;
   import Shared.dto.WaitingListEntryDTO;
   import Shared.network.*;
   import Server.service.AuthService;
@@ -60,8 +62,10 @@
             String password = credentials[1];
 
             var authResult = authService.authenticate(username, password);
+            var user = authResult.get();
+            var fullUser = new FullUserDTO(user.getUserId(),user.getUserName(),user.getFullName(),user.getEmail(),user.getPhoneNumber(),user.getAddress(),user.getAvatar());
             if (authResult.isPresent()) {
-              yield new Response(true, "Login successful", null);
+              yield new Response(true, fullUser, null);
             } else {
               yield new Response(false, null, "Invalid credentials.");
             }
@@ -74,7 +78,17 @@
               ArrayList<BookSummaryDTO> summaries = bookInfoService.getAllBookSummaries();
               System.out.println(" -> Server received GET_ALL_BOOKS request. ");
               yield new Response(true, summaries, null);
+            } catch (Exception e) {
+              yield new Response(false, null, "Failed to get books: " + e.getMessage());
+            }
 
+          }
+          case GET_MY_BOOKS -> {
+            try {
+              int userId = (Integer) request.getPayload();
+              ArrayList<BookSummaryDTO> summaries = bookInfoService.getMyBookSummaries(userId);
+              System.out.println(" -> Server received GET_MY_BOOKS request. ");
+              yield new Response(true, summaries, null);
             } catch (Exception e) {
               yield new Response(false, null, "Failed to get books: " + e.getMessage());
             }

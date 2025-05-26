@@ -33,9 +33,9 @@ public class SearchVM {
       System.out.println(" <- Got response: " + resp.isSuccess());
       
       if (resp.isSuccess()) {
-        ArrayList<BookSummaryDTO> ArrayList = (ArrayList<BookSummaryDTO>) resp.getData();
-        System.out.println("Loaded books: " + ArrayList.size());
-        books.setAll(ArrayList);
+        ArrayList<BookSummaryDTO> bookSummaryList = (ArrayList<BookSummaryDTO>) resp.getData();
+        System.out.println("Loaded books: " + bookSummaryList.size());
+        books.setAll(bookSummaryList);
       } else {
         System.err.println("Failed to load books: " + resp.getErrorMessage());
       }

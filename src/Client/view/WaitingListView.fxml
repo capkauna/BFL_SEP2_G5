@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="446.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.WaitingListController">
+<BorderPane prefHeight="446.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.WaitingListViewController">
     <center>
         <TableView fx:id="waitingListTable" prefHeight="420.0" prefWidth="209.0">
             <columns>
@@ -13,9 +13,9 @@
         </TableView>
     </center>
    <bottom>
-      <Button fx:id="okbutton" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" text="OK" BorderPane.alignment="CENTER" />
+      <Button fx:id="#okbutton" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" text="OK" BorderPane.alignment="CENTER" />
    </bottom>
    <right>
-      <Button fx:id="addmebutton" mnemonicParsing="false" text="Add me" BorderPane.alignment="CENTER" />
+      <Button fx:id="#addmebutton" mnemonicParsing="false" text="Add me" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>

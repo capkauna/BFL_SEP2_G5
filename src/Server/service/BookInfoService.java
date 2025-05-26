@@ -25,6 +25,17 @@ public class BookInfoService
   {
     return books.findAll();
   }
+  public ArrayList<BookSummaryDTO> getMyBookSummaries(int userId) throws SQLException
+  {
+    ArrayList<Book>booksToTurn= books.findMyBooks(userId);
+    ArrayList<BookSummaryDTO>myBooks = new ArrayList<>();
+    for (Book b : booksToTurn) {
+      BookSummaryDTO newBook = convertToSummary(b);
+      myBooks.add(newBook);
+    }
+    return myBooks;
+  }
+
   public ArrayList<BookSummaryDTO> getAllBookSummaries() throws SQLException
   {
     ArrayList<Book>booksToTurn= books.findAll();

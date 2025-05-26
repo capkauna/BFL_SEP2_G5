@@ -103,6 +103,30 @@ public class JdbcBookDAO implements BookDAO {
   }
 
   @Override
+  public ArrayList<Book> findMyBooks(int userId) throws SQLException {
+    String sql = """
+            SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
+                   b.description, b.image, b.owner_id, b.status, b.year
+            FROM books b 
+            WHERE b.owner_id = ?
+            """;
+    ArrayList<Book> books = new ArrayList<>();
+    try (Connection c = DBConnection.getConnection();
+        PreparedStatement ps = c.prepareStatement(sql)) {
+
+      ps.setInt(1, userId);
+
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          books.add(mapResultSetToBook(rs));
+        }
+      }
+    }
+    
+    return books;
+  }
+
+  @Override
   public ArrayList<Book> findByTitle(String searchString) throws SQLException {
     String sql = """
             SELECT b.book_id, b.title, b.author, b.genre, b.isbn, b.format,
