@@ -154,6 +154,7 @@
               if (book != null && user != null) {
                 // Assuming lendBook method exists in the service
                 Lend lend =Lend.lendBook(book, user);
+                lends.create(lend);
 
                 yield new Response(true, lend,  "Book lent successfully.");
               } else {

@@ -83,6 +83,11 @@ public User() {
     this.userName = userName;
     this.setPassword(rawPassword);
   }
+  public User (int userId, String username)
+  {
+    this.userId = userId;
+    this.userName = username;
+  }
 
 
   //VALIDATORS

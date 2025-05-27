@@ -32,7 +32,6 @@
         <Label fx:id="genreLabel" text="Genre" />
         <Label fx:id="isbnLabel" text="ISBN" />
         <Label fx:id="ownerLabel" text="Owner" />
-        <Label fx:id="borrowedLabel" text="Borrowed by" />
         <Label fx:id="languageLabel" text="Language" />
       <Label fx:id="format" text="Format" />
         <Label fx:id="yearLabel" text="Year" />

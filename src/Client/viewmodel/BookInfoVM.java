@@ -2,7 +2,12 @@
 package Client.viewmodel;
 
 import Client.state.SessionState;
+import Server.database.BookDAO;
+import Server.database.JdbcBookDAO;
+import Server.model.Book;
 import Server.model.Lend;
+import Server.model.User;
+import Server.service.BookInfoService;
 import Shared.dto.FullUserDTO;
 import Shared.dto.WaitingListEntryDTO;
 import Shared.network.Request;
@@ -31,6 +36,7 @@ public class BookInfoVM {
   private final StringProperty status = new SimpleStringProperty();
   private final StringProperty description = new SimpleStringProperty();
   private final StringProperty imagePath   = new SimpleStringProperty();
+  private final StringProperty owner = new SimpleStringProperty();
 
   // expose for binding in the controller
   public StringProperty titleProperty()       { return title; }
@@ -41,6 +47,7 @@ public class BookInfoVM {
   public StringProperty statusProperty()      { return status; }
   public StringProperty descriptionProperty(){ return description; }
   public StringProperty imagePathProperty()   { return imagePath; }
+  public StringProperty ownerProperty()       { return owner; }
 
   public BookInfoVM(ClientSocketHandler socketHandler, String currentUser)
   {
@@ -54,7 +61,7 @@ public class BookInfoVM {
   public void loadBookInfo(int bookId)
       throws IOException, ClassNotFoundException
   {
-    socket.connect("localhost", 1234);
+    socket.connect();
     socket.sendRequest(new Request(Action.GET_BOOK_INFO, bookId));
     Response resp = socket.readResponse();
     socket.close();
@@ -72,6 +79,7 @@ public class BookInfoVM {
     status.set(b.getStatus());
     description.set(b.getDescription());
     imagePath.set(b.getAvatar());
+    owner.set(b.getOwnerName());
   }
 
   public String getTitle()
@@ -106,6 +114,10 @@ public class BookInfoVM {
   {
     return imagePath.get();
   }
+  public String getOwner()
+  {
+    return owner.get();
+  }
 
   public void lendBook(int bookId) {
     System.out.println("->Sending LEND_BOOK request to server");
@@ -113,10 +125,19 @@ public class BookInfoVM {
       FullUserDTO loggedUser = sessionState.getLoggedUser();
       WaitingListEntryDTO entry = new WaitingListEntryDTO(bookId,loggedUser.getUserName(),
           LocalDateTime.now());
+
       Request req = new Request(Action.ADD_TO_WAITING_LIST, entry);
       socketHandler.sendRequest(req);
       Response resp = socketHandler.readResponse();
       System.out.println(" <- Got response: " + resp.isSuccess());
+
+//      just to make it work, this shouldn't access the database directly
+//      BookInfoService books = new BookInfoService();
+//      Book b = books.getBookInfo(bookId);
+//      User u = new User(loggedUser.getUserId(), loggedUser.getUserName());
+//      Lend lendattempt = Lend.lendBook(b, u);
+//      Request Req = new Request(Action.LEND_BOOK, lendattempt );
+//      Response resp = socketHandler.readResponse();
 
       if (resp.isSuccess()) {
       System.out.println("Landed successfully");
@@ -128,4 +149,6 @@ public class BookInfoVM {
       System.out.println("Error loading books");
     }
   }
+
+
 }

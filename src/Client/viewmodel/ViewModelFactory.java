@@ -18,7 +18,7 @@ public class ViewModelFactory
   public ViewModelFactory() {
     socketHandler = new ClientSocketHandler();
     try {
-      socketHandler.connect("localhost", 1234); // make sure port matches server
+      socketHandler.connect(); // make sure port matches server
     } catch (IOException e) {
       System.err.println("Failed to connect to server: " + e.getMessage());
       e.printStackTrace();

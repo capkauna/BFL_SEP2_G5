@@ -40,6 +40,7 @@ public class BookListViewController
     authorLabel.setText(viewModel.getAuthor());
     genreLabel.setText(viewModel.getGenre());
     isbnLabel.setText(viewModel.getIsbn());
+    ownerLabel.setText(viewModel.getOwner());
     //TODO: fix later
 //    ownerLabel.setText(viewModel.getOwner());
 //    borrowedLabel.setText(viewModel.getBorrowedBy());

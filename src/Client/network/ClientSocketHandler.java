@@ -10,9 +10,11 @@ public class ClientSocketHandler {
   private ObjectOutputStream out;
   private ObjectInputStream in;
   private Socket socket;
+  private String HOST = "localhost";
+  private int PORT = 1234;
 
-  public void connect(String host, int port) throws IOException {
-    socket = new Socket(host, port);
+  public void connect() throws IOException {
+    socket = new Socket(HOST, PORT);
     out = new ObjectOutputStream(socket.getOutputStream());
     in = new ObjectInputStream(socket.getInputStream());
   }
@@ -29,4 +31,6 @@ public class ClientSocketHandler {
   public void close() throws IOException {
     if (socket != null) socket.close();
   }
+
+
 }

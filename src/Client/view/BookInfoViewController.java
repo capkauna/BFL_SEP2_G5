@@ -83,6 +83,7 @@ this.bookId = bookId;
     format.textProperty().bind(vm.formatProperty());
     descriptionarea.textProperty().bind(vm.descriptionProperty());
     statusLabel.textProperty().bind(vm.statusProperty());
+    ownerLabel.textProperty().bind(vm.ownerProperty());
 
     // load the image once the path is set
     vm.imagePathProperty().addListener((obs, oldP, newP) -> {

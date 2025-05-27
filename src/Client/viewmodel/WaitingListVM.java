@@ -30,7 +30,7 @@ public class WaitingListVM
   public WaitingListEntryDTO addToWaitingList(int bookId)
       throws IOException, ClassNotFoundException
   {
-    socket.connect("localhost", 1234);
+    socket.connect();
     socket.sendRequest(
         new Request(Action.ADD_TO_WAITING_LIST,
             new WaitingListEntryDTO(bookId, username, LocalDateTime.now()))

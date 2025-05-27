@@ -23,12 +23,7 @@ public class ThreeDataBasePopulationOneRun
     try
     {
       UserDAO users = JdbcUserDAO.getInstance();
-      BookDAO books = JdbcBookDAO.getInstance();
-      WaitingListDAO waitingList = JdbcWaitingListDAO.getInstance();
-      LendDAO lends = JdbcLendDAO.getInstance();
-      MarkAsReadDAO markAsRead = JdbcMarkAsReadDAO.getInstance();
-      HistoryLogDAO historyLog = JdbcHistoryLogDAO.getInstance();
-      NotificationDAO notifications = JdbcNotificationDAO.getInstance();
+
 
       User user1 = new User("AAAA", "Aa aa",
           "aaa@aa.com", "aaaa", "123456778",
@@ -88,6 +83,18 @@ public class ThreeDataBasePopulationOneRun
       user8 = users.create(user8);
       user9 = users.create(user9);
       user10 = users.create(user10);
+
+
+
+
+      //from here on, theusers can take over the database population
+      BookDAO books = JdbcBookDAO.getInstance();
+      WaitingListDAO waitingList = JdbcWaitingListDAO.getInstance();
+      LendDAO lends = JdbcLendDAO.getInstance();
+      MarkAsReadDAO markAsRead = JdbcMarkAsReadDAO.getInstance();
+      HistoryLogDAO historyLog = JdbcHistoryLogDAO.getInstance();
+      NotificationDAO notifications = JdbcNotificationDAO.getInstance();
+
 
       Book book1 = new Book("The Great Adventure", "John Doe", 2023,
           Genre.FICTION, "1234567890123", Format.HARDCOVER,

@@ -77,7 +77,6 @@ public class SearchVM {
 
     this.socketHandler = (ClientSocketHandler) socketHandler;
 
-    //TODO: give a search service attrivute (or clientsockethandler) instead of a DAO
     searchResults = FXCollections.observableArrayList();
     genres = FXCollections.observableArrayList("All", "Fiction", "Manga", "History");
     formats = FXCollections.observableArrayList("All", "Paperback", "Hardcover", "EBook");
