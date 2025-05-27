@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <!--<AnchorPane xmlns:fx="http://javafx.com/fxml/1"-->
@@ -25,7 +24,7 @@
 <AnchorPane prefHeight="400" prefWidth="500" style="-fx-background-color: #a51414;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.BookInfoViewController">
 
     <Button fx:id="back" layoutX="10" layoutY="10" onAction="#onBackClicked" text="←" />
-    <ImageView fx:id="bookImage" fitHeight="140" fitWidth="100" layoutX="36.0" layoutY="36.0" />
+<!--    <ImageView fx:id="bookImage" fitHeight="140" fitWidth="100" layoutX="36.0" layoutY="36.0" />-->
 
     <VBox layoutX="142.0" layoutY="14.0" prefHeight="174.0" prefWidth="344.0" spacing="5">
         <Label fx:id="titleLabel" text="Title" />
@@ -43,13 +42,13 @@
    <TextArea fx:id="descriptionarea" layoutX="251.0" layoutY="250.0" prefHeight="60.0" prefWidth="196.0" />
     <CheckBox fx:id="readCheckBox" layoutX="360" layoutY="80" text="read" />
 
-    <Button fx:id="waitinglist" layoutX="50" layoutY="210" prefHeight="26.0" prefWidth="189.0" text="Waiting list" />
+    <Button fx:id="waitinglist" layoutX="50" layoutY="210" onAction="#onWaitingListView" prefHeight="26.0" prefWidth="189.0" text="Waiting list" />
     <Button fx:id="history" layoutX="250" layoutY="210" prefHeight="26.0" prefWidth="196.0" text="History" />
 
     <TextArea fx:id="booknotes" editable="false" layoutX="50" layoutY="250" prefHeight="60" prefWidth="190.0" promptText="Notes from readers" />
 
-    <Button fx:id="lendbutton" layoutX="190.0" layoutY="330.0" onAction="onLendButtonClicked" prefHeight="26.0" prefWidth="112.0" text="Lend" />
-    <Button fx:id="addnote" layoutX="50.0" layoutY="330.0" onAction="onAddNoteButtonClicked" prefHeight="26.0" prefWidth="112.0" text="Add note" />
+    <Button fx:id="lendbutton" layoutX="171.0" layoutY="330.0" onAction="#onLendButtonClicked" prefHeight="26.0" prefWidth="140.0" text="Lend book" />
+    <Button fx:id="addnote" layoutX="50.0" layoutY="330.0" onAction="#onAddNoteButtonClicked" prefHeight="26.0" prefWidth="112.0" text="Add note" />
     <Button fx:id="returnbutton" layoutX="320" layoutY="330" prefHeight="26.0" prefWidth="126.0" text="Book was returned" />
    <Label fx:id="statusLabel" layoutX="50.0" layoutY="182.0" prefHeight="18.0" prefWidth="83.0" text="Status" />
 

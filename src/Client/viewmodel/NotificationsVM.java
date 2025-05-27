@@ -4,7 +4,7 @@ import Server.model.Notification;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class NotificationsVM
 {
@@ -18,7 +18,7 @@ public class NotificationsVM
     return notifications;
   }
 
-  public void loadNotifications(List<Notification> list) {
-    notifications.setAll(list);
+  public void loadNotifications(ArrayList<Notification> ArrayList) {
+    notifications.setAll(ArrayList);
   }
 }

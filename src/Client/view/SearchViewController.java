@@ -2,7 +2,7 @@ package Client.view;
 
 import Client.viewmodel.SearchVM;
 import Server.model.Book;
-import Shared.dto.BookSummary;
+import Shared.dto.BookSummaryDTO;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,7 +20,7 @@ public class SearchViewController {
   @FXML private ChoiceBox<String> ownerChoice;
   @FXML private ChoiceBox<String> borrowedChoice;
 
-  @FXML private TableView<BookSummary> bookTable;
+  @FXML private TableView<BookSummaryDTO> bookTable;
   @FXML private TableColumn<Book, String> titlecolumn;
   @FXML private TableColumn<Book, String> authorcolumn;
   @FXML private TableColumn<Book, String> ownercolumn;
@@ -48,7 +48,7 @@ public class SearchViewController {
     // Disable "View Book" button if nothing is selected
     viewbook.setDisable(true);
     bookTable.getSelectionModel().selectedItemProperty().addListener(
-        (ObservableValue<? extends BookSummary> obs, BookSummary oldVal, BookSummary newVal) -> {
+        (ObservableValue<? extends BookSummaryDTO> obs, BookSummaryDTO oldVal, BookSummaryDTO newVal) -> {
           viewbook.setDisable(newVal == null);
         }
     );
@@ -73,7 +73,7 @@ public class SearchViewController {
 
   @FXML
   private void onViewBookClicked() {
-    BookSummary selected = bookTable.getSelectionModel().getSelectedItem();
+    BookSummaryDTO selected = bookTable.getSelectionModel().getSelectedItem();
     if (selected != null) {
       viewModel.setSelectedBook(selected);
       viewHandler.openBookInfoView(selected.getBookId());

@@ -14,7 +14,7 @@ import Shared.network.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList;
 
 public class WaitingListService
 {
@@ -36,10 +36,10 @@ public class WaitingListService
     }
   }
 
-  public List<WaitingListEntry> getFullWaitingList() throws SQLException
+  public ArrayList<WaitingListEntry> getFullWaitingList() throws SQLException
   {
-    List<WaitingListRecord> waitingListDao = waitingListRepository.findAll();
-    List<WaitingListEntry> waitingList = new ArrayList<>();
+    ArrayList<WaitingListRecord> waitingListDao = waitingListRepository.findAll();
+    ArrayList<WaitingListEntry> waitingList = new ArrayList<>();
     for (WaitingListRecord entry : waitingListDao)
     {
       User user = userRepository.findById(entry.getUserId());
@@ -49,10 +49,10 @@ public class WaitingListService
     return waitingList;
   }
 
-  public List<WaitingListEntry> getBookWaitingList(Book b) throws SQLException
+  public ArrayList<WaitingListEntry> getBookWaitingList(Book b) throws SQLException
   {
-    List<WaitingListEntry> waitingListDao = waitingListRepository.getByBookId(b.getBookId());
-    List<WaitingListEntry> waitingList = new ArrayList<>();
+    ArrayList<WaitingListEntry> waitingListDao = waitingListRepository.getByBookId(b.getBookId());
+    ArrayList<WaitingListEntry> waitingList = new ArrayList<>();
     for (WaitingListEntry entry : waitingListDao)
     {
       User user = userRepository.findById(entry.getUser().getUserId());
@@ -60,10 +60,10 @@ public class WaitingListService
     }
     return waitingList;
   }
-  public List<WaitingListEntry> getUserWaitingList(User u) throws SQLException
+  public ArrayList<WaitingListEntry> getUserWaitingList(User u) throws SQLException
   {
-    List<WaitingListEntry> waitingListDao = waitingListRepository.getByUserId(u.getUserId());
-    List<WaitingListEntry> waitingList = new ArrayList<>();
+    ArrayList<WaitingListEntry> waitingListDao = waitingListRepository.getByUserId(u.getUserId());
+    ArrayList<WaitingListEntry> waitingList = new ArrayList<>();
     for (WaitingListEntry entry : waitingListDao)
     {
       Book book = bookRepository.findById(entry.getBook().getBookId());
@@ -73,12 +73,12 @@ public class WaitingListService
   }
   public WaitingListEntry addEntry(User user, Book book) throws SQLException
   {
-    List<WaitingListEntry> existingEntries = waitingListRepository.exists(user.getUserId(), book.getBookId());
+    ArrayList<WaitingListEntry> existingEntries = waitingListRepository.exists(user.getUserId(), book.getBookId());
     if (!existingEntries.isEmpty())
     {
       return existingEntries.get(0); // Entry already exists, return it
     }
-    List<WaitingListEntry> newEntry = waitingListRepository.addEntry(user.getUserId(), book.getBookId());
+    ArrayList<WaitingListEntry> newEntry = waitingListRepository.addEntry(user.getUserId(), book.getBookId());
     return newEntry.get(0); // Return the newly created entry
   }
   public WaitingListEntry addEntryDTO (WaitingListEntryDTO dto) throws SQLException {

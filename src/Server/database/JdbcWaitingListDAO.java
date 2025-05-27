@@ -9,7 +9,6 @@ import Server.dbstart.DBConnection;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 //* Provides full CRUD access to the waiting_list table in the database.
 // * Responsible for creating, reading, and deleting entries related to book reservations.
@@ -35,7 +34,7 @@ public class JdbcWaitingListDAO implements WaitingListDAO
   }
 
   @Override
-  public List<WaitingListEntry> addEntry(int userId, int bookId) throws SQLException{
+  public ArrayList<WaitingListEntry> addEntry(int userId, int bookId) throws SQLException{
     if (exists(userId, bookId).isEmpty()) {
       String sql = "INSERT INTO waiting_list (user_id, book_id, added_at) VALUES (?, ?, NOW())";
       try (Connection conn = DBConnection.getConnection();
@@ -50,7 +49,7 @@ public class JdbcWaitingListDAO implements WaitingListDAO
     return getByBookId(bookId);
   }
   //alt create that takes a WaitingListEntry object
-  public List<WaitingListEntry> newEntry(WaitingListEntry entry) throws SQLException {
+  public ArrayList<WaitingListEntry> newEntry(WaitingListEntry entry) throws SQLException {
     String sql = "INSERT INTO waiting_list (user_id, book_id, added_at) VALUES (?, ?, NOW()) RETURNING entry_id";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -69,7 +68,7 @@ public class JdbcWaitingListDAO implements WaitingListDAO
   }
 
   @Override
-  public List<WaitingListEntry> removeEntry(int userId, int bookId) {
+  public ArrayList<WaitingListEntry> removeEntry(int userId, int bookId) {
     String sql = "DELETE FROM waiting_list WHERE user_id = ? AND book_id = ?";
     try (Connection conn = DBConnection.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -84,9 +83,9 @@ public class JdbcWaitingListDAO implements WaitingListDAO
 
   //It ensures that only the selected user is removed,
   // * without affecting other users waiting for the same book.
-  //* This method is typically used when a book is successfully lent to a user from the waiting list
+  //* This method is typically used when a book is successfully lent to a user from the waiting ArrayList
   @Override
-  public List<WaitingListEntry> removeEntryById(int entryId) {
+  public ArrayList<WaitingListEntry> removeEntryById(int entryId) {
     String sql = "DELETE FROM waiting_list WHERE entry_id = ?";
     int bookId = -1;
     try (Connection conn = DBConnection.getConnection()) {
@@ -106,8 +105,8 @@ public class JdbcWaitingListDAO implements WaitingListDAO
   }
 
   @Override
-  public List<WaitingListEntry> exists(int userId, int bookId) {
-    List<WaitingListEntry> result = new ArrayList<>();
+  public ArrayList<WaitingListEntry> exists(int userId, int bookId) {
+    ArrayList<WaitingListEntry> result = new ArrayList<>();
     String sql = "SELECT w.entry_id, w.user_id, u.username, w.book_id, w.added_at, b.title " +
         "FROM waiting_list w " +
         "JOIN users u ON w.user_id = u.user_id " +
@@ -128,9 +127,9 @@ public class JdbcWaitingListDAO implements WaitingListDAO
   }
 
   @Override
-  //Provides the list of those waiting for a specific book and the "lend" function.
-  public List<WaitingListEntry> getByBookId(int bookId) {
-    List<WaitingListEntry> list = new ArrayList<>();
+  //Provides the ArrayList of those waiting for a specific book and the "lend" function.
+  public ArrayList<WaitingListEntry> getByBookId(int bookId) {
+    ArrayList<WaitingListEntry> ArrayList = new ArrayList<>();
     String sql = "SELECT w.entry_id, w.user_id, u.username, w.book_id, w.added_at, b.title " +
         "FROM waiting_list w " +
         "JOIN users u ON w.user_id = u.user_id " +
@@ -142,16 +141,16 @@ public class JdbcWaitingListDAO implements WaitingListDAO
       stmt.setInt(1, bookId);
       ResultSet rs = stmt.executeQuery();
       while (rs.next()) {
-        list.add(mapResultSetToEntry(rs));
+        ArrayList.add(mapResultSetToEntry(rs));
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return list;
+    return ArrayList;
   }
 
-  public List<WaitingListEntry> getByUserId(int userId) {
-    List<WaitingListEntry> list = new ArrayList<>();
+  public ArrayList<WaitingListEntry> getByUserId(int userId) {
+    ArrayList<WaitingListEntry> ArrayList = new ArrayList<>();
     String sql = "SELECT w.entry_id, w.user_id, u.username, w.book_id, w.added_at, b.title " +
         "FROM waiting_list w " +
         "JOIN users u ON w.user_id = u.user_id " +
@@ -162,21 +161,21 @@ public class JdbcWaitingListDAO implements WaitingListDAO
       stmt.setInt(1, userId);
       ResultSet rs = stmt.executeQuery();
       while (rs.next()) {
-        list.add(mapResultSetToEntry(rs));
+        ArrayList.add(mapResultSetToEntry(rs));
       }
     } catch (SQLException e)
     {
       e.printStackTrace();
     }
-    return list;
+    return ArrayList;
     }
 
 
 
   @Override
-  public List<WaitingListRecord> findAll() throws SQLException {
+  public ArrayList<WaitingListRecord> findAll() throws SQLException {
     String sqlQuery = "SELECT entry_id, book_id, user_id, added_at FROM waiting_list";
-    List<WaitingListRecord> waitingList = new ArrayList<>();
+    ArrayList<WaitingListRecord> waitingList = new ArrayList<>();
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sqlQuery);
         ResultSet rs = ps.executeQuery()) {

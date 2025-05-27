@@ -1,8 +1,10 @@
 package Server.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class HistoryLog {
+public class HistoryLog implements Serializable
+{
   private int bookId;
   private String note;
   private LocalDateTime addedAt;

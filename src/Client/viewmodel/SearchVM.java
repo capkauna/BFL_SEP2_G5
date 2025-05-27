@@ -2,26 +2,23 @@ package Client.viewmodel;
 
 
 import Client.network.ClientSocketHandler;
-import Server.model.Book;
-import Shared.dto.BookSummary;
+import Shared.dto.BookSummaryDTO;
 import Shared.dto.enums.Action;
 import Shared.network.Request;
 import Shared.network.Response;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.util.List;
-
-import java.util.logging.SocketHandler;
+import java.util.ArrayList;
 
 import static java.util.Arrays.stream;
 
 
 
 public class SearchVM {
-  private final ObservableList<BookSummary> books = FXCollections.observableArrayList();
+  private final ObservableList<BookSummaryDTO> books = FXCollections.observableArrayList();
   private final ClientSocketHandler socketHandler;
 
-  private BookSummary selectedBook;
+  private BookSummaryDTO selectedBook;
 
   public SearchVM(ClientSocketHandler socketHandler) {
     this.socketHandler = socketHandler;
@@ -36,9 +33,9 @@ public class SearchVM {
       System.out.println(" <- Got response: " + resp.isSuccess());
       
       if (resp.isSuccess()) {
-        List<BookSummary> list = (List<BookSummary>) resp.getData();
-        System.out.println("Loaded books: " + list.size());
-        books.setAll(list);
+        ArrayList<BookSummaryDTO> bookSummaryList = (ArrayList<BookSummaryDTO>) resp.getData();
+        System.out.println("Loaded books: " + bookSummaryList.size());
+        books.setAll(bookSummaryList);
       } else {
         System.err.println("Failed to load books: " + resp.getErrorMessage());
       }
@@ -48,15 +45,15 @@ public class SearchVM {
     }
   }
 
-  public ObservableList<BookSummary> getBooks() {
+  public ObservableList<BookSummaryDTO> getBooks() {
     return books;
   }
 
-  public void setSelectedBook(BookSummary book) {
+  public void setSelectedBook(BookSummaryDTO book) {
     this.selectedBook = book;
   }
 
-  public BookSummary getSelectedBook() {
+  public BookSummaryDTO getSelectedBook() {
     return selectedBook;
   }
 }
@@ -130,14 +127,14 @@ public class SearchVM {
 //    this.dao = dao;
 //  }
 //
-//  public List<String> search(String title, String genre, String format, String owner, String borrower, String status) {
+//  public ArrayList<String> search(String title, String genre, String format, String owner, String borrower, String status) {
 //    try {
 //      return dao.findAll().stream()
 //          .filter(book -> title == null || book.getTitle().toLowerCase().contains(title.toLowerCase()))
 //          .map(Book::getTitle)
 //          .collect(Collectors.toList());
 //    } catch (SQLException e) {
-//      return List.of("Error searching: " + e.getMessage());
+//      return ArrayList.of("Error searching: " + e.getMessage());
 //    }
 //  }
 //}

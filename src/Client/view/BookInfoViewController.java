@@ -1,6 +1,9 @@
 package Client.view;
 
 import Client.viewmodel.BookInfoVM;
+import Server.database.BookDAO;
+import Shared.dto.BookSummaryDTO;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -14,7 +17,7 @@ public class BookInfoViewController
       genreLabel,format, isbnLabel,languageLabel, ownerLabel,borrowedLabel;
 
   @FXML private Button waitinglist, history,lendbutton,getpdfbutton,addnote,
-      back,edit,returnButton;
+      back,edit,returnButton,onLendButtonClicked,onAddNoteButtonClicked;
   @FXML private  ImageView bookImage;
   @FXML private TextArea booknotes, descriptionarea;
 
@@ -22,68 +25,29 @@ public class BookInfoViewController
 
   private ViewHandler viewHandler;
   private BookInfoVM viewModel;
+  private int bookId;
 
-//TODO: add the book object and the label setting methods (getters)
-  public void setBook() {
-    titleLabel.setText("Book Title: Example Book Title");
-    authorLabel.setText("Author: Example Author");
-    yearLabel.setText("Year: 2023");
-    genreLabel.setText("Genre: Fiction");
-    isbnLabel.setText("ISBN: 123-4567890123");
-    languageLabel.setText("Language: English");
-    ownerLabel.setText("Owner: John Doe");
-    borrowedLabel.setText("Borrowed By: Jane Smith");
-    // Set the image for the book (assuming you have an image file)
-    waitinglist.setText("Waiting List");
-    history.setText("History");
-    lendbutton.setText("Lend Book");
-    getpdfbutton.setText("Get PDF");
-    addnote.setText("Add Note");
-    back.setText("Back");
-    edit.setText("Edit Book");
-    returnButton.setText("Return Book");
-
-    booknotes.setText("This is an example note for the book.");
-
-    unavailableCheckBox.setText("Unavailable");
-    readCheckBox.setText("Read");
-  }
-  /*// Bind labels to VM properties
-        titleLabel.textProperty().bind(viewModel.titleProperty());
-        authorLabel.textProperty().bind(viewModel.authorProperty());
-        genreLabel.textProperty().bind(viewModel.genreProperty());
-        isbnLabel.textProperty().bind(viewModel.isbnProperty());
-        ownerLabel.textProperty().bind(viewModel.ownerProperty());
-        borrowedLabel.textProperty().bind(viewModel.borrowedProperty());
-        languageLabel.textProperty().bind(viewModel.languageProperty());
-        yearLabel.textProperty().bind(viewModel.yearProperty());
-        readerNotes.textProperty().bind(viewModel.notesProperty());
-
-  // Load book image
-        if (viewModel.getImagePath() != null && !viewModel.getImagePath().isEmpty()) {
-  bookImage.setImage(new Image(viewModel.getImagePath()));
-}
-
-        readCheckBox.setSelected(viewModel.isRead());
-        unavailableCheckBox.setSelected(viewModel.isUnavailable());
-}*/
-
-
-
-  public void onLendButtonClicked()
+  @FXML
+  private void onLendButtonClicked(ActionEvent actionEvent )
   {
-    // Logic to lend the book
-    System.out.println("Lending the book: " + titleLabel.getText());
-    // You can add more logic here, such as updating the database or notifying the user
+    viewModel.lendBook(this.bookId);
   }
 
-  public void onGetPdfButtonClicked()
+  @FXML
+  private void onWaitingListView (ActionEvent actionEvent){
+    viewHandler.openView("Client/view/WaitingListView.fxml");
+  }
+
+  @FXML
+  private void onGetPdfButtonClicked(ActionEvent actionEvent)
   {
     // Logic to get the PDF of the book
     System.out.println("Getting PDF for the book: " + titleLabel.getText());
     // You can add more logic here, such as opening a file dialog or downloading the PDF
   }
-  public void onAddNoteButtonClicked()
+
+  @FXML
+  private void onAddNoteButtonClicked(ActionEvent actionEvent)
   {
     // Logic to add a note to the book
     System.out.println("Adding note for the book: " + titleLabel.getText());
@@ -110,7 +74,7 @@ public class BookInfoViewController
   {
     this.viewHandler = vh;
     this.viewModel          = vm;
-
+this.bookId = bookId;
     // bind UI to VM properties
     titleLabel.textProperty().bind(vm.titleProperty());
     authorLabel.textProperty().bind(vm.authorProperty());
@@ -127,13 +91,12 @@ public class BookInfoViewController
         //handle later
       }
     });
-
     // finally, fetch from the server
     vm.loadBookInfo(bookId);
   }
 
   @FXML private void onBackClicked() {
-    viewHandler.openView("Client/view/BookListView.fxml");
+    viewHandler.openView("Client/view/SearchView.fxml");
   }
 
   @FXML

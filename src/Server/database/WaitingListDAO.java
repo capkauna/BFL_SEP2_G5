@@ -4,17 +4,18 @@ import Server.model.WaitingListEntry;
 import Server.model.WaitingListRecord;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.ArrayList;
 
 public interface WaitingListDAO
 {
   // CRUD operations create
-  List<WaitingListEntry> addEntry(int userId, int bookId) throws SQLException;
+  ArrayList<WaitingListEntry> addEntry(int userId, int bookId) throws SQLException;
   // Read
-  List<WaitingListEntry> removeEntry(int userId, int bookId)throws SQLException;
-  List<WaitingListEntry> removeEntryById(int entryId)throws SQLException;
-  List<WaitingListEntry> exists(int userId, int bookId)throws SQLException;
+  ArrayList<WaitingListEntry> removeEntry(int userId, int bookId)throws SQLException;
+  ArrayList<WaitingListEntry> removeEntryById(int entryId)throws SQLException;
+  ArrayList<WaitingListEntry> exists(int userId, int bookId)throws SQLException;
   // Read
-  List<WaitingListEntry> getByBookId(int bookId)throws SQLException;
-  List<WaitingListRecord> findAll()throws SQLException;// for debug
+  ArrayList<WaitingListEntry> getByBookId(int bookId)throws SQLException;
+  ArrayList<WaitingListRecord> findAll()throws SQLException;// for debug
 }

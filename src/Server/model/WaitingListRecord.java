@@ -1,5 +1,6 @@
 package Server.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
  // Represents a raw database record from the waiting_list table.
@@ -7,7 +8,7 @@ import java.time.LocalDateTime;
  // and is primarily used for internal mapping, logging, or administrative queries.
  // This class avoids expensive object resolution (e.g., User, Book) for performance.
 
-public class WaitingListRecord
+public class WaitingListRecord implements Serializable
 {
   private int userId;
   private int bookId;

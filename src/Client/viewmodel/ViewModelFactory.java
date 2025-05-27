@@ -64,7 +64,7 @@ public class ViewModelFactory
     {
       throw new IllegalStateException("must log in before creating HomeVM");
     }
-    return new BookInfoVM(getCurrentUsername());
+    return new BookInfoVM(socketHandler, getCurrentUsername());
   }
 
   public BookListVM getBookListVM() {

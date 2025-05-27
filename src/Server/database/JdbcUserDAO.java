@@ -5,7 +5,7 @@ import Server.dbstart.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class JdbcUserDAO implements UserDAO
@@ -95,8 +95,8 @@ public class JdbcUserDAO implements UserDAO
 
 
   @Override
-  public List<User> findAll() throws SQLException {
-    List<User> users = new ArrayList<>();
+  public ArrayList<User> findAll() throws SQLException {
+    ArrayList<User> users = new ArrayList<>();
     String sql = "SELECT * FROM users";
     try (Connection c = DBConnection.getConnection();
         PreparedStatement ps = c.prepareStatement(sql);

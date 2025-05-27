@@ -1,5 +1,5 @@
-package Shared.dto;
-
-public class ReaderNoteDTO
-{
-}
+//package Shared.dto;
+//
+//public class ReaderNoteDTO
+//{
+//}

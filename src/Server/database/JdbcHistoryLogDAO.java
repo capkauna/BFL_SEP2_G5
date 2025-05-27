@@ -5,7 +5,7 @@ import Server.dbstart.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList;
 
 public class JdbcHistoryLogDAO implements HistoryLogDAO
 {
@@ -40,12 +40,12 @@ public class JdbcHistoryLogDAO implements HistoryLogDAO
   }
 
   @Override
-  public List<HistoryLog> findByBookId(int bookId) throws SQLException {
+  public ArrayList<HistoryLog> findByBookId(int bookId) throws SQLException {
     String sql = "SELECT * FROM history_log WHERE book_id = ? ORDER BY added_at DESC";
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
       stmt.setInt(1, bookId);
       ResultSet rs = stmt.executeQuery();
-      List<HistoryLog> logs = new ArrayList<>();
+      ArrayList<HistoryLog> logs = new ArrayList<>();
       while (rs.next()) {
         logs.add(mapRowToLog(rs));
       }
@@ -54,11 +54,11 @@ public class JdbcHistoryLogDAO implements HistoryLogDAO
   }
 
   @Override
-  public List<HistoryLog> findAll() throws SQLException {
+  public ArrayList<HistoryLog> findAll() throws SQLException {
     String sql = "SELECT * FROM history_log ORDER BY added_at DESC";
     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
       ResultSet rs = stmt.executeQuery();
-      List<HistoryLog> logs = new ArrayList<>();
+      ArrayList<HistoryLog> logs = new ArrayList<>();
       while (rs.next()) {
         logs.add(mapRowToLog(rs));
       }

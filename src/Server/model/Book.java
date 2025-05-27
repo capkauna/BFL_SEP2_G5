@@ -4,7 +4,9 @@ import Server.model.status.*;
 import Shared.dto.enums.Format;
 import Shared.dto.enums.Genre;
 
-public class Book implements java.io.Serializable
+import java.io.Serializable;
+
+public class Book implements Serializable
 {
   private String title, author, isbn, description, image;
   private Genre genre;

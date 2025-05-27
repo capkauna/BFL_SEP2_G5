@@ -1,6 +1,7 @@
 package Client.viewmodel;
 
 import Client.network.ClientSocketHandler;
+import Client.state.SessionState;
 import Shared.dto.enums.Action;
 import Shared.network.Request;
 import Shared.network.Response;
@@ -9,6 +10,7 @@ import Shared.dto.FullUserDTO;
 public class LogInVM {
   private final ClientSocketHandler socketHandler;
   private final ViewModelFactory factory;
+  private SessionState sessionState = SessionState.getInstance();
 
   public LogInVM(ClientSocketHandler socketHandler, ViewModelFactory factory) {
     this.socketHandler = socketHandler;
@@ -25,12 +27,14 @@ public class LogInVM {
       Response response = socketHandler.readResponse();
 
       if (response.isSuccess()) {
-        /*this i will delete if wrong(FullUserDto)
-        FullUserDTO user = (FullUserDTO) response.getData();
-        factory.setUserToView(user);
-        */
-        factory.setCurrentUsername(username);  // You could also extract it from the response if needed
-        return true;
+        if(response instanceof Response){
+          FullUserDTO user = (FullUserDTO) response.getData();
+          factory.setUserToView(user);
+          factory.setCurrentUsername(username);
+          sessionState.setSessionUser(user);// You could also extract it from the response if needed
+          return true;
+        }
+        return false;
       } else {
         System.err.println("Login failed: " + response.getErrorMessage());
         return false;

@@ -1,8 +1,9 @@
 package Server.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Notification
+public class Notification implements Serializable
 {
   private int notificationId;
   private int userId;

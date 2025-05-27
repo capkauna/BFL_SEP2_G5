@@ -7,7 +7,7 @@ import Server.dbstart.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList;
 
 public class JdbcMarkAsReadDAO implements MarkAsReadDAO {
   private static JdbcMarkAsReadDAO instance;
@@ -82,8 +82,8 @@ public class JdbcMarkAsReadDAO implements MarkAsReadDAO {
   }
 
   @Override
-  public List<MarkAsRead> findByUser(int userId) throws SQLException {
-    List<MarkAsRead> list = new ArrayList<>();
+  public ArrayList<MarkAsRead> findByUser(int userId) throws SQLException {
+    ArrayList<MarkAsRead> ArrayList = new ArrayList<>();
     String sql = """
         SELECT * FROM read WHERE user_id = ?
         """;
@@ -92,16 +92,16 @@ public class JdbcMarkAsReadDAO implements MarkAsReadDAO {
       ps.setInt(1, userId);
       try (ResultSet rs = ps.executeQuery()) {
         while (rs.next()) {
-          list.add(mapToMarkAsRead(rs));
+          ArrayList.add(mapToMarkAsRead(rs));
         }
       }
     }
-    return list;
+    return ArrayList;
   }
 
   @Override
-  public List<MarkAsRead> findAll() throws SQLException {
-    List<MarkAsRead> list = new ArrayList<>();
+  public ArrayList<MarkAsRead> findAll() throws SQLException {
+    ArrayList<MarkAsRead> ArrayList = new ArrayList<>();
     String sql = """
         SELECT * FROM read
         """;
@@ -110,10 +110,10 @@ public class JdbcMarkAsReadDAO implements MarkAsReadDAO {
         PreparedStatement ps = c.prepareStatement(sql);
         ResultSet rs = ps.executeQuery()) {
       while (rs.next()) {
-        list.add(mapToMarkAsRead(rs));
+        ArrayList.add(mapToMarkAsRead(rs));
       }
     }
-    return list;
+    return ArrayList;
   }
 
   @Override
