@@ -78,10 +78,12 @@ public static Lend fromDb(int lendId,
 
   public static Lend lendBook(Book b, User u)
   {
+    //user u is the borrower
    return new Lend(b.getOwner().getUserId(), b.getBookId(), u.getUserId());
      }
   public void returnBook(Book b, User u)
   {
+    //user u is the borrower
     this.setEndDate();
     b.markAsReturned(u);
   }

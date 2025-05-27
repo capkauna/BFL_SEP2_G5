@@ -70,6 +70,7 @@ public class JdbcLendDAO implements LendDAO {
       JdbcBookDAO.getInstance().update(book);
 
       c.commit();
+      System.out.println("Created lend: " + lend);
       return lend;
     } catch (SQLException ex) {
       c.rollback();

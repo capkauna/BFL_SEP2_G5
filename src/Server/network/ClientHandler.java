@@ -69,7 +69,7 @@
           case GET_ALL_BOOKS -> {
 
             try {
-              BookDAO dao = JdbcBookDAO.getInstance();
+
               List<BookSummary> summaries = bookInfoService.getAllBookSummaries();
               System.out.println(" -> Server received GET_ALL_BOOKS request. ");
               yield new Response(true, summaries, null);

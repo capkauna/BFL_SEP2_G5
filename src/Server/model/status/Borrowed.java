@@ -21,7 +21,6 @@ public class Borrowed implements Status
 
   @Override public void markAsReturned(Book b, User u)
   {
-    //TODO: make sure the owner is the one returning the book
     if (b.getOwner() != u) {
       throw new IllegalStateException("Only the owner can mark the book as returned.");
     }
