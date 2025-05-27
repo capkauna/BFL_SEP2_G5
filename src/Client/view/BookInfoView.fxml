@@ -50,5 +50,6 @@
     <Button fx:id="addnote" layoutX="50.0" layoutY="330.0" onAction="#onAddNoteButtonClicked" prefHeight="26.0" prefWidth="112.0" text="Add note" />
     <Button fx:id="returnbutton" layoutX="320" layoutY="330" prefHeight="26.0" prefWidth="126.0" text="Book was returned" />
    <Label fx:id="statusLabel" layoutX="50.0" layoutY="182.0" prefHeight="18.0" prefWidth="83.0" text="Status" />
+   <Button fx:id="addtowait" layoutX="250.0" layoutY="178.0" mnemonicParsing="false" onAction="#onAddtoWaitingListClicked" prefHeight="26.0" prefWidth="196.0" text="Add me to waiting list" />
 
 </AnchorPane>

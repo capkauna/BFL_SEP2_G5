@@ -118,31 +118,31 @@ public class BookInfoVM {
   {
     return owner.get();
   }
-
+  //      just to show it working, this shouldn't access the database directly
+  //also bypasses safety checks, so it shouldn't be used
   public void lendBook(int bookId) {
     System.out.println("->Sending LEND_BOOK request to server");
     try {
       FullUserDTO loggedUser = sessionState.getLoggedUser();
-      WaitingListEntryDTO entry = new WaitingListEntryDTO(bookId,loggedUser.getUserName(),
-          LocalDateTime.now());
 
-      Request req = new Request(Action.ADD_TO_WAITING_LIST, entry);
-      socketHandler.sendRequest(req);
-      Response resp = socketHandler.readResponse();
-      System.out.println(" <- Got response: " + resp.isSuccess());
+      BookInfoService books = new BookInfoService();
+      Book b = books.getBookInfo(bookId);
+      User u = new User(loggedUser.getUserId(), loggedUser.getUserName());
+      Lend lendattempt = Lend.lendBook(b, u);
+      if (lendattempt != null)
+      {
+        Request req = new Request(Action.LEND_BOOK, lendattempt);
+        socketHandler.sendRequest(req);
+        Response resp = socketHandler.readResponse();
+        System.out.println(" <- Got response: " + resp.isSuccess());
 
-//      just to make it work, this shouldn't access the database directly
-//      BookInfoService books = new BookInfoService();
-//      Book b = books.getBookInfo(bookId);
-//      User u = new User(loggedUser.getUserId(), loggedUser.getUserName());
-//      Lend lendattempt = Lend.lendBook(b, u);
-//      Request Req = new Request(Action.LEND_BOOK, lendattempt );
-//      Response resp = socketHandler.readResponse();
-
-      if (resp.isSuccess()) {
-      System.out.println("Landed successfully");
+        if (resp.isSuccess()) {
+          System.out.println("Lended successfully");
+        } else {
+          System.err.println("Failed to lend book: " + resp.getErrorMessage());
+        }
       } else {
-        System.err.println("Failed to load books: " + resp.getErrorMessage());
+        System.err.println("Lending attempt failed, book might not be available.");
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -150,5 +150,28 @@ public class BookInfoVM {
     }
   }
 
+  public void addwaitingList(int bookId)
+  {
+    try {
+    FullUserDTO loggedUser = sessionState.getLoggedUser();
+          WaitingListEntryDTO entry = new WaitingListEntryDTO(bookId,loggedUser.getUserName(),
+              LocalDateTime.now());
 
+          Request req = new Request(Action.ADD_TO_WAITING_LIST, entry);
+          socketHandler.sendRequest(req);
+          Response resp = socketHandler.readResponse();
+          System.out.println(" <- Got response: " + resp.isSuccess());
+
+
+      if (resp.isSuccess()) {
+        System.out.println("Landed successfully");
+      } else {
+        System.err.println("Failed to load books: " + resp.getErrorMessage());
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("Error loading books");
+    }
+
+  }
 }

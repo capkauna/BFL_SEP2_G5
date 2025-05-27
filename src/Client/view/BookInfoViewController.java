@@ -17,7 +17,7 @@ public class BookInfoViewController
       genreLabel,format, isbnLabel,languageLabel, ownerLabel,borrowedLabel;
 
   @FXML private Button waitinglist, history,lendbutton,getpdfbutton,addnote,
-      back,edit,returnButton,onLendButtonClicked,onAddNoteButtonClicked;
+      back,edit,returnButton,onLendButtonClicked,onAddNoteButtonClicked,addtowait;
   @FXML private  ImageView bookImage;
   @FXML private TextArea booknotes, descriptionarea;
 
@@ -37,6 +37,10 @@ public class BookInfoViewController
   private void onWaitingListView (ActionEvent actionEvent){
     viewHandler.openView("Client/view/WaitingListView.fxml");
   }
+  @FXML private void onAddtoWaitingListClicked(ActionEvent e)
+{
+  viewModel.addwaitingList(this.bookId);
+}
 
   @FXML
   private void onGetPdfButtonClicked(ActionEvent actionEvent)
