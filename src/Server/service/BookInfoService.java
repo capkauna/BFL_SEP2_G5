@@ -1,20 +1,23 @@
 package Server.service;
 
-import Server.database.JdbcBookDAO;
-import Server.model.Book;
-import Server.model.User;
-import Shared.dto.BookSummaryDTO;
-import Shared.dto.enums.Genre;
+import Server.database.*;
+import Server.model.*;
+import Server.model.status.*;
+import Shared.dto.*;
+import Shared.dto.enums.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BookInfoService
 {
-  private final JdbcBookDAO books;
+  private final BookDAO books;
+  private final JdbcBookDAO lends;
   public BookInfoService() throws SQLException
   {
     this.books = JdbcBookDAO.getInstance();
+    //added to handle lending operations
+    this.lends = JdbcBookDAO.getInstance();
   }
 
   public Book getBookInfo(int bookId) throws SQLException
@@ -86,6 +89,23 @@ public class BookInfoService
       summaries.add(convertToSummary(book));
     }
     return summaries;
+  }
+  public void lendBook(int bookId, int userId) throws SQLException
+  {
+    Book book = books.findById(bookId);
+    if (book == null) {
+      throw new SQLException("Book not found");
+    }
+    if (book.getStatus() instanceof Borrowed || book.getStatus() instanceof Unavailable) {
+      throw new SQLException("Book is not available for lending");
+    }
+    UserInfoService userService = new UserInfoService();
+    FullUserDTO borrow = userService.getUserInfo(userId);
+    User borrower = new User(borrow.getUserName(), borrow.getEmail(),
+        borrow.getFullName(), borrow.getPhoneNumber(), borrow.getAddress(), borrow.getAvatar());
+
+    book.lendTo(borrower);
+    books.update(book);
   }
 
 

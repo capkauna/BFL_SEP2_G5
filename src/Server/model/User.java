@@ -91,13 +91,13 @@ public User() {
 
 
   //VALIDATORS
-//TODO add check that username doesn't already exist in database
-// this should be done in the DAO
+
   private static void validateUserName(String userName)
   {
     if(userName == null || userName.contains(" ") ||userName.length() < MIN_USERNAME_LENGTH || userName.length() >= MAX_USERNAME_LENGTH)
     {
-      throw new IllegalArgumentException("Username cannot be null, empty or contain spaces, and must be between " + MIN_USERNAME_LENGTH + " and " + MAX_USERNAME_LENGTH + " characters long");
+      throw new IllegalArgumentException("Username cannot be null, empty or contain spaces, and must be between " + MIN_USERNAME_LENGTH + " and "
+          + MAX_USERNAME_LENGTH + " characters long");
     }
   }
   private static void validateFullName(String fullName)
@@ -291,4 +291,6 @@ public User() {
   {
     return userName;
   }
+
+
 }

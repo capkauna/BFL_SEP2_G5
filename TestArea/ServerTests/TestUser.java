@@ -13,7 +13,7 @@ public class TestUser
   @BeforeEach
   public void setUp()
   {
-    // set up any shared resources or configurations
+    //shared resources or configurations
     testUser = new User("janey", "Jane Doe", "janedoe@mail.com",
         "1234", "5252525252", "Janes Street 20");
   }
@@ -56,6 +56,11 @@ public class TestUser
   public void testSpaceUserName()
   {
     assertThrows (IllegalArgumentException.class, () -> testUser.setUserName("user name"));
+  }
+  @Test
+  public void testShortUserName()
+  {
+    assertThrows (IllegalArgumentException.class, () -> testUser.setUserName("u"));
   }
   @Test
   public void testLongUserName()

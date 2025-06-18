@@ -144,6 +144,7 @@
             //not really done, this is a lot of wilding
             try {
               Lend lendRequest = (Lend) request.getPayload();
+              //bookInfoService.lendBook();
               BookDAO bookDAO = JdbcBookDAO.getInstance();
               UserDAO userDAO = JdbcUserDAO.getInstance();
               LendDAO lends = JdbcLendDAO.getInstance();

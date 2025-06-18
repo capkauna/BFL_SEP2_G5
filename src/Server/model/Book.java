@@ -19,7 +19,9 @@ public class Book implements Serializable
   //private static final AtomicInteger nextId = new AtomicInteger(1);
 
 
-  public Book(String title, String author, Integer year, Genre genre, String isbn, Format format, String description, String imagePath, User owner)
+  public Book(String title, String author, Integer year, Genre genre,
+      String isbn, Format format, String description,
+      String imagePath, User owner)
   {
     validateTitle(title);
     validateAuthor(author);
