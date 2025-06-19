@@ -3,9 +3,10 @@ package Server.model.status;
 import Shared.dto.enums.BookStatus;
 import Server.model.*;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
-public class Borrowed implements Status
+public class Borrowed implements Status, Serializable
 {
   private User borrower;
 

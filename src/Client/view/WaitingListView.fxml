@@ -3,19 +3,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="446.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.WaitingListViewController">
-    <center>
-        <TableView fx:id="waitingListTable" prefHeight="420.0" prefWidth="209.0">
+<AnchorPane prefHeight="446.0" prefWidth="300.0" style="-fx-background-color: #990000;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.view.WaitingListViewController">
+
+
+      <Button fx:id="backButton" layoutX="6.0" layoutY="1.0" mnemonicParsing="false" onAction="#onBackClicked" prefHeight="24.0" prefWidth="34.0" text="←" BorderPane.alignment="CENTER" />
+
+        <TableView fx:id="waitingListTable" layoutY="29.0" prefHeight="370.0" prefWidth="300.0">
             <columns>
-                <TableColumn fx:id="usernameColumn" prefWidth="128.59998166561127" text="Username" />
-            <TableColumn fx:id="addedat" prefWidth="173.79998779296875" text="Added at" />
+                <TableColumn fx:id="usernameColumn" prefWidth="146.0" text="Username" />
+            <TableColumn fx:id="addedat" prefWidth="154.0" text="Added at" />
             </columns>
         </TableView>
-    </center>
-   <bottom>
-      <Button fx:id="#okbutton" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" text="OK" BorderPane.alignment="CENTER" />
-   </bottom>
-   <right>
-      <Button fx:id="#addmebutton" mnemonicParsing="false" text="Add me" BorderPane.alignment="CENTER" />
-   </right>
-</BorderPane>
+
+
+      <Button fx:id="okbutton" layoutX="163.0" layoutY="405.0" mnemonicParsing="false" onAction="#onOkClicked" prefHeight="34.0" prefWidth="64.0" text="OK" BorderPane.alignment="CENTER" />
+
+
+      <Button fx:id="addmebutton" layoutX="95.0" layoutY="405.0" mnemonicParsing="false" onAction="#onAddClicked" prefHeight="34.0" prefWidth="64.0" text="Add me" BorderPane.alignment="CENTER" />
+
+      <Button fx:id="lendButton" layoutX="232.0" layoutY="405.0" mnemonicParsing="false" onAction="#onLendClicked" prefHeight="34.0" prefWidth="53.0" text="Lend" BorderPane.alignment="CENTER" />
+   <Label fx:id="statusLabel" layoutX="61.0" layoutY="5.0" prefHeight="18.0" prefWidth="224.0" />
+   <Button fx:id="remove" layoutX="2.0" layoutY="405.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="86.0" text="Remove me" />
+
+</AnchorPane>

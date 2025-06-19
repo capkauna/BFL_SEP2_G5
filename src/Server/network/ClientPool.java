@@ -1,5 +1,7 @@
 package Server.network;
 
+import Shared.network.Response;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,4 +27,20 @@ public class ClientPool
     authenticatedClients.remove(client);
     System.out.println("Client disconnected: " + client.getAuthenticatedUser().getUserName());
   }
+
+  public void broadcast(Response response) {
+    for (ClientHandler client : authenticatedClients) {
+      client.send(response);
+    }
+  }
+
+  public void sendToUser(String username, Response response) {
+    for (ClientHandler client : authenticatedClients) {
+      if (client.getAuthenticatedUser().getUserName().equals(username)) {
+        client.send(response);
+        break;
+      }
+    }
+  }
+
 }

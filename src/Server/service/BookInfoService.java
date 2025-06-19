@@ -12,12 +12,13 @@ import java.util.ArrayList;
 public class BookInfoService
 {
   private final BookDAO books;
-  private final JdbcBookDAO lends;
+  private final LendDAO lends;
+  //private final JdbcBookDAO lends;
   public BookInfoService() throws SQLException
   {
     this.books = JdbcBookDAO.getInstance();
     //added to handle lending operations
-    this.lends = JdbcBookDAO.getInstance();
+    this.lends = JdbcLendDAO.getInstance();
   }
 
   public static Book getBookInfo(int bookId) throws SQLException
@@ -105,6 +106,8 @@ public class BookInfoService
         borrow.getFullName(), borrow.getPhoneNumber(), borrow.getAddress(), borrow.getAvatar());
 
     book.lendTo(borrower);
+    Lend lend = Lend.lendBook(book, borrower);
+    lends.create(lend);
     books.update(book);
   }
 

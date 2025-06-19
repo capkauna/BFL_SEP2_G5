@@ -4,7 +4,9 @@ import Shared.dto.enums.BookStatus;
 import Server.model.Book;
 import Server.model.User;
 
-public class Unavailable implements Status
+import java.io.Serializable;
+
+public class Unavailable implements Status, Serializable
 {
   @Override public void lendTo(Book b, User u)
   {

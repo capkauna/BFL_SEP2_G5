@@ -6,7 +6,9 @@ import Shared.dto.enums.BookStatus;
 import Server.model.Book;
 import Server.model.User;
 
-public class Available implements Status
+import java.io.Serializable;
+
+public class Available implements Status, Serializable
 {
 
   @Override public void lendTo(Book b, User u)

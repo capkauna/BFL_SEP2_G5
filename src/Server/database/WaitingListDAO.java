@@ -18,4 +18,5 @@ public interface WaitingListDAO
   // Read
   ArrayList<WaitingListEntry> getByBookId(int bookId)throws SQLException;
   ArrayList<WaitingListRecord> findAll()throws SQLException;// for debug
+  ArrayList<WaitingListEntry> getByUserId(int userId);
 }

@@ -19,7 +19,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class BookInfoVM {
@@ -71,15 +70,17 @@ public class BookInfoVM {
     }
 
     BookSummaryDTO b = (BookSummaryDTO) resp.getData();
-    title.set(b.getTitle());
-    author.set(b.getAuthor());
-    isbn.set(b.getIsbn());
-    genre.set(b.getGenre().name());
-    format.set(b.getFormat().name());
-    status.set(b.getStatus());
-    description.set(b.getDescription());
-    imagePath.set(b.getAvatar());
-    owner.set(b.getOwnerName());
+    javafx.application.Platform.runLater(() -> {
+      title.set(b.getTitle());
+      author.set(b.getAuthor());
+      isbn.set(b.getIsbn());
+      genre.set(b.getGenre().name());
+      format.set(b.getFormat().name());
+      status.set(b.getStatus());
+      description.set(b.getDescription());
+      imagePath.set(b.getAvatar());
+      owner.set(b.getOwnerName());
+    });
   }
 
   public String getTitle()
@@ -117,6 +118,10 @@ public class BookInfoVM {
   public String getOwner()
   {
     return owner.get();
+  }
+  public String getCurrentUser()
+  {
+    return currentUser;
   }
   //      just to show it working, this shouldn't access the database directly
   //also bypasses safety checks, so it shouldn't be used

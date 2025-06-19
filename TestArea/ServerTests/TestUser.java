@@ -133,7 +133,11 @@ public class TestUser
   public void testValidPasswordCheck()
   {
    assertTrue(testUser.validatePassword("1234"));
-   assertFalse(testUser.validatePassword("0000"));
+  }
+  @Test
+  public void testInvalidPassword()
+  {
+    assertFalse(testUser.validatePassword("0000"));
   }
   @Test
   public void testInvalidSpacePassword()

@@ -53,7 +53,7 @@ public class ViewHandler
             bookInfoController.init(this, viewModelFactory.getBookInfoVM(), 0);//TODO: Pass actual bookId
         case WaitingListViewController waitingListController ->
             waitingListController.init(this, viewModelFactory.getWaitingListVM(),
-                viewModelFactory.getCurrentUsername());
+                viewModelFactory.getCurrentUsername(), 0, false); //TODO: Pass actual bookId
 
 
         // …add more cases for UserPageViewController, UserListViewController, etc.
@@ -92,6 +92,28 @@ public class ViewHandler
       primaryStage.setScene(new Scene(root));
       primaryStage.show();
     } catch (IOException | ClassNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public void openWaitingListView(int bookId, boolean fromLendFlow) {
+    try {
+      FXMLLoader loader = new FXMLLoader(
+          getClass().getClassLoader().getResource("Client/view/WaitingListView.fxml")
+      );
+      Parent root = loader.load();
+
+      WaitingListViewController ctrl = loader.getController();
+      ctrl.init(
+          this,
+          viewModelFactory.getWaitingListVM(),
+          viewModelFactory.getCurrentUsername(),
+          bookId, fromLendFlow
+      );
+
+      primaryStage.setScene(new Scene(root));
+      primaryStage.show();
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }

@@ -32,6 +32,8 @@ public class ConnectionPool {
     }
   }
 
+
+
   public void broadcast(String message) {
     for (Socket socket : connections.values()) {
       try {

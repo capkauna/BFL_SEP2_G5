@@ -1,26 +1,21 @@
 package Server.service;
 
-import Server.database.WaitingListDAO;
+import Server.database.*;
 import Server.model.Book;
 import Server.model.User;
 import Server.model.WaitingListRecord;
 import Server.model.WaitingListEntry;
-import Server.database.JdbcBookDAO;
-import Server.database.JdbcUserDAO;
-import Server.database.JdbcWaitingListDAO;
 import Shared.dto.WaitingListEntryDTO;
-import Shared.dto.enums.Action;
-import Shared.network.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.ArrayList;
+
 
 public class WaitingListService
 {
-  JdbcWaitingListDAO waitingListRepository;
-  JdbcUserDAO userRepository;
-  JdbcBookDAO bookRepository;
+  WaitingListDAO waitingListRepository;
+  UserDAO userRepository;
+  BookDAO bookRepository;
 
   public WaitingListService()
   {
@@ -49,17 +44,29 @@ public class WaitingListService
     return waitingList;
   }
 
-  public ArrayList<WaitingListEntry> getBookWaitingList(Book b) throws SQLException
+  public ArrayList<WaitingListEntryDTO> getBookWaitingList(Book b) throws SQLException
   {
     ArrayList<WaitingListEntry> waitingListDao = waitingListRepository.getByBookId(b.getBookId());
-    ArrayList<WaitingListEntry> waitingList = new ArrayList<>();
+    ArrayList<WaitingListEntryDTO> waitingList = new ArrayList<>();
     for (WaitingListEntry entry : waitingListDao)
     {
       User user = userRepository.findById(entry.getUser().getUserId());
-      waitingList.add(new WaitingListEntry(entry.getEntryId(), user, b, entry.getAddedAt()));
+      waitingList.add(new WaitingListEntryDTO( b.getBookId(),user.getUserName(), entry.getAddedAt()));
     }
     return waitingList;
   }
+  public ArrayList<WaitingListEntryDTO> getByBookId(int bookId) throws SQLException
+  {
+    ArrayList<WaitingListEntry> waitingListDao = waitingListRepository.getByBookId(bookId);
+    ArrayList<WaitingListEntryDTO> waitingList = new ArrayList<>();
+    for (WaitingListEntry entry : waitingListDao)
+    {
+      User user = userRepository.findById(entry.getUser().getUserId());
+      waitingList.add(new WaitingListEntryDTO(bookId, user.getUserName(), entry.getAddedAt()));
+    }
+    return waitingList;
+  }
+
   public ArrayList<WaitingListEntry> getUserWaitingList(User u) throws SQLException
   {
     ArrayList<WaitingListEntry> waitingListDao = waitingListRepository.getByUserId(u.getUserId());
@@ -79,9 +86,9 @@ public class WaitingListService
       return existingEntries.get(0); // Entry already exists, return it
     }
     ArrayList<WaitingListEntry> newEntry = waitingListRepository.addEntry(user.getUserId(), book.getBookId());
-    return newEntry.get(0); // Return the newly created entry
+    return newEntry.getFirst(); // Return the newly created entry
   }
-  public WaitingListEntry addEntryDTO (WaitingListEntryDTO dto) throws SQLException {
+  public WaitingListEntry addEntryFromDTO (WaitingListEntryDTO dto) throws SQLException {
     // 1) turn DTO → domain objects
     User user = userRepository.findByUserName(dto.getUsername());
     Book book = bookRepository.findById(dto.getBookId());

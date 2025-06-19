@@ -7,7 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import javax.swing.text.html.ImageView;
+import javafx.scene.image.ImageView;
 import java.io.IOException;
 
 public class BookInfoViewController
@@ -26,16 +26,19 @@ public class BookInfoViewController
   private ViewHandler viewHandler;
   private BookInfoVM viewModel;
   private int bookId;
+  private String currentUser;
 
   @FXML
   private void onLendButtonClicked(ActionEvent actionEvent )
   {
+    viewHandler.openWaitingListView(bookId, true);
     viewModel.lendBook(this.bookId);
   }
 
   @FXML
   private void onWaitingListView (ActionEvent actionEvent){
-    viewHandler.openView("Client/view/WaitingListView.fxml");
+    System.out.println("Opening Waiting List View for book ID: " + bookId);
+    viewHandler.openWaitingListView(bookId, false);
   }
   @FXML private void onAddtoWaitingListClicked(ActionEvent e)
 {
@@ -57,28 +60,26 @@ public class BookInfoViewController
     System.out.println("Adding note for the book: " + titleLabel.getText());
     // You can add more logic here, such as opening a dialog to enter the note
   }
-  public void onBackButtonClicked()
-  {
-    // Logic to go back to the previous screen
-    System.out.println("Going back to the previous screen.");
-    // You can add more logic here, such as closing the current window or navigating to another view
-  }
+
   public void onEditButtonClicked()
   {
     // Logic to edit the book details
-    System.out.println("Editing the book: " + titleLabel.getText());
+    System.out.println("Not implemented - Editing the book: " + titleLabel.getText());
+    //viewHandler.openEditBookView(bookId);
     // You can add more logic here, such as opening a dialog to edit the book details
   }
 
-  /*@FXML private void onHistoryClicked() {
-    viewModel.showHistory();
-  }*/
+  @FXML private void onHistoryClicked() {
+    System.out.println("Not implemented - Opening History View for book ID: " + bookId);
+    //viewHandler.openView("Client/view/HistoryView.fxml");
+  }
   public void init(ViewHandler vh, BookInfoVM vm, int bookId)
       throws IOException, ClassNotFoundException
   {
     this.viewHandler = vh;
     this.viewModel          = vm;
-this.bookId = bookId;
+    this.bookId = bookId;
+    this.currentUser = vm.getCurrentUser();
     // bind UI to VM properties
     titleLabel.textProperty().bind(vm.titleProperty());
     authorLabel.textProperty().bind(vm.authorProperty());
@@ -89,16 +90,42 @@ this.bookId = bookId;
     statusLabel.textProperty().bind(vm.statusProperty());
     ownerLabel.textProperty().bind(vm.ownerProperty());
 
+
+    // Listen for owner property being populated
+    vm.ownerProperty().addListener((obs, oldOwner, newOwner) -> {
+          if (newOwner != null && !newOwner.isBlank())
+          {
+            System.out.println("Book owner loaded: " + newOwner);
+            System.out.println("Current user: " + currentUser);
+
+            boolean isOwner = newOwner.equals(currentUser);
+
+            edit.setVisible(isOwner);
+            lendbutton.setDisable(!isOwner);
+            lendbutton.setOpacity(isOwner ? 1.0 : 0.5);
+          }
+        });
+
+
     // load the image once the path is set
     vm.imagePathProperty().addListener((obs, oldP, newP) -> {
       if (newP != null && !newP.isBlank()) {
        // bookImage.setImage(new Image(newP));
         //handle later
       }
+
     });
     // finally, fetch from the server
-    vm.loadBookInfo(bookId);
-  }
+      try
+      {
+        vm.loadBookInfo(bookId);
+      }
+      catch (IOException e)
+      {
+        throw new RuntimeException(e);
+      }
+
+    }
 
   @FXML private void onBackClicked() {
     viewHandler.openView("Client/view/SearchView.fxml");

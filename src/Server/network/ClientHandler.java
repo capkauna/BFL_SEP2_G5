@@ -28,6 +28,7 @@
     {
       this.socket = socket;
       this.authService = authService;
+
     }
 
     @Override
@@ -101,7 +102,7 @@
 
 
             // fetch domain object
-            Book b = bookInfoService.getBookInfo(bookId);
+            Book b = BookInfoService.getBookInfo(bookId);
 
             // map to a serializable DTO
             var dto = new BookSummaryDTO(
@@ -126,18 +127,21 @@
           case ADD_TO_WAITING_LIST ->
           {
             WaitingListEntryDTO waitingListEntry = (WaitingListEntryDTO) request.getPayload();
-            WaitingListEntry entry = waitingListService.addEntryDTO(waitingListEntry);
+            WaitingListEntry entry = waitingListService.addEntryFromDTO(waitingListEntry);
             // return the newly-created entry back to the client
-            yield new Response(true, entry, null);
+            yield new Response(true, waitingListEntry, null);
             }
 
             case GET_WAITING_LIST -> {
             //not done yet
               try {
-                WaitingListDAO wd = JdbcWaitingListDAO.getInstance();
-                ArrayList<WaitingListRecord> waitingList = wd.findAll();
+                int bookId = (Integer) request.getPayload();
+
+                ArrayList<WaitingListEntryDTO> waitingList = waitingListService.getByBookId(bookId);
+                System.out.println(" -> Server received GET_WAITING_LIST request for book ID: " + bookId);
                 yield new Response(true, waitingList, null);
               } catch (Exception e) {
+                System.out.println("Error getting waiting list: " + e.getMessage());
                 yield new Response(false, null, "Failed to get waiting ArrayList: " + e.getMessage());
               }
             }
@@ -201,4 +205,14 @@
     {
          return authService.getAuthenticatedUser();
     }
+//for broadcasting messages to all clients
+    public void send(Response response) {
+      try {
+        out.writeObject(response);
+        out.flush();
+      } catch (Exception e) {
+        System.out.println("Failed to send to client: " + e.getMessage());
+      }
+    }
+
   }
