@@ -1,6 +1,7 @@
 package Server;
 
 import Server.network.ClientHandler;
+import Server.network.ClientPool;
 import Server.service.AuthService;
 import Server.service.ConnectionPool;
 

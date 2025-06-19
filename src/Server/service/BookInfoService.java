@@ -20,9 +20,9 @@ public class BookInfoService
     this.lends = JdbcBookDAO.getInstance();
   }
 
-  public Book getBookInfo(int bookId) throws SQLException
+  public static Book getBookInfo(int bookId) throws SQLException
   {
-    return books.findById(bookId);
+    return JdbcBookDAO.getInstance().findById(bookId);
   }
   public ArrayList<Book> getAllBooks() throws SQLException
   {

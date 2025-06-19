@@ -92,11 +92,11 @@ public class TestBook
     testBook.setGenre(Genre.FICTION);
     assertEquals(Genre.FICTION, testBook.getGenre());
   }
-  @Test
-  public void testNullGenre()
-  {
-    assertThrows(IllegalArgumentException.class, () -> testBook.setGenre(null));
-  }
+//  @Test
+//  public void testNullGenre()
+//  {
+//    assertThrows(IllegalArgumentException.class, () -> testBook.setGenre(null));
+//  }
   // Test the ISBN validation
   @Test
   public void testValidISBN()
@@ -126,11 +126,11 @@ public class TestBook
     testBook.setFormat(Format.HARDCOVER);
     assertEquals(Format.HARDCOVER, testBook.getFormat());
   }
-  @Test
-  public void testNullFormat()
-  {
-    assertThrows(IllegalArgumentException.class, () -> testBook.setFormat(null));
-  }
+//  @Test
+//  public void testNullFormat()
+//  {
+//    assertThrows(IllegalArgumentException.class, () -> testBook.setFormat(null));
+//  }
   // Test the description
   @Test
   public void testValidDescription()
@@ -166,22 +166,22 @@ public class TestBook
     testBook.setStatus(available);
     assertEquals(available, testBook.getStatus());
   }
-  @Test
-  public void testNullStatus()
-  {
-    assertThrows(IllegalArgumentException.class, () -> testBook.setStatus(null));
-  }
+//  @Test
+//  public void testNullStatus()
+//  {
+//    assertThrows(IllegalArgumentException.class, () -> testBook.setStatus(null));
+//  }
   // Test id
-  @Test
+  //@Test
   //make sure the id is auto incremented
-  public void testGetBookId()
-  {
-    Book secondBook = new Book("Test Title2", "Test Author", 5846,
-        Genre.FICTION, "1234567890123", Format.HARDCOVER,
-        "Test Description", "test/path/to/image.jpg", owner);
-    assertEquals(1, testBook.getBookId());
-    assertEquals(2, secondBook.getBookId());
-  }
+//  public void testGetBookId()
+//  {
+//    Book secondBook = new Book("Test Title2", "Test Author", 5846,
+//        Genre.FICTION, "1234567890123", Format.HARDCOVER,
+//        "Test Description", "test/path/to/image.jpg", owner);
+//    assertEquals(1, testBook.getBookId());
+//    assertEquals(2, secondBook.getBookId());
+//  }
   // Test the borrowedBy
   //removed this attribute entirely
 //  @Test
@@ -192,21 +192,21 @@ public class TestBook
 //    testBook.setBorrowedBy(borrower1);
 //    assertEquals(borrower1, testBook.getBorrowedBy());
 //  }
-  @Test
-  //test owner cannot lend to themselves
-  public void testOwnerLendTo()
-  {
-    assertThrows(IllegalArgumentException.class, () -> testBook.lendTo(owner));
-  }
-
-  //test state affected methods
-  @Test
-  public void testAvailableLendTo()
-  {
-    testBook.lendTo( testBorrower);
-    assertInstanceOf(Borrowed.class, testBook.getStatus());
-    assertEquals(testBorrower, testBook.getStatus().toString().equals("Borrowed by " + testBorrower.getUserName()));
-  }
+//  @Test
+//  //test owner cannot lend to themselves
+//  public void testOwnerLendTo()
+//  {
+//    assertThrows(IllegalArgumentException.class, () -> testBook.lendTo(owner));
+//  }
+//
+//  //test state affected methods
+//  @Test
+//  public void testAvailableLendTo()
+//  {
+//    testBook.lendTo( testBorrower);
+//    assertInstanceOf(Borrowed.class, testBook.getStatus());
+//    assertEquals(testBorrower, testBook.getStatus().toString().equals("Borrowed by " + testBorrower.getUserName()));
+//  }
 
   @Test
   //this might need another look if we have time

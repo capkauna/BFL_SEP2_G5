@@ -2,14 +2,11 @@
 
   import Server.database.*;
   import Server.model.*;
-  import Server.service.BookInfoService;
-  import Server.service.ConnectionPool;
-  import Server.service.WaitingListService;
+  import Server.service.*;
   import Shared.dto.BookSummaryDTO;
   import Shared.dto.FullUserDTO;
   import Shared.dto.WaitingListEntryDTO;
   import Shared.network.*;
-  import Server.service.AuthService;
 
   import java.sql.SQLException;
   import java.util.ArrayList;
@@ -36,8 +33,8 @@
     @Override
     public void run() {
       try {
-        out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
+        out = new ObjectOutputStream(socket.getOutputStream());
 
         while (true) {
           Object obj = in.readObject();
@@ -64,6 +61,10 @@
             var authResult = authService.authenticate(username, password);
             var user = authResult.get();
             var fullUser = new FullUserDTO(user.getUserId(),user.getUserName(),user.getFullName(),user.getEmail(),user.getPhoneNumber(),user.getAddress(),user.getAvatar());
+            authService.setAuthenticatedUser(username);
+            ClientPool pool = ClientPool.getInstance();
+            pool.addClient(this);
+
             if (authResult.isPresent()) {
               yield new Response(true, fullUser, null);
             } else {
@@ -165,6 +166,16 @@
               yield new Response(false, null, "Error lending book: " + e.getMessage());
             }
           }
+          case GET_ALL_USERS -> {
+            try {
+              UserInfoService users = new UserInfoService();
+              ArrayList<FullUserDTO> allUsers = users.getAllUsers();
+              System.out.println(" -> Server received GET_ALL_USERS request. ");
+              yield new Response(true, allUsers, null);
+            } catch (SQLException e) {
+              yield new Response(false, null, "Failed to get users: " + e.getMessage());
+            }
+          }
 
 
 
@@ -174,5 +185,20 @@
       } catch (Exception e) {
         return new Response(false, null, "Error: " + e.getMessage());
       }
+    }
+
+    public void close() {
+      try {
+        if (in != null) in.close();
+        if (out != null) out.close();
+        if (socket != null && !socket.isClosed()) socket.close();
+      } catch (Exception e) {
+        System.out.println("Error closing client handler: " + e.getMessage());
+      }
+    }
+
+    public FullUserDTO getAuthenticatedUser()
+    {
+         return authService.getAuthenticatedUser();
     }
   }

@@ -5,6 +5,7 @@ import Server.model.User;
 import Server.model.WaitingListEntry;
 import Server.model.WaitingListRecord;
 import Server.dbstart.DBConnection;
+import Server.service.BookInfoService;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -203,7 +204,7 @@ public class JdbcWaitingListDAO implements WaitingListDAO
     user.setUserId(userId);
     user.setUsername(username);
 
-    Book book = new Book();
+    Book book = BookInfoService.getBookInfo(bookId);
     book.setBookId(bookId);
     book.setTitle(title);
 

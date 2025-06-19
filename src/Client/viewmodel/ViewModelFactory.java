@@ -109,7 +109,7 @@ public class ViewModelFactory
   }
   public UserListVM getUserListVM()
   {
-    return new UserListVM();
+    return new UserListVM(socketHandler);
   }
   public UserProfileVM getUserProfileVM()
   {
